@@ -1,5 +1,6 @@
 ﻿namespace MiniApp.Models
 {
+    // prueba experimental
     public class User
     {
         public int Id { get; set; }
