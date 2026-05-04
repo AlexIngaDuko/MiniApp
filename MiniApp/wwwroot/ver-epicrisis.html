@@ -1,0 +1,355 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ver Epicrisis</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #e9e9e9;
+            padding: 30px;
+        }
+
+        .formulario {
+            background: white;
+            max-width: 1100px;
+            margin: auto;
+            padding: 25px;
+            border: 2px solid #333;
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin: 5px 0;
+        }
+
+        .seccion {
+            border: 1px solid #333;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+            .seccion h3 {
+                margin-top: 0;
+                background: #f1f1f1;
+                padding: 8px;
+                border-bottom: 1px solid #333;
+            }
+
+        .fila {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .campo {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        input, textarea {
+            padding: 8px;
+            border: 1px solid #777;
+            font-size: 14px;
+        }
+
+        textarea {
+            min-height: 70px;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .examen-item {
+            border: 1px dashed #555;
+            padding: 10px;
+            margin-top: 10px;
+            background: #fafafa;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="formulario">
+        <h2>INSTITUTO NACIONAL DE SALUD DEL NIÑO</h2>
+        <h1>EPICRISIS</h1>
+
+        <div class="seccion">
+            <h3>Datos del paciente</h3>
+
+            <div class="fila">
+                <div class="campo">
+                    <label>Servicio</label>
+                    <input id="servicio" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>Historia Clínica N°</label>
+                    <input id="historiaClinicaNumero" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>N° SIS</label>
+                    <input id="numeroSIS" readonly>
+                </div>
+            </div>
+
+            <div class="fila">
+                <div class="campo">
+                    <label>Nombres</label>
+                    <input id="nombres" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>Apellidos</label>
+                    <input id="apellidos" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>Edad</label>
+                    <input id="edad" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>Sexo</label>
+                    <input id="sexo" readonly>
+                </div>
+            </div>
+
+            <div class="fila">
+                <div class="campo">
+                    <label>N° Cama</label>
+                    <input id="numeroCama" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>Fecha nacimiento</label>
+                    <input id="fechaNacimiento" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>Procedencia</label>
+                    <input id="procedencia" readonly>
+                </div>
+            </div>
+        </div>
+
+        <div class="seccion">
+            <h3>Historia clínica</h3>
+
+            <div class="campo">
+                <label>Antecedentes</label>
+                <textarea id="antecedentes" readonly></textarea>
+            </div>
+
+            <div class="campo">
+                <label>Enfermedad actual resumida</label>
+                <textarea id="enfermedadActualResumen" readonly></textarea>
+            </div>
+
+            <div class="campo">
+                <label>Examen físico</label>
+                <textarea id="examenFisico" readonly></textarea>
+            </div>
+
+            <div class="campo">
+                <label>Evolución y tratamiento</label>
+                <textarea id="evolucionTratamiento" readonly></textarea>
+            </div>
+        </div>
+
+        <div class="seccion">
+            <h3>Exámenes auxiliares</h3>
+            <div id="examenesAuxiliares"></div>
+        </div>
+
+        <div class="seccion">
+            <h3>Diagnósticos</h3>
+
+            <div class="campo">
+                <label>Diagnóstico de ingreso</label>
+                <textarea id="diagnosticoIngreso" readonly></textarea>
+            </div>
+
+            <div class="campo">
+                <label>CIE 10 ingreso</label>
+                <input id="cie10Ingreso" readonly>
+            </div>
+
+            <div class="campo">
+                <label>Diagnóstico de alta</label>
+                <textarea id="diagnosticoAlta" readonly></textarea>
+            </div>
+
+            <div class="campo">
+                <label>CIE 10 alta</label>
+                <input id="cie10Alta" readonly>
+            </div>
+        </div>
+
+        <div class="seccion">
+            <h3>Condición al egreso</h3>
+
+            <div class="radio-group">
+                <label><input id="condicionCurado" type="radio" disabled> Curado</label>
+                <label><input id="condicionMejorado" type="radio" disabled> Mejorado</label>
+                <label><input id="condicionEmpeorado" type="radio" disabled> Empeorado</label>
+                <label><input id="condicionEstacionario" type="radio" disabled> Estacionario</label>
+                <label><input id="condicionFallecido" type="radio" disabled> Fallecido</label>
+            </div>
+        </div>
+
+        <div class="seccion">
+            <h3>Tipo de alta</h3>
+
+            <div class="radio-group">
+                <label><input id="tipoAltaMedica" type="radio" disabled> Médica</label>
+                <label><input id="tipoAltaVoluntaria" type="radio" disabled> Voluntaria</label>
+                <label><input id="tipoAltaTransferencia" type="radio" disabled> Transferencia</label>
+                <label><input id="tipoAltaFallecido" type="radio" disabled> Fallecido</label>
+            </div>
+        </div>
+
+        <div class="seccion">
+            <h3>Indicaciones finales</h3>
+
+            <div class="campo">
+                <label>Pronóstico</label>
+                <textarea id="pronostico" readonly></textarea>
+            </div>
+
+            <div class="campo">
+                <label>Pendiente</label>
+                <textarea id="pendiente" readonly></textarea>
+            </div>
+
+            <div class="campo">
+                <label>Indicaciones de alta</label>
+                <textarea id="indicacionesAlta" readonly></textarea>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function setValor(id, valor) {
+        const elemento = document.getElementById(id);
+        if (elemento) elemento.value = valor ?? "";
+    }
+
+    function setCheck(id, valor) {
+        const elemento = document.getElementById(id);
+        if (elemento) elemento.checked = valor === true;
+    }
+
+    function fechaCorta(fecha) {
+        if (!fecha) return "";
+        return fecha.split("T")[0];
+    }
+
+    async function cargarEpicrisis() {
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get("id");
+
+        if (!id) {
+            alert("Debes enviar un ID. Ejemplo: ver-epicrisis.html?id=1");
+            return;
+        }
+
+        const response = await fetch(`/api/Epicrisis/${id}`);
+
+        if (!response.ok) {
+            alert("No se encontró la epicrisis.");
+            return;
+        }
+
+        const e = await response.json();
+
+        setValor("servicio", e.servicio);
+        setValor("historiaClinicaNumero", e.historiaClinicaNumero);
+        setValor("numeroSIS", e.numeroSIS);
+
+        setValor("nombres", e.nombres);
+        setValor("apellidos", e.apellidos);
+        setValor("edad", e.edad);
+        setValor("sexo", e.sexo);
+        setValor("numeroCama", e.numeroCama);
+        setValor("fechaNacimiento", fechaCorta(e.fechaNacimiento));
+        setValor("procedencia", e.procedencia);
+
+        setValor("antecedentes", e.antecedentes);
+        setValor("enfermedadActualResumen", e.enfermedadActualResumen);
+        setValor("examenFisico", e.examenFisico);
+        setValor("evolucionTratamiento", e.evolucionTratamiento);
+
+        setValor("diagnosticoIngreso", e.diagnosticoIngreso);
+        setValor("cie10Ingreso", e.cie10Ingreso);
+        setValor("diagnosticoAlta", e.diagnosticoAlta);
+        setValor("cie10Alta", e.cie10Alta);
+
+        setCheck("condicionCurado", e.condicionCurado);
+        setCheck("condicionMejorado", e.condicionMejorado);
+        setCheck("condicionEmpeorado", e.condicionEmpeorado);
+        setCheck("condicionEstacionario", e.condicionEstacionario);
+        setCheck("condicionFallecido", e.condicionFallecido);
+
+        setCheck("tipoAltaMedica", e.tipoAltaMedica);
+        setCheck("tipoAltaVoluntaria", e.tipoAltaVoluntaria);
+        setCheck("tipoAltaTransferencia", e.tipoAltaTransferencia);
+        setCheck("tipoAltaFallecido", e.tipoAltaFallecido);
+
+        setValor("pronostico", e.pronostico);
+        setValor("pendiente", e.pendiente);
+        setValor("indicacionesAlta", e.indicacionesAlta);
+
+        const contenedor = document.getElementById("examenesAuxiliares");
+        contenedor.innerHTML = "";
+
+        e.examenesAuxiliares.forEach(examen => {
+            const div = document.createElement("div");
+            div.className = "examen-item";
+
+            div.innerHTML = `
+                <div class="fila">
+                    <div class="campo">
+                        <label>Nombre del examen</label>
+                        <input value="${examen.nombreExamen ?? ""}" readonly>
+                    </div>
+
+                    <div class="campo">
+                        <label>Resultado</label>
+                        <input value="${examen.resultado ?? ""}" readonly>
+                    </div>
+
+                    <div class="campo">
+                        <label>Fecha</label>
+                        <input value="${fechaCorta(examen.fecha)}" readonly>
+                    </div>
+                </div>
+
+                <div class="campo">
+                    <label>Observaciones</label>
+                    <textarea readonly>${examen.observaciones ?? ""}</textarea>
+                </div>
+            `;
+
+            contenedor.appendChild(div);
+        });
+    }
+
+    cargarEpicrisis();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,811 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario Epicrisis</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #e9e9e9;
+            padding: 30px;
+        }
+
+        .formulario {
+            background: white;
+            max-width: 1100px;
+            margin: auto;
+            padding: 25px;
+            border: 2px solid #333;
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin: 5px 0;
+        }
+
+        .seccion {
+            border: 1px solid #333;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+            .seccion h3 {
+                margin-top: 0;
+                background: #f1f1f1;
+                padding: 8px;
+                border-bottom: 1px solid #333;
+            }
+
+        .fila {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .campo {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        input, textarea, select {
+            padding: 8px;
+            border: 1px solid #777;
+            font-size: 14px;
+        }
+
+        textarea {
+            min-height: 70px;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+            .radio-group label {
+                font-weight: normal;
+            }
+
+        button {
+            padding: 10px 18px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .btn-principal {
+            background: #0d6efd;
+            color: white;
+        }
+
+        .btn-secundario {
+            background: #198754;
+            color: white;
+        }
+
+        .btn-eliminar {
+            background: #dc3545;
+            color: white;
+        }
+
+        .examen-item {
+            border: 1px dashed #555;
+            padding: 10px;
+            margin-top: 10px;
+            background: #fafafa;
+        }
+
+        .mensaje {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="formulario">
+        <h2>INSTITUTO NACIONAL DE SALUD DEL NIÑO</h2>
+        <h1>EPICRISIS</h1>
+
+        <form id="epicrisisForm">
+
+            <div class="seccion">
+                <h3>Datos del paciente</h3>
+
+                <div class="fila">
+                    <div class="campo">
+                        <label>Servicio</label>
+                        <input id="servicio" type="text">
+                    </div>
+
+                    <div class="campo">
+                        <label>Historia Clínica N°</label>
+                        <input id="historiaClinicaNumero" type="text">
+                    </div>
+
+                    <div class="campo">
+                        <label>N° SIS</label>
+                        <input id="numeroSIS" type="text">
+                    </div>
+                </div>
+
+                <div class="fila">
+                    <div class="campo">
+                        <label>Nombres</label>
+                        <input id="nombres" type="text">
+                    </div>
+
+                    <div class="campo">
+                        <label>Apellidos</label>
+                        <input id="apellidos" type="text">
+                    </div>
+
+                    <div class="campo">
+                        <label>Edad</label>
+                        <input id="edad" type="number">
+                    </div>
+
+                    <div class="campo">
+                        <label>Sexo</label>
+                        <select id="sexo">
+                            <option value="">Seleccione</option>
+                            <option value="M">Masculino</option>
+                            <option value="F">Femenino</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="fila">
+                    <div class="campo">
+                        <label>N° Cama</label>
+                        <input id="numeroCama" type="text">
+                    </div>
+
+                    <div class="campo">
+                        <label>Fecha de nacimiento</label>
+                        <input id="fechaNacimiento" type="date">
+                    </div>
+
+                    <div class="campo">
+                        <label>Procedencia</label>
+                        <input id="procedencia" type="text">
+                    </div>
+                </div>
+            </div>
+
+            <div class="seccion">
+                <h3>Fechas</h3>
+
+                <div class="fila">
+                    <div class="campo">
+                        <label>Fecha ingreso INSN</label>
+                        <input id="fechaIngresoINSN" type="date">
+                    </div>
+
+                    <div class="campo">
+                        <label>Fecha ingreso al servicio</label>
+                        <input id="fechaIngresoServicio" type="date">
+                    </div>
+
+                    <div class="campo">
+                        <label>Fecha ingreso otros servicios</label>
+                        <input id="fechaIngresoOtrosServicios" type="date">
+                    </div>
+                </div>
+
+                <div class="fila">
+                    <div class="campo">
+                        <label>Fecha alta</label>
+                        <input id="fechaAlta" type="date">
+                    </div>
+
+                    <div class="campo">
+                        <label>Fecha egreso</label>
+                        <input id="fechaEgreso" type="date">
+                    </div>
+
+                    <div class="campo">
+                        <label>Estadía total días</label>
+                        <input id="estadiaTotalDias" type="number">
+                    </div>
+                </div>
+            </div>
+
+            <div class="seccion">
+                <h3>Antecedentes e historia clínica</h3>
+
+                <div class="campo">
+                    <label>Antecedentes</label>
+                    <textarea id="antecedentes"></textarea>
+                </div>
+
+                <div class="campo">
+                    <label>Enfermedad actual resumida</label>
+                    <textarea id="enfermedadActualResumen"></textarea>
+                </div>
+
+                <div class="campo">
+                    <label>Examen físico</label>
+                    <textarea id="examenFisico"></textarea>
+                </div>
+
+                <div class="campo">
+                    <label>Evolución y tratamiento</label>
+                    <textarea id="evolucionTratamiento"></textarea>
+                </div>
+            </div>
+
+            <div class="seccion">
+                <h3>Exámenes auxiliares</h3>
+
+                <div id="examenesContainer"></div>
+
+                <button type="button" class="btn-secundario" onclick="agregarExamen()">
+                    + Agregar examen
+                </button>
+            </div>
+
+            <div class="seccion">
+                <h3>Examen clínico al ingreso</h3>
+
+                <div class="fila">
+                    <div class="campo">
+                        <label>T° ingreso</label>
+                        <input id="temperaturaIngreso" type="number" step="0.1">
+                    </div>
+
+                    <div class="campo">
+                        <label>PA</label>
+                        <input id="presionArterial" type="text">
+                    </div>
+
+                    <div class="campo">
+                        <label>P</label>
+                        <input id="pulso" type="text">
+                    </div>
+
+                    <div class="campo">
+                        <label>T</label>
+                        <input id="temperatura" type="number" step="0.1">
+                    </div>
+
+                    <div class="campo">
+                        <label>FC</label>
+                        <input id="frecuenciaCardiaca" type="number">
+                    </div>
+
+                    <div class="campo">
+                        <label>FR</label>
+                        <input id="frecuenciaRespiratoria" type="number">
+                    </div>
+                </div>
+            </div>
+
+            <div class="seccion">
+                <h3>Diagnóstico de ingreso</h3>
+
+                <div class="fila">
+                    <div class="campo">
+                        <label>Diagnóstico de ingreso</label>
+                        <textarea id="diagnosticoIngreso"></textarea>
+                    </div>
+
+                    <div class="campo">
+                        <label>CIE 10 ingreso</label>
+                        <input id="cie10Ingreso" type="text">
+                    </div>
+                </div>
+
+                <div class="campo">
+                    <label>Diagnóstico nutricional</label>
+                    <textarea id="diagnosticoNutricional"></textarea>
+                </div>
+
+                <div class="campo">
+                    <label>Evolución</label>
+                    <textarea id="evolucion"></textarea>
+                </div>
+            </div>
+
+            <div class="seccion">
+                <h3>Interconsultas</h3>
+
+                <div class="fila">
+                    <div class="campo">
+                        <label>Fecha 1</label>
+                        <input id="interconsultaFecha1" type="date">
+                    </div>
+
+                    <div class="campo">
+                        <label>Especialidad 1</label>
+                        <input id="interconsultaEspecialidad1" type="text">
+                    </div>
+
+                    <div class="campo">
+                        <label>Conclusión 1</label>
+                        <input id="interconsultaConclusion1" type="text">
+                    </div>
+                </div>
+
+                <div class="fila">
+                    <div class="campo">
+                        <label>Fecha 2</label>
+                        <input id="interconsultaFecha2" type="date">
+                    </div>
+
+                    <div class="campo">
+                        <label>Especialidad 2</label>
+                        <input id="interconsultaEspecialidad2" type="text">
+                    </div>
+
+                    <div class="campo">
+                        <label>Conclusión 2</label>
+                        <input id="interconsultaConclusion2" type="text">
+                    </div>
+                </div>
+
+                <div class="fila">
+                    <div class="campo">
+                        <label>Fecha 3</label>
+                        <input id="interconsultaFecha3" type="date">
+                    </div>
+
+                    <div class="campo">
+                        <label>Especialidad 3</label>
+                        <input id="interconsultaEspecialidad3" type="text">
+                    </div>
+
+                    <div class="campo">
+                        <label>Conclusión 3</label>
+                        <input id="interconsultaConclusion3" type="text">
+                    </div>
+                </div>
+            </div>
+
+            <div class="seccion">
+                <h3>Tratamiento recibido</h3>
+
+                <div class="fila">
+                    <div class="campo">
+                        <label>Medicamento 1</label>
+                        <input id="medicamento1" type="text">
+                    </div>
+
+                    <div class="campo">
+                        <label>Dosis mg/kg 1</label>
+                        <input id="dosisMgKg1" type="text">
+                    </div>
+
+                    <div class="campo">
+                        <label>Vía 1</label>
+                        <input id="via1" type="text">
+                    </div>
+
+                    <div class="campo">
+                        <label>Tiempo administración 1</label>
+                        <input id="tiempoAdministracion1" type="text">
+                    </div>
+                </div>
+
+                <div class="fila">
+                    <div class="campo">
+                        <label>Medicamento 2</label>
+                        <input id="medicamento2" type="text">
+                    </div>
+
+                    <div class="campo">
+                        <label>Dosis mg/kg 2</label>
+                        <input id="dosisMgKg2" type="text">
+                    </div>
+
+                    <div class="campo">
+                        <label>Vía 2</label>
+                        <input id="via2" type="text">
+                    </div>
+
+                    <div class="campo">
+                        <label>Tiempo administración 2</label>
+                        <input id="tiempoAdministracion2" type="text">
+                    </div>
+                </div>
+
+                <div class="fila">
+                    <div class="campo">
+                        <label>Medicamento 3</label>
+                        <input id="medicamento3" type="text">
+                    </div>
+
+                    <div class="campo">
+                        <label>Dosis mg/kg 3</label>
+                        <input id="dosisMgKg3" type="text">
+                    </div>
+
+                    <div class="campo">
+                        <label>Vía 3</label>
+                        <input id="via3" type="text">
+                    </div>
+
+                    <div class="campo">
+                        <label>Tiempo administración 3</label>
+                        <input id="tiempoAdministracion3" type="text">
+                    </div>
+                </div>
+            </div>
+
+            <div class="seccion">
+                <h3>Procedimientos terapéuticos</h3>
+
+                <div class="fila">
+                    <div class="campo">
+                        <label>Procedimiento 1</label>
+                        <input id="procedimientoTerapeutico1" type="text">
+                    </div>
+
+                    <div class="campo">
+                        <label>Código 1</label>
+                        <input id="codigoProcedimiento1" type="text">
+                    </div>
+                </div>
+
+                <div class="fila">
+                    <div class="campo">
+                        <label>Procedimiento 2</label>
+                        <input id="procedimientoTerapeutico2" type="text">
+                    </div>
+
+                    <div class="campo">
+                        <label>Código 2</label>
+                        <input id="codigoProcedimiento2" type="text">
+                    </div>
+                </div>
+
+                <div class="fila">
+                    <div class="campo">
+                        <label>Procedimiento 3</label>
+                        <input id="procedimientoTerapeutico3" type="text">
+                    </div>
+
+                    <div class="campo">
+                        <label>Código 3</label>
+                        <input id="codigoProcedimiento3" type="text">
+                    </div>
+                </div>
+            </div>
+
+            <div class="seccion">
+                <h3>Diagnóstico de alta</h3>
+
+                <div class="fila">
+                    <div class="campo">
+                        <label>Diagnóstico de alta</label>
+                        <textarea id="diagnosticoAlta"></textarea>
+                    </div>
+
+                    <div class="campo">
+                        <label>CIE 10 alta</label>
+                        <input id="cie10Alta" type="text">
+                    </div>
+                </div>
+
+                <div class="campo">
+                    <label>Nutricional</label>
+                    <textarea id="nutricional"></textarea>
+                </div>
+            </div>
+
+            <div class="seccion">
+                <h3>Inmunización</h3>
+
+                <div class="radio-group">
+                    <label><input name="inmunizacion" value="Completa" type="radio"> Completa</label>
+                    <label><input name="inmunizacion" value="Incompleta" type="radio"> Incompleta</label>
+                </div>
+            </div>
+
+            <div class="seccion">
+                <h3>Condición al egreso</h3>
+
+                <div class="radio-group">
+                    <label><input name="condicionEgreso" value="Curado" type="radio"> Curado</label>
+                    <label><input name="condicionEgreso" value="Mejorado" type="radio"> Mejorado</label>
+                    <label><input name="condicionEgreso" value="Empeorado" type="radio"> Empeorado</label>
+                    <label><input name="condicionEgreso" value="Estacionario" type="radio"> Estacionario</label>
+                    <label><input name="condicionEgreso" value="Fallecido" type="radio"> Fallecido</label>
+                </div>
+            </div>
+
+            <div class="seccion">
+                <h3>Tipo de alta</h3>
+
+                <div class="radio-group">
+                    <label><input name="tipoAlta" value="Medica" type="radio"> Médica</label>
+                    <label><input name="tipoAlta" value="Voluntaria" type="radio"> Voluntaria</label>
+                    <label><input name="tipoAlta" value="Transferencia" type="radio"> Transferencia</label>
+                    <label><input name="tipoAlta" value="Fallecido" type="radio"> Fallecido</label>
+                </div>
+            </div>
+
+            <div class="seccion">
+                <h3>Necropsia</h3>
+
+                <div class="radio-group">
+                    <label><input name="necropsia" value="Si" type="radio"> Sí</label>
+                    <label><input name="necropsia" value="No" type="radio"> No</label>
+                </div>
+            </div>
+
+            <div class="seccion">
+                <h3>Indicaciones finales</h3>
+
+                <div class="campo">
+                    <label>Pronóstico</label>
+                    <textarea id="pronostico"></textarea>
+                </div>
+
+                <div class="campo">
+                    <label>Pendiente</label>
+                    <textarea id="pendiente"></textarea>
+                </div>
+
+                <div class="campo">
+                    <label>Indicaciones de alta</label>
+                    <textarea id="indicacionesAlta"></textarea>
+                </div>
+            </div>
+
+            <div class="seccion">
+                <h3>Firmas</h3>
+
+                <div class="fila">
+                    <div class="campo">
+                        <label>Nombre y firma del interno</label>
+                        <input id="nombreFirmaInterno" type="text">
+                    </div>
+
+                    <div class="campo">
+                        <label>Nombre y firma del médico residente</label>
+                        <input id="nombreFirmaMedicoResidente1" type="text">
+                    </div>
+                </div>
+
+                <div class="fila">
+                    <div class="campo">
+                        <label>Nombre y firma del médico tratante</label>
+                        <input id="nombreFirmaMedicoTratante" type="text">
+                    </div>
+
+                    <div class="campo">
+                        <label>Nombre y firma del médico residente 2</label>
+                        <input id="nombreFirmaMedicoResidente2" type="text">
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-principal">
+                Guardar Epicrisis
+            </button>
+
+            <div id="mensaje" class="mensaje"></div>
+
+        </form>
+    </div>
+
+    <script>
+        function valor(id) {
+            return document.getElementById(id).value;
+        }
+
+        function numero(id) {
+            const value = document.getElementById(id).value;
+            return value === "" ? null : Number(value);
+        }
+
+        function fecha(id) {
+            const value = document.getElementById(id).value;
+            return value === "" ? null : value;
+        }
+
+        function radio(name) {
+            return document.querySelector(`input[name="${name}"]:checked`)?.value || "";
+        }
+
+        function agregarExamen() {
+            const container = document.getElementById("examenesContainer");
+
+            const div = document.createElement("div");
+            div.className = "examen-item";
+
+            div.innerHTML = `
+                <div class="fila">
+                    <div class="campo">
+                        <label>Nombre del examen</label>
+                        <input class="nombreExamen" type="text">
+                    </div>
+
+                    <div class="campo">
+                        <label>Resultado</label>
+                        <input class="resultadoExamen" type="text">
+                    </div>
+
+                    <div class="campo">
+                        <label>Fecha</label>
+                        <input class="fechaExamen" type="date">
+                    </div>
+                </div>
+
+                <div class="campo">
+                    <label>Observaciones</label>
+                    <textarea class="observacionesExamen"></textarea>
+                </div>
+
+                <button type="button" class="btn-eliminar" onclick="this.parentElement.remove()">
+                    Eliminar examen
+                </button>
+            `;
+
+            container.appendChild(div);
+        }
+
+        document.getElementById("epicrisisForm").addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const examenes = [];
+
+            document.querySelectorAll(".examen-item").forEach(item => {
+                examenes.push({
+                    nombreExamen: item.querySelector(".nombreExamen").value,
+                    resultado: item.querySelector(".resultadoExamen").value,
+                    fecha: item.querySelector(".fechaExamen").value || null,
+                    observaciones: item.querySelector(".observacionesExamen").value
+                });
+            });
+
+            const condicionSeleccionada = radio("condicionEgreso");
+            const tipoAltaSeleccionada = radio("tipoAlta");
+            const inmunizacionSeleccionada = radio("inmunizacion");
+            const necropsiaSeleccionada = radio("necropsia");
+
+            const epicrisis = {
+                servicio: valor("servicio"),
+                historiaClinicaNumero: valor("historiaClinicaNumero"),
+                numeroSIS: valor("numeroSIS"),
+
+                nombres: valor("nombres"),
+                apellidos: valor("apellidos"),
+                edad: numero("edad"),
+                sexo: valor("sexo"),
+                numeroCama: valor("numeroCama"),
+                fechaNacimiento: fecha("fechaNacimiento"),
+                procedencia: valor("procedencia"),
+
+                fechaIngresoINSN: fecha("fechaIngresoINSN"),
+                fechaIngresoServicio: fecha("fechaIngresoServicio"),
+                fechaIngresoOtrosServicios: fecha("fechaIngresoOtrosServicios"),
+                fechaAlta: fecha("fechaAlta"),
+                fechaEgreso: fecha("fechaEgreso"),
+                estadiaTotalDias: numero("estadiaTotalDias"),
+
+                antecedentes: valor("antecedentes"),
+                enfermedadActualResumen: valor("enfermedadActualResumen"),
+                examenFisico: valor("examenFisico"),
+                evolucionTratamiento: valor("evolucionTratamiento"),
+
+                temperaturaIngreso: numero("temperaturaIngreso"),
+                presionArterial: valor("presionArterial"),
+                pulso: valor("pulso"),
+                temperatura: numero("temperatura"),
+                frecuenciaCardiaca: numero("frecuenciaCardiaca"),
+                frecuenciaRespiratoria: numero("frecuenciaRespiratoria"),
+
+                diagnosticoIngreso: valor("diagnosticoIngreso"),
+                cie10Ingreso: valor("cie10Ingreso"),
+                diagnosticoNutricional: valor("diagnosticoNutricional"),
+                evolucion: valor("evolucion"),
+
+                interconsultaFecha1: fecha("interconsultaFecha1"),
+                interconsultaEspecialidad1: valor("interconsultaEspecialidad1"),
+                interconsultaConclusion1: valor("interconsultaConclusion1"),
+
+                interconsultaFecha2: fecha("interconsultaFecha2"),
+                interconsultaEspecialidad2: valor("interconsultaEspecialidad2"),
+                interconsultaConclusion2: valor("interconsultaConclusion2"),
+
+                interconsultaFecha3: fecha("interconsultaFecha3"),
+                interconsultaEspecialidad3: valor("interconsultaEspecialidad3"),
+                interconsultaConclusion3: valor("interconsultaConclusion3"),
+
+                medicamento1: valor("medicamento1"),
+                dosisMgKg1: valor("dosisMgKg1"),
+                via1: valor("via1"),
+                tiempoAdministracion1: valor("tiempoAdministracion1"),
+
+                medicamento2: valor("medicamento2"),
+                dosisMgKg2: valor("dosisMgKg2"),
+                via2: valor("via2"),
+                tiempoAdministracion2: valor("tiempoAdministracion2"),
+
+                medicamento3: valor("medicamento3"),
+                dosisMgKg3: valor("dosisMgKg3"),
+                via3: valor("via3"),
+                tiempoAdministracion3: valor("tiempoAdministracion3"),
+
+                procedimientoTerapeutico1: valor("procedimientoTerapeutico1"),
+                codigoProcedimiento1: valor("codigoProcedimiento1"),
+
+                procedimientoTerapeutico2: valor("procedimientoTerapeutico2"),
+                codigoProcedimiento2: valor("codigoProcedimiento2"),
+
+                procedimientoTerapeutico3: valor("procedimientoTerapeutico3"),
+                codigoProcedimiento3: valor("codigoProcedimiento3"),
+
+                diagnosticoAlta: valor("diagnosticoAlta"),
+                cie10Alta: valor("cie10Alta"),
+                nutricional: valor("nutricional"),
+
+                inmunizacionCompleta: inmunizacionSeleccionada === "Completa",
+                inmunizacionIncompleta: inmunizacionSeleccionada === "Incompleta",
+
+                condicionCurado: condicionSeleccionada === "Curado",
+                condicionMejorado: condicionSeleccionada === "Mejorado",
+                condicionEmpeorado: condicionSeleccionada === "Empeorado",
+                condicionEstacionario: condicionSeleccionada === "Estacionario",
+                condicionFallecido: condicionSeleccionada === "Fallecido",
+
+                tipoAltaMedica: tipoAltaSeleccionada === "Medica",
+                tipoAltaVoluntaria: tipoAltaSeleccionada === "Voluntaria",
+                tipoAltaTransferencia: tipoAltaSeleccionada === "Transferencia",
+                tipoAltaFallecido: tipoAltaSeleccionada === "Fallecido",
+
+                necropsiaSi: necropsiaSeleccionada === "Si",
+                necropsiaNo: necropsiaSeleccionada === "No",
+
+                pronostico: valor("pronostico"),
+                pendiente: valor("pendiente"),
+                indicacionesAlta: valor("indicacionesAlta"),
+
+                nombreFirmaInterno: valor("nombreFirmaInterno"),
+                nombreFirmaMedicoResidente1: valor("nombreFirmaMedicoResidente1"),
+                nombreFirmaMedicoTratante: valor("nombreFirmaMedicoTratante"),
+                nombreFirmaMedicoResidente2: valor("nombreFirmaMedicoResidente2"),
+
+                examenesAuxiliares: examenes
+            };
+
+            const response = await fetch("/api/Epicrisis", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(epicrisis)
+            });
+
+            const mensaje = document.getElementById("mensaje");
+
+            if (response.ok) {
+                mensaje.style.color = "green";
+                mensaje.innerText = "Epicrisis guardada correctamente.";
+                document.getElementById("epicrisisForm").reset();
+                document.getElementById("examenesContainer").innerHTML = "";
+                agregarExamen();
+            } else {
+                mensaje.style.color = "red";
+                mensaje.innerText = "Error al guardar la epicrisis.";
+            }
+        });
+
+        agregarExamen();
+    </script>
+
+</body>
+</html>

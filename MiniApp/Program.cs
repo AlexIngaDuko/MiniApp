@@ -1,20 +1,12 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi;
-using Microsoft.OpenApi.Models; // 👈 IMPORTANTE
+using Microsoft.OpenApi.Models;
 using MiniApp.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// PRUEBA
-var conn = builder.Configuration.GetConnectionString("DefaultConnection");
-Console.WriteLine("CONEXIÓN:");
-Console.WriteLine(conn);
-
-// Servicios
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-// 
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo
@@ -29,7 +21,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 var app = builder.Build();
 
-// Middleware
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -39,8 +30,12 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+app.UseStaticFiles();
+
 app.UseHttpsRedirection();
+
 app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();
