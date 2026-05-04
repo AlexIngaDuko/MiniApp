@@ -1,0 +1,505 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ver Informe de Alta</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #e9e9e9;
+            padding: 20px;
+        }
+
+        .formulario {
+            background: white;
+            max-width: 1100px;
+            width: 100%;
+            margin: auto;
+            padding: 20px;
+            border: 2px solid #333;
+            overflow: hidden;
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin: 5px 0;
+        }
+
+        .seccion {
+            border: 1px solid #333;
+            margin-top: 15px;
+            padding: 10px;
+        }
+
+            .seccion h3 {
+                background: #eee;
+                padding: 8px;
+                margin-top: 0;
+                border-bottom: 1px solid #333;
+            }
+
+        .fila {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .campo {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        label {
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        input, textarea {
+            padding: 8px;
+            border: 1px solid #555;
+            width: 100%;
+            background: #f8f8f8;
+        }
+
+        textarea {
+            min-height: 70px;
+        }
+
+        .radio-group {
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+            flex-wrap: wrap;
+        }
+
+            .radio-group label {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 6px;
+                font-weight: normal;
+                text-align: center;
+            }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .formulario {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="formulario">
+        <h2>INSTITUTO NACIONAL DE SALUD DEL NIÑO</h2>
+        <h1>INFORME DE ALTA</h1>
+
+        <div class="seccion">
+            <h3>Datos del paciente</h3>
+
+            <div class="fila">
+                <div class="campo">
+                    <label>Servicio</label>
+                    <input id="servicio" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>N° Cama</label>
+                    <input id="numeroCama" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>N° HC</label>
+                    <input id="numeroHistoriaClinica" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>N° SIS</label>
+                    <input id="numeroSIS" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>Sala</label>
+                    <input id="sala" readonly>
+                </div>
+            </div>
+
+            <div class="fila">
+                <div class="campo">
+                    <label>Nombres y Apellidos</label>
+                    <input id="nombresApellidos" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>Edad</label>
+                    <input id="edad" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>Fecha nacimiento</label>
+                    <input id="fechaNacimiento" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>Sexo</label>
+                    <input id="sexo" readonly>
+                </div>
+            </div>
+
+            <div class="campo">
+                <label>Domicilio</label>
+                <input id="domicilio" readonly>
+            </div>
+        </div>
+
+        <div class="seccion">
+            <h3>Ingreso</h3>
+
+            <div class="radio-group">
+                <label><input id="ingresoEmergencia" type="radio" disabled> Emergencia</label>
+                <label><input id="ingresoConsultaExterna" type="radio" disabled> Consulta externa</label>
+            </div>
+
+            <div class="fila">
+                <div class="campo">
+                    <label>Fecha ingreso emergencia</label>
+                    <input id="fechaIngresoEmergenciaTexto" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>Fecha ingreso al servicio</label>
+                    <input id="fechaIngresoServicioTexto" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>Fecha alta del servicio</label>
+                    <input id="fechaAltaServicioTexto" readonly>
+                </div>
+            </div>
+        </div>
+
+        <div class="seccion">
+            <h3>Diagnósticos de ingreso</h3>
+
+            <div class="fila">
+                <div class="campo"><label>1</label><input id="diagnosticoIngreso1" readonly></div>
+                <div class="campo"><label>CIE 1</label><input id="cieIngreso1" readonly></div>
+            </div>
+
+            <div class="fila">
+                <div class="campo"><label>2</label><input id="diagnosticoIngreso2" readonly></div>
+                <div class="campo"><label>CIE 2</label><input id="cieIngreso2" readonly></div>
+            </div>
+
+            <div class="fila">
+                <div class="campo"><label>3</label><input id="diagnosticoIngreso3" readonly></div>
+                <div class="campo"><label>CIE 3</label><input id="cieIngreso3" readonly></div>
+            </div>
+
+            <div class="fila">
+                <div class="campo"><label>4</label><input id="diagnosticoIngreso4" readonly></div>
+                <div class="campo"><label>CIE 4</label><input id="cieIngreso4" readonly></div>
+            </div>
+        </div>
+
+        <div class="seccion">
+            <h3>Diagnósticos de alta</h3>
+
+            <div class="fila">
+                <div class="campo"><label>1</label><input id="diagnosticoAlta1" readonly></div>
+                <div class="campo"><label>CIE 1</label><input id="cieAlta1" readonly></div>
+            </div>
+
+            <div class="fila">
+                <div class="campo"><label>2</label><input id="diagnosticoAlta2" readonly></div>
+                <div class="campo"><label>CIE 2</label><input id="cieAlta2" readonly></div>
+            </div>
+
+            <div class="fila">
+                <div class="campo"><label>3</label><input id="diagnosticoAlta3" readonly></div>
+                <div class="campo"><label>CIE 3</label><input id="cieAlta3" readonly></div>
+            </div>
+
+            <div class="fila">
+                <div class="campo"><label>4</label><input id="diagnosticoAlta4" readonly></div>
+                <div class="campo"><label>CIE 4</label><input id="cieAlta4" readonly></div>
+            </div>
+        </div>
+
+        <div class="seccion">
+            <h3>Procedimientos y/o cirugía médico/odontológico</h3>
+
+            <div class="fila">
+                <div class="campo">
+                    <label>Procedimientos</label>
+                    <textarea id="procedimientosCirugia" readonly></textarea>
+                </div>
+
+                <div class="campo">
+                    <label>Código CPT</label>
+                    <input id="codigoCpt" readonly>
+                </div>
+            </div>
+        </div>
+
+        <div class="seccion">
+            <h3>Exámenes</h3>
+
+            <div class="campo">
+                <label>Exámenes de ayuda diagnóstica por imagen</label>
+                <textarea id="examenesImagen" readonly></textarea>
+            </div>
+
+            <div class="campo">
+                <label>Exámenes de anatomía patológica y laboratorio clínico</label>
+                <textarea id="examenesLaboratorio" readonly></textarea>
+            </div>
+        </div>
+
+        <div class="seccion">
+            <h3>Tratamiento recibido</h3>
+
+            <div class="fila">
+                <div class="campo"><label>Fármaco 1</label><input id="farmaco1" readonly></div>
+                <div class="campo"><label>N° días 1</label><input id="diasFarmaco1" readonly></div>
+            </div>
+
+            <div class="fila">
+                <div class="campo"><label>Fármaco 2</label><input id="farmaco2" readonly></div>
+                <div class="campo"><label>N° días 2</label><input id="diasFarmaco2" readonly></div>
+            </div>
+
+            <div class="fila">
+                <div class="campo"><label>Fármaco 3</label><input id="farmaco3" readonly></div>
+                <div class="campo"><label>N° días 3</label><input id="diasFarmaco3" readonly></div>
+            </div>
+        </div>
+
+        <div class="seccion">
+            <h3>Recomendaciones al alta</h3>
+
+            <div class="campo"><label>Recomendaciones</label><textarea id="recomendacionesAlta" readonly></textarea></div>
+            <div class="campo"><label>Otras indicaciones</label><textarea id="otrasIndicaciones" readonly></textarea></div>
+            <div class="campo"><label>Dieta</label><textarea id="dieta" readonly></textarea></div>
+            <div class="campo"><label>Cuidados higiénicos</label><textarea id="cuidadosHigienicos" readonly></textarea></div>
+            <div class="campo"><label>Vacunas</label><textarea id="vacunas" readonly></textarea></div>
+            <div class="campo"><label>Cuidados de traslado</label><textarea id="cuidadosTraslado" readonly></textarea></div>
+        </div>
+
+        <div class="seccion">
+            <h3>Motivo de alta</h3>
+
+            <div class="radio-group">
+                <label><input id="motivoAltaMedica" type="radio" disabled> Alta médica</label>
+                <label><input id="motivoRetiroVoluntario" type="radio" disabled> Retiro voluntario</label>
+                <label><input id="motivoReferencia" type="radio" disabled> Referencia</label>
+                <label><input id="motivoContrarreferencia" type="radio" disabled> Contrarreferencia</label>
+                <label><input id="motivoFuga" type="radio" disabled> Fuga</label>
+                <label><input id="motivoFallecido" type="radio" disabled> Fallecido</label>
+            </div>
+        </div>
+
+        <div class="seccion">
+            <h3>Condición de alta</h3>
+
+            <div class="radio-group">
+                <label><input id="condicionCurado" type="radio" disabled> Curado</label>
+                <label><input id="condicionMejorado" type="radio" disabled> Mejorado</label>
+                <label><input id="condicionEstacionario" type="radio" disabled> Estacionario</label>
+                <label><input id="condicionEmpeorado" type="radio" disabled> Empeorado</label>
+                <label><input id="condicionFallecido" type="radio" disabled> Fallecido</label>
+            </div>
+        </div>
+
+        <div class="seccion">
+            <h3>Pronóstico</h3>
+
+            <div class="radio-group">
+                <label><input id="pronosticoBueno" type="radio" disabled> Bueno</label>
+                <label><input id="pronosticoReservado" type="radio" disabled> Reservado</label>
+            </div>
+        </div>
+
+        <div class="seccion">
+            <h3>Citas en consultorio</h3>
+
+            <div class="fila">
+                <div class="campo"><label>Cita 1</label><input id="citaConsultorio1" readonly></div>
+                <div class="campo"><label>Fecha 1</label><input id="fechaCita1" readonly></div>
+            </div>
+
+            <div class="fila">
+                <div class="campo"><label>Cita 2</label><input id="citaConsultorio2" readonly></div>
+                <div class="campo"><label>Fecha 2</label><input id="fechaCita2" readonly></div>
+            </div>
+
+            <div class="fila">
+                <div class="campo"><label>Cita 3</label><input id="citaConsultorio3" readonly></div>
+                <div class="campo"><label>Fecha 3</label><input id="fechaCita3" readonly></div>
+            </div>
+        </div>
+
+        <div class="seccion">
+            <h3>Firma del padre o apoderado</h3>
+
+            <div class="fila">
+                <div class="campo"><label>Firma / Nombre</label><input id="firmaPadreApoderado" readonly></div>
+                <div class="campo"><label>DNI</label><input id="dniApoderado" readonly></div>
+                <div class="campo"><label>Parentesco</label><input id="parentesco" readonly></div>
+            </div>
+        </div>
+
+        <div class="seccion">
+            <h3>Firmas del personal médico</h3>
+
+            <div class="fila">
+                <div class="campo"><label>Jefe de servicio</label><input id="jefeServicio" readonly></div>
+                <div class="campo"><label>Médico tratante</label><input id="medicoTratante" readonly></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+function formatearFechaHora(texto) {
+    if (!texto) return "";
+    return texto.replace("-", "/");
+        }
+function setValor(id, valor) {
+    const elemento = document.getElementById(id);
+    if (elemento) elemento.value = valor ?? "";
+}
+
+function setCheck(id, valor) {
+    const elemento = document.getElementById(id);
+    if (elemento) elemento.checked = valor === true;
+}
+
+function fechaCorta(fecha) {
+    if (!fecha) return "";
+    return fecha.split("T")[0];
+}
+
+async function cargarInformeAlta() {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+
+    if (!id) {
+        alert("Debes enviar un ID. Ejemplo: ver-informe-alta.html?id=1");
+        return;
+    }
+
+    const response = await fetch(`/api/InformesAlta/${id}`);
+
+    if (!response.ok) {
+        alert("No se encontró el informe de alta.");
+        return;
+    }
+
+    const e = await response.json();
+
+    setValor("servicio", e.servicio);
+    setValor("numeroCama", e.numeroCama);
+    setValor("numeroHistoriaClinica", e.numeroHistoriaClinica);
+    setValor("numeroSIS", e.numeroSIS);
+    setValor("sala", e.sala);
+
+    setValor("nombresApellidos", e.nombresApellidos);
+    setValor("edad", e.edad);
+    setValor("fechaNacimiento", fechaCorta(e.fechaNacimiento));
+    setValor("sexo", e.sexo);
+    setValor("domicilio", e.domicilio);
+
+    setCheck("ingresoEmergencia", e.ingresoEmergencia);
+    setCheck("ingresoConsultaExterna", e.ingresoConsultaExterna);
+
+    setValor("fechaIngresoEmergenciaTexto", e.fechaIngresoEmergenciaTexto);
+    setValor("fechaIngresoServicioTexto", e.fechaIngresoServicioTexto);
+    setValor("fechaAltaServicioTexto", e.fechaAltaServicioTexto);
+
+    setValor("diagnosticoIngreso1", e.diagnosticoIngreso1);
+    setValor("cieIngreso1", e.cieIngreso1);
+    setValor("diagnosticoIngreso2", e.diagnosticoIngreso2);
+    setValor("cieIngreso2", e.cieIngreso2);
+    setValor("diagnosticoIngreso3", e.diagnosticoIngreso3);
+    setValor("cieIngreso3", e.cieIngreso3);
+    setValor("diagnosticoIngreso4", e.diagnosticoIngreso4);
+    setValor("cieIngreso4", e.cieIngreso4);
+
+    setValor("diagnosticoAlta1", e.diagnosticoAlta1);
+    setValor("cieAlta1", e.cieAlta1);
+    setValor("diagnosticoAlta2", e.diagnosticoAlta2);
+    setValor("cieAlta2", e.cieAlta2);
+    setValor("diagnosticoAlta3", e.diagnosticoAlta3);
+    setValor("cieAlta3", e.cieAlta3);
+    setValor("diagnosticoAlta4", e.diagnosticoAlta4);
+    setValor("cieAlta4", e.cieAlta4);
+
+    setValor("procedimientosCirugia", e.procedimientosCirugia);
+    setValor("codigoCpt", e.codigoCpt);
+
+    setValor("examenesImagen", e.examenesImagen);
+    setValor("examenesLaboratorio", e.examenesLaboratorio);
+
+    setValor("farmaco1", e.farmaco1);
+    setValor("diasFarmaco1", e.diasFarmaco1);
+    setValor("farmaco2", e.farmaco2);
+    setValor("diasFarmaco2", e.diasFarmaco2);
+    setValor("farmaco3", e.farmaco3);
+    setValor("diasFarmaco3", e.diasFarmaco3);
+
+    setValor("recomendacionesAlta", e.recomendacionesAlta);
+    setValor("otrasIndicaciones", e.otrasIndicaciones);
+    setValor("dieta", e.dieta);
+    setValor("cuidadosHigienicos", e.cuidadosHigienicos);
+    setValor("vacunas", e.vacunas);
+    setValor("cuidadosTraslado", e.cuidadosTraslado);
+
+    setCheck("motivoAltaMedica", e.motivoAltaMedica);
+    setCheck("motivoRetiroVoluntario", e.motivoRetiroVoluntario);
+    setCheck("motivoReferencia", e.motivoReferencia);
+    setCheck("motivoContrarreferencia", e.motivoContrarreferencia);
+    setCheck("motivoFuga", e.motivoFuga);
+    setCheck("motivoFallecido", e.motivoFallecido);
+
+    setCheck("condicionCurado", e.condicionCurado);
+    setCheck("condicionMejorado", e.condicionMejorado);
+    setCheck("condicionEstacionario", e.condicionEstacionario);
+    setCheck("condicionEmpeorado", e.condicionEmpeorado);
+    setCheck("condicionFallecido", e.condicionFallecido);
+
+    setCheck("pronosticoBueno", e.pronosticoBueno);
+    setCheck("pronosticoReservado", e.pronosticoReservado);
+
+    setValor("citaConsultorio1", e.citaConsultorio1);
+    setValor("fechaCita1", e.fechaCita1);
+    setValor("citaConsultorio2", e.citaConsultorio2);
+    setValor("fechaCita2", e.fechaCita2);
+    setValor("citaConsultorio3", e.citaConsultorio3);
+    setValor("fechaCita3", e.fechaCita3);
+
+    setValor("firmaPadreApoderado", e.firmaPadreApoderado);
+    setValor("dniApoderado", e.dniApoderado);
+    setValor("parentesco", e.parentesco);
+
+    setValor("jefeServicio", e.jefeServicio);
+    setValor("medicoTratante", e.medicoTratante);
+}
+
+cargarInformeAlta();
+    </script>
+
+</body>
+</html>

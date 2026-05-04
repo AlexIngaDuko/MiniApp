@@ -11,6 +11,7 @@
         public string? Nombres { get; set; }
         public string? Apellidos { get; set; }
         public int? Edad { get; set; }
+        public string? TipoEdad { get; set; }
         public string? Sexo { get; set; }
         public string? NumeroCama { get; set; }
         public DateTime? FechaNacimiento { get; set; }
@@ -22,6 +23,12 @@
         public DateTime? FechaAlta { get; set; }
         public DateTime? FechaEgreso { get; set; }
         public int? EstadiaTotalDias { get; set; }
+        public string? FechaIngresoINSNTexto { get; set; }
+        public string? FechaIngresoServicioTexto { get; set; }
+        public string? FechaIngresoOtrosServiciosTexto { get; set; }
+        public string? FechaAltaTexto { get; set; }
+        public string? FechaEgresoTexto { get; set; }
+
 
         public string? Antecedentes { get; set; }
         public string? EnfermedadActualResumen { get; set; }

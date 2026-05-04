@@ -38,7 +38,8 @@
             }
 
         .fila {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 10px;
             margin-bottom: 10px;
         }
@@ -109,6 +110,53 @@
             margin-top: 15px;
             font-weight: bold;
         }
+                * {
+            box-sizing: border-box;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .campo {
+            min-width: 0;
+        }
+
+        .formulario {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .formulario {
+                padding: 15px;
+            }
+
+        .edad-grupo {
+                display: grid;
+                grid-template-columns: 1fr 110px;
+                gap: 8px;
+            }
+        }
+        .radio-group {
+            justify-content: center;
+            align-items: center;
+            gap: 45px;
+        }
+
+        .radio-group label {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                text-align: center;
+        }
     </style>
 </head>
 
@@ -131,29 +179,35 @@
 
                     <div class="campo">
                         <label>Historia Clínica N°</label>
-                        <input id="historiaClinicaNumero" type="text">
+                        <input id="historiaClinicaNumero" type="number" inputmode="numeric" min="0" step="1" onkeydown="bloquearNoNumerico(event)">
                     </div>
 
                     <div class="campo">
                         <label>N° SIS</label>
-                        <input id="numeroSIS" type="text">
+                        <input id="numeroSIS" type="number" inputmode="numeric" min="0" step="1" onkeydown="bloquearNoNumerico(event)">
                     </div>
                 </div>
 
                 <div class="fila">
                     <div class="campo">
                         <label>Nombres</label>
-                        <input id="nombres" type="text">
+                        <input id="nombres" type="text" oninput="soloLetras(this)">
                     </div>
 
                     <div class="campo">
                         <label>Apellidos</label>
-                        <input id="apellidos" type="text">
+                        <input id="apellidos" type="text" oninput="soloLetras(this)">
                     </div>
 
                     <div class="campo">
                         <label>Edad</label>
-                        <input id="edad" type="number">
+                        <div class="edad-grupo">
+                            <input id="edad" type="number" min="0" placeholder="Ej: 8">
+                            <select id="tipoEdad">
+                                <option value="Meses">Meses</option>
+                                <option value="Años">Años</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div class="campo">
@@ -169,7 +223,7 @@
                 <div class="fila">
                     <div class="campo">
                         <label>N° Cama</label>
-                        <input id="numeroCama" type="text">
+                        <input id="numeroCama" type="text" oninput="soloCama(this)">
                     </div>
 
                     <div class="campo">
@@ -190,34 +244,34 @@
                 <div class="fila">
                     <div class="campo">
                         <label>Fecha ingreso INSN</label>
-                        <input id="fechaIngresoINSN" type="date">
+                        <input id="fechaIngresoINSN" type="text" placeholder="Emergencia 21/09/2023 7:53h" oninput="calcularEstadia()">
                     </div>
 
                     <div class="campo">
                         <label>Fecha ingreso al servicio</label>
-                        <input id="fechaIngresoServicio" type="date">
+                        <input id="fechaIngresoServicio" type="text" placeholder="UCI 21/09/2023 18:20h">
                     </div>
 
                     <div class="campo">
                         <label>Fecha ingreso otros servicios</label>
-                        <input id="fechaIngresoOtrosServicios" type="date">
+                        <input id="fechaIngresoOtrosServicios" type="text" placeholder="Cirugía Pediátrica 30/10/2023 19:00h">
                     </div>
                 </div>
 
                 <div class="fila">
                     <div class="campo">
                         <label>Fecha alta</label>
-                        <input id="fechaAlta" type="date">
+                        <input id="fechaAlta" type="text" placeholder="Alta médica 14/04/2025 10:00h">
                     </div>
 
                     <div class="campo">
                         <label>Fecha egreso</label>
-                        <input id="fechaEgreso" type="date">
+                        <input id="fechaEgreso" type="text" placeholder="14/04/2025 10:30h" oninput="calcularEstadia()">
                     </div>
 
                     <div class="campo">
                         <label>Estadía total días</label>
-                        <input id="estadiaTotalDias" type="number">
+                        <input id="estadiaTotalDias" type="number" readonly>
                     </div>
                 </div>
             </div>
@@ -602,6 +656,49 @@
     </div>
 
     <script>
+        function extraerFecha(texto) {
+            const match = texto.match(/(\d{2})\/(\d{2})\/(\d{4})/);
+
+            if (!match) return null;
+
+            const dia = parseInt(match[1], 10);
+            const mes = parseInt(match[2], 10) - 1;
+            const anio = parseInt(match[3], 10);
+
+            return new Date(anio, mes, dia);
+        }
+
+        function calcularEstadia() {
+            const ingresoTexto = valor("fechaIngresoINSN");
+            const egresoTexto = valor("fechaEgreso");
+
+            const fechaIngreso = extraerFecha(ingresoTexto);
+            const fechaEgreso = extraerFecha(egresoTexto);
+
+            if (!fechaIngreso || !fechaEgreso) {
+                document.getElementById("estadiaTotalDias").value = "";
+                return;
+            }
+
+            const diferenciaMs = fechaEgreso - fechaIngreso;
+            const dias = Math.ceil(diferenciaMs / (1000 * 60 * 60 * 24));
+
+            document.getElementById("estadiaTotalDias").value = dias >= 0 ? dias : "";
+        }
+
+        function bloquearNoNumerico(e) {
+            const permitidos = ["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"];
+            if (permitidos.includes(e.key)) return;
+
+            if (!/^[0-9]$/.test(e.key)) {
+                e.preventDefault();
+            }
+        }
+
+        function soloLetras(input) {
+            input.value = input.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, "");
+        }
+
         function valor(id) {
             return document.getElementById(id).value;
         }
@@ -614,6 +711,10 @@
         function fecha(id) {
             const value = document.getElementById(id).value;
             return value === "" ? null : value;
+        }
+
+        function soloCama(input) {
+            input.value = input.value.replace(/[^0-9a-zA-Z\-]/g, "");
         }
 
         function radio(name) {
@@ -684,17 +785,26 @@
                 nombres: valor("nombres"),
                 apellidos: valor("apellidos"),
                 edad: numero("edad"),
+                tipoEdad: valor("tipoEdad"),
                 sexo: valor("sexo"),
                 numeroCama: valor("numeroCama"),
                 fechaNacimiento: fecha("fechaNacimiento"),
                 procedencia: valor("procedencia"),
 
-                fechaIngresoINSN: fecha("fechaIngresoINSN"),
-                fechaIngresoServicio: fecha("fechaIngresoServicio"),
-                fechaIngresoOtrosServicios: fecha("fechaIngresoOtrosServicios"),
-                fechaAlta: fecha("fechaAlta"),
-                fechaEgreso: fecha("fechaEgreso"),
+                fechaIngresoINSN: null,
+                fechaIngresoServicio: null,
+                fechaIngresoOtrosServicios: null,
+                fechaAlta: null,
+                fechaEgreso: null,
+
+                fechaIngresoINSNTexto: valor("fechaIngresoINSN"),
+                fechaIngresoServicioTexto: valor("fechaIngresoServicio"),
+                fechaIngresoOtrosServiciosTexto: valor("fechaIngresoOtrosServicios"),
+                fechaAltaTexto: valor("fechaAlta"),
+                fechaEgresoTexto: valor("fechaEgreso"),
                 estadiaTotalDias: numero("estadiaTotalDias"),
+
+                antecedentes: valor("antecedentes"),
 
                 antecedentes: valor("antecedentes"),
                 enfermedadActualResumen: valor("enfermedadActualResumen"),

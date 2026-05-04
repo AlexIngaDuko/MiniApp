@@ -1,0 +1,839 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Informe de Alta</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial;
+            background: #e9e9e9;
+            padding: 20px;
+        }
+
+        .formulario {
+            background: white;
+            max-width: 1100px;
+            margin: auto;
+            padding: 20px;
+            border: 2px solid #333;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        .seccion {
+            border: 1px solid #333;
+            margin-top: 15px;
+            padding: 10px;
+        }
+
+            .seccion h3 {
+                background: #eee;
+                padding: 5px;
+            }
+
+        .fila {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 8px; 
+            margin-bottom: 8px; 
+        }
+
+        .campo {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        input, select, textarea {
+            padding: 7px; 
+            border: 1px solid #555;
+        }
+
+        .seccion {
+            border: 1px solid #333;
+            margin-top: 10px;
+            padding: 10px; 
+        }
+
+        label {
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #0d6efd;
+        }
+
+        input, textarea, select {
+            padding: 6px;
+            border: 1px solid #555;
+            width: 100%;
+        }
+
+        textarea {
+            min-height: 60px;
+        }
+
+        .radio-group {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .radio-group label {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+        button {
+            margin-top: 15px;
+            padding: 10px;
+            background: blue;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .edad-grupo {
+            display: grid;
+            grid-template-columns: 1fr 110px;
+            gap: 8px;
+        }
+
+        .fecha-hora {
+            display: grid;
+            grid-template-columns: 1fr 140px;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        textarea {
+            margin-bottom: 5px;
+        }
+
+        .tabla-dinamica {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .fila-dinamica {
+            display: grid;
+            grid-template-columns: 40px 1fr 130px 90px;
+            gap: 8px;
+            align-items: start;
+        }
+
+        .numero-fila {
+            font-weight: bold;
+            text-align: center;
+            padding-top: 8px;
+        }
+
+        .btn-agregar {
+            background: #198754;
+            color: white;
+        }
+
+        .btn-eliminar {
+            background: #dc3545;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .fila-dinamica {
+                grid-template-columns: 1fr;
+            }
+
+            .numero-fila {
+                text-align: left;
+            }
+        }
+
+        .linea-formulario {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            border-bottom: 1px solid #555;
+            align-items: stretch;
+        }
+
+        .linea-formulario label {
+                padding: 10px;
+                font-weight: bold;
+                border-right: 1px solid #555;
+                text-transform: uppercase;
+            }
+
+        .linea-formulario textarea {
+                border: none;
+                resize: vertical;
+                min-height: 45px;
+                padding: 10px;
+            }
+
+        .linea-formulario textarea:focus {
+                    outline: none;
+                    background: #f8f8f8;
+                }
+
+        @media (max-width: 768px) {
+            .linea-formulario {
+                grid-template-columns: 1fr;
+            }
+
+                .linea-formulario label {
+                    border-right: none;
+                    border-bottom: 1px solid #555;
+                }
+        }
+
+        .buscador-diagnostico {
+            margin-bottom: 12px;
+        }
+
+        .resultados-busqueda {
+            border: 1px solid #aaa;
+            background: white;
+            display: none;
+            max-height: 180px;
+            overflow-y: auto;
+        }
+
+        .resultado-item {
+            padding: 8px;
+            cursor: pointer;
+            border-bottom: 1px solid #ddd;
+        }
+
+            .resultado-item:hover {
+                background: #f1f1f1;
+            }
+
+        .input-con-icono {
+            position: relative;
+        }
+
+            .input-con-icono input {
+                padding-left: 36px;
+            }
+
+        .icono-lupa {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="formulario">
+
+        <h2>INSTITUTO NACIONAL DE SALUD DEL NIÑO</h2>
+        <h1>INFORME DE ALTA</h1>
+
+        <form id="form">
+
+            <div class="seccion">
+                <h3>Datos</h3>
+
+                <div class="fila">
+
+                    <div class="campo">
+                        <label>Servicio</label>
+                        <input id="servicio">
+                    </div>
+
+                    <div class="campo">
+                        <label>N° Cama</label>
+                        <input id="numeroCama">
+                    </div>
+
+                    <div class="campo">
+                        <label>N° Historia Clínica</label>
+                        <input id="numeroHistoriaClinica" oninput="soloNumeros(this)" inputmode="numeric">
+                    </div>
+
+                    <div class="campo">
+                        <label>N° SIS</label>
+                        <input id="numeroSIS" oninput="soloNumeros(this)" inputmode="numeric">
+                    </div>
+
+                    <div class="campo">
+                        <label>Sala</label>
+                        <input id="sala">
+                    </div>
+
+                </div>
+
+                <div class="fila">
+
+                    <div class="campo">
+                        <label>Nombres y Apellidos</label>
+                        <input id="nombresApellidos" oninput="soloLetras(this)">
+                    </div>
+
+                    <div class="campo">
+                        <label>Edad</label>
+                        <div class="edad-grupo">
+                            <input id="edad" type="number" min="0">
+                            <select id="tipoEdad">
+                                <option value="Meses">Meses</option>
+                                <option value="Años">Años</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="campo">
+                        <label>Fecha de nacimiento</label>
+                        <input id="fechaNacimiento" type="date">
+                    </div>
+
+                    <div class="campo">
+                        <label>Sexo</label>
+                        <select id="sexo">
+                            <option value="">Seleccione</option>
+                            <option value="M">Masculino</option>
+                            <option value="F">Femenino</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="campo">
+                    <label>Domicilio</label>
+                    <input id="domicilio">
+                </div>
+
+            </div>
+
+            <div class="seccion">
+                <h3>Ingreso</h3>
+
+                <div class="radio-group">
+                    <label><input type="radio" name="ingreso" value="Emergencia"> Emergencia</label>
+                    <label><input type="radio" name="ingreso" value="Consulta"> Consulta externa</label>
+                </div>
+
+                <div class="campo">
+                    <label>Ingreso al servicio</label>
+                    <div class="fecha-hora">
+                        <input id="fechaIngresoServicio" type="date">
+                        <input id="horaIngresoServicio" type="time">
+                    </div>
+                </div>
+
+                <div class="campo">
+                    <label>Alta del servicio</label>
+                    <div class="fecha-hora">
+                        <input id="fechaAltaServicio" type="date">
+                        <input id="horaAltaServicio" type="time">
+                    </div>
+                </div>
+            </div>
+
+            <div class="seccion">
+                <h3>Diagnóstico de ingreso</h3>
+
+                <div class="campo buscador-diagnostico">
+                    <label>Buscar diagnóstico previo</label>
+
+                    <div class="input-con-icono">
+                        <span class="icono-lupa">🔍</span>
+                        <input id="buscarDiagnosticoIngreso" type="text">
+                    </div>
+
+                    <div id="resultadosDiagnosticoIngreso" class="resultados-busqueda"></div>
+                </div>
+
+                <div id="diagnosticosIngresoContainer" class="tabla-dinamica"></div>
+
+                <button type="button" class="btn-agregar" onclick="agregarDiagnosticoIngreso()">
+                    + Agregar diagnóstico de ingreso
+                </button>
+            </div>
+
+            <div class="seccion">
+                <h3>Diagnóstico de alta</h3>
+
+                <div id="diagnosticosAltaContainer" class="tabla-dinamica"></div>
+
+                <button type="button" class="btn-agregar" onclick="agregarDiagnosticoAlta()">
+                    + Agregar diagnóstico de alta
+                </button>
+            </div>
+
+            <div class="seccion">
+                <h3>Procedimientos Y/O Cirugías (s) Médico / Odontológico</h3>
+
+                <div id="procedimientosContainer" class="tabla-dinamica"></div>
+
+                <button type="button" class="btn-agregar" onclick="agregarProcedimiento()">
+                    + Agregar procedimiento
+                </button>
+            </div>
+
+            <div class="seccion">
+                <h3>Exámenes de ayuda diagnóstica por imagen</h3>
+
+                <div id="examenesImagenContainer" class="tabla-dinamica"></div>
+
+                <button type="button" class="btn-agregar" onclick="agregarExamenImagen()">
+                    + Agregar examen de imagen
+                </button>
+            </div>
+
+            <div class="seccion">
+                <h3>Exámenes de anatomía patológica y laboratorio clínico</h3>
+
+                <div id="examenesLaboratorioContainer" class="tabla-dinamica"></div>
+
+                <button type="button" class="btn-agregar" onclick="agregarExamenLaboratorio()">
+                    + Agregar examen de laboratorio
+                </button>
+            </div>
+
+            <div class="seccion">
+                <h3>Tratamiento recibido</h3>
+
+                <div id="tratamientoContainer" class="tabla-dinamica"></div>
+
+                <button type="button" class="btn-agregar" onclick="agregarTratamiento()">
+                    + Agregar fármaco
+                </button>
+            </div>
+
+            <div class="seccion">
+                <h3>Recomendaciones al alta</h3>
+
+                <div class="linea-formulario">
+                    <label>Recomendaciones</label>
+                    <textarea id="recomendacionesAlta"></textarea>
+                </div>
+
+                <div class="linea-formulario">
+                    <label>Otras indicaciones</label>
+                    <textarea id="otrasIndicaciones"></textarea>
+                </div>
+
+                <div class="linea-formulario">
+                    <label>Dieta</label>
+                    <textarea id="dieta"></textarea>
+                </div>
+
+                <div class="linea-formulario">
+                    <label>Cuidados higiénicos</label>
+                    <textarea id="cuidadosHigienicos"></textarea>
+                </div>
+
+                <div class="linea-formulario">
+                    <label>Vacunas</label>
+                    <textarea id="vacunas"></textarea>
+                </div>
+
+                <div class="linea-formulario">
+                    <label>Cuidados de traslado</label>
+                    <textarea id="cuidadosTraslado"></textarea>
+                </div>
+            </div>
+
+            <div class="seccion">
+                <h3>Motivo de alta</h3>
+
+                <div class="radio-group">
+                    <label><input type="radio" name="motivo" value="Medica"> Médica</label>
+                    <label><input type="radio" name="motivo" value="Voluntario"> Voluntario</label>
+                    <label><input type="radio" name="motivo" value="Referencia"> Referencia</label>
+                    <label><input type="radio" name="motivo" value="Fuga"> Fuga</label>
+                    <label><input type="radio" name="motivo" value="Fallecido"> Fallecido</label>
+                </div>
+
+            </div>
+
+            <div class="seccion">
+                <h3>Condición</h3>
+
+                <div class="radio-group">
+                    <label><input type="radio" name="condicion" value="Curado"> Curado</label>
+                    <label><input type="radio" name="condicion" value="Mejorado"> Mejorado</label>
+                    <label><input type="radio" name="condicion" value="Estacionario"> Estacionario</label>
+                    <label><input type="radio" name="condicion" value="Empeorado"> Empeorado</label>
+                </div>
+
+            </div>
+
+            <div class="seccion">
+                <h3>Pronóstico</h3>
+
+                <div class="radio-group">
+                    <label><input type="radio" name="pronostico" value="Bueno"> Bueno</label>
+                    <label><input type="radio" name="pronostico" value="Reservado"> Reservado</label>
+                </div>
+
+            </div>
+
+            <div class="seccion">
+                <h3>Citas</h3>
+
+                <input id="cita1" placeholder="Cita 1">
+                <input id="fechaCita1">
+                <input id="cita2">
+                <input id="fechaCita2">
+
+            </div>
+
+            <div class="seccion">
+                <h3>Firmas</h3>
+
+                <input id="firmaPadreApoderado" placeholder="Padre / Apoderado">
+                <input id="dniApoderado" placeholder="DNI">
+                <input id="parentesco">
+                <input id="jefeServicio">
+                <input id="medicoTratante">
+
+            </div>
+
+            <button>Guardar</button>
+
+        </form>
+
+    </div>
+
+    <script>
+
+        let diagnosticosIngreso = [];
+
+        document.querySelectorAll(".diagnostico-ingreso-item").forEach(fila => {
+            diagnosticosIngreso.push({
+                diagnostico: fila.querySelector(".diagnosticoIngreso").value,
+                cie: fila.querySelector(".cieIngreso").value
+            });
+        });
+
+        let diagnosticosPreviosIngreso = [];
+
+        async function cargarDiagnosticosPreviosIngreso() {
+            const response = await fetch("/api/InformesAlta");
+
+            if (!response.ok) return;
+
+            const informes = await response.json();
+
+            diagnosticosPreviosIngreso = [];
+
+            informes.forEach(informe => {
+                for (let i = 1; i <= 4; i++) {
+                    const diagnostico = informe[`diagnosticoIngreso${i}`];
+                    const cie = informe[`cieIngreso${i}`];
+
+                    if (diagnostico && diagnostico.trim() !== "") {
+                        diagnosticosPreviosIngreso.push({
+                            diagnostico: diagnostico,
+                            cie: cie || ""
+                        });
+                    }
+                }
+            });
+        }
+
+        function buscarDiagnosticoIngreso(texto) {
+            const contenedor = document.getElementById("resultadosDiagnosticoIngreso");
+            contenedor.innerHTML = "";
+
+            if (!texto.trim()) {
+                contenedor.style.display = "none";
+                return;
+            }
+
+            const resultados = diagnosticosPreviosIngreso.filter(x =>
+                x.diagnostico.toLowerCase().includes(texto.toLowerCase())
+            );
+
+            if (resultados.length === 0) {
+                contenedor.style.display = "none";
+                return;
+            }
+
+            resultados.slice(0, 10).forEach(item => {
+                const div = document.createElement("div");
+                div.className = "resultado-item";
+                div.innerText = `${item.diagnostico} ${item.cie ? "- " + item.cie : ""}`;
+
+                div.onclick = function () {
+                    agregarDiagnosticoIngreso(item.diagnostico, item.cie);
+                    document.getElementById("buscarDiagnosticoIngreso").value = "";
+                    contenedor.style.display = "none";
+                };
+
+                contenedor.appendChild(div);
+            });
+
+            contenedor.style.display = "block";
+        }
+
+        document.getElementById("buscarDiagnosticoIngreso").addEventListener("input", function () {
+            buscarDiagnosticoIngreso(this.value);
+        });
+
+        cargarDiagnosticosPreviosIngreso();
+
+        function agregarTratamiento() {
+            const container = document.getElementById("tratamientoContainer");
+
+            const div = document.createElement("div");
+            div.className = "fila-dinamica tratamiento-item";
+
+            div.innerHTML = `
+        <div class="numero-fila"></div>
+
+        <div class="campo">
+            <label>Fármacos</label>
+            <textarea class="farmaco"></textarea>
+        </div>
+
+        <div class="campo" style="max-width:100px;">
+            <label>N° de días</label>
+            <input class="diasFarmaco" oninput="soloNumeros(this)">
+        </div>
+
+        <button type="button" class="btn-eliminar"
+            onclick="this.parentElement.remove(); actualizarNumeracion('tratamientoContainer')">
+            Eliminar
+        </button>
+    `;
+
+            container.appendChild(div);
+            actualizarNumeracion("tratamientoContainer");
+        }
+
+        function agregarExamenImagen() {
+            const container = document.getElementById("examenesImagenContainer");
+
+            const div = document.createElement("div");
+            div.className = "fila-dinamica examen-imagen-item";
+
+            div.innerHTML = `
+        <div class="numero-fila"></div>
+
+        <div class="campo">
+            <label>Descripción</label>
+            <textarea class="examenImagen"></textarea>
+        </div>
+
+        <button type="button" class="btn-eliminar"
+            onclick="this.parentElement.remove(); actualizarNumeracion('examenesImagenContainer')">
+            Eliminar
+        </button>
+    `;
+
+            container.appendChild(div);
+            actualizarNumeracion("examenesImagenContainer");
+        }
+
+        function agregarExamenLaboratorio() {
+            const container = document.getElementById("examenesLaboratorioContainer");
+
+            const div = document.createElement("div");
+            div.className = "fila-dinamica examen-lab-item";
+
+            div.innerHTML = `
+        <div class="numero-fila"></div>
+
+        <div class="campo">
+            <label>Descripción</label>
+            <textarea class="examenLaboratorio"></textarea>
+        </div>
+
+        <button type="button" class="btn-eliminar"
+            onclick="this.parentElement.remove(); actualizarNumeracion('examenesLaboratorioContainer')">
+            Eliminar
+        </button>
+    `;
+
+            container.appendChild(div);
+            actualizarNumeracion("examenesLaboratorioContainer");
+        }
+
+        function actualizarNumeracion(containerId) {
+            const container = document.getElementById(containerId);
+            const filas = container.querySelectorAll(".fila-dinamica");
+
+            filas.forEach((fila, index) => {
+                fila.querySelector(".numero-fila").innerText = index + 1;
+            });
+        }
+
+        function agregarDiagnosticoIngreso(diagnostico = "", cie = "") {
+            const container = document.getElementById("diagnosticosIngresoContainer");
+
+            const div = document.createElement("div");
+            div.className = "fila-dinamica diagnostico-ingreso-item";
+
+            div.innerHTML = `
+        <div class="numero-fila"></div>
+
+        <div class="campo">
+            <label>Diagnóstico</label>
+            <textarea class="diagnosticoIngreso">${diagnostico}</textarea>
+        </div>
+
+        <div class="campo">
+            <label>COD. CIE X</label>
+            <input class="cieIngreso" value="${cie}">
+        </div>
+
+        <button type="button" class="btn-eliminar"
+            onclick="this.parentElement.remove(); actualizarNumeracion('diagnosticosIngresoContainer')">
+            Eliminar
+        </button>
+    `;
+
+            container.appendChild(div);
+            actualizarNumeracion("diagnosticosIngresoContainer");
+        }
+
+        function agregarDiagnosticoAlta() {
+            const container = document.getElementById("diagnosticosAltaContainer");
+
+            const div = document.createElement("div");
+            div.className = "fila-dinamica diagnostico-alta-item";
+
+            div.innerHTML = `
+        <div class="numero-fila"></div>
+
+        <div class="campo">
+            <label>Diagnóstico</label>
+            <textarea class="diagnosticoAlta"></textarea>
+        </div>
+
+        <div class="campo">
+            <label>COD. CIE X</label>
+            <input class="cieAlta">
+        </div>
+
+        <button type="button" class="btn-eliminar" onclick="this.parentElement.remove(); actualizarNumeracion('diagnosticosAltaContainer')">
+            Eliminar
+        </button>
+    `;
+
+            container.appendChild(div);
+            actualizarNumeracion("diagnosticosAltaContainer");
+        }
+
+        function agregarProcedimiento() {
+            const container = document.getElementById("procedimientosContainer");
+
+            const div = document.createElement("div");
+            div.className = "fila-dinamica procedimiento-item";
+
+            div.innerHTML = `
+        <div class="numero-fila"></div>
+
+        <div class="campo">
+            <label>Procedimiento</label>
+            <textarea class="procedimiento"></textarea>
+        </div>
+
+        <div class="campo">
+            <label>COD. CPT 99</label>
+            <input class="codigoCptItem">
+        </div>
+
+        <button type="button" class="btn-eliminar" onclick="this.parentElement.remove(); actualizarNumeracion('procedimientosContainer')">
+            Eliminar
+        </button>
+    `;
+
+            container.appendChild(div);
+            actualizarNumeracion("procedimientosContainer");
+        }
+
+        function soloNumeros(input) {
+            input.value = input.value.replace(/[^0-9]/g, '');
+        }
+
+        function soloLetras(input) {
+            input.value = input.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
+        }
+
+        function val(id) { return document.getElementById(id).value }
+
+        function formatearFecha(fecha) {
+            if (!fecha) return "";
+            const partes = fecha.split("-");
+            return `${partes[2]}/${partes[1]}/${partes[0]}`;
+        }
+
+        document.getElementById("form").addEventListener("submit", async e=>{
+        e.preventDefault()
+
+        let data = {
+        servicio: val("servicio"),
+        numeroCama: val("numeroCama"),
+        numeroHistoriaClinica: val("numeroHistoriaClinica"),
+        numeroSIS: val("numeroSIS"),
+        sala: val("sala"),
+        nombresApellidos: val("nombresApellidos"),
+        edad: val("edad") + " " + val("tipoEdad"),
+        fechaNacimiento: val("fechaNacimiento"),
+        sexo: val("sexo"),
+        domicilio: val("domicilio"),
+        fechaIngresoEmergenciaTexto: val("fechaIngresoEmergenciaTexto"),
+        fechaIngresoServicioTexto: formatearFecha(val("fechaIngresoServicio")) + " " + val("horaIngresoServicio") + "h",
+        fechaAltaServicioTexto: formatearFecha(val("fechaAltaServicio")) + " " + val("horaAltaServicio") + "h",
+        diagnosticoIngreso1: val("diagnosticoIngreso1"),
+        cieIngreso1: val("cieIngreso1"),
+        diagnosticoAlta1: val("diagnosticoAlta1"),
+        cieAlta1: val("cieAlta1"),
+        procedimientosCirugia: val("procedimientosCirugia"),
+        codigoCpt: val("codigoCpt"),
+        examenesImagen: val("examenesImagen"),
+        examenesLaboratorio: val("examenesLaboratorio"),
+        farmaco1: val("farmaco1"),
+        diasFarmaco1: val("diasFarmaco1"),
+        recomendacionesAlta: val("recomendacionesAlta"),
+        otrasIndicaciones: val("otrasIndicaciones"),
+        dieta: val("dieta"),
+        cuidadosHigienicos: val("cuidadosHigienicos"),
+        vacunas: val("vacunas"),
+        cuidadosTraslado: val("cuidadosTraslado"),
+        firmaPadreApoderado: val("firmaPadreApoderado"),
+        dniApoderado: val("dniApoderado"),
+        parentesco: val("parentesco"),
+        jefeServicio: val("jefeServicio"),
+        medicoTratante: val("medicoTratante")
+        }
+
+        await fetch("/api/InformesAlta", {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(data)
+        })
+
+        alert("Guardado")
+        })
+
+        agregarTratamiento();
+        agregarExamenImagen();
+        agregarExamenLaboratorio();
+        agregarDiagnosticoIngreso();
+        agregarDiagnosticoAlta();
+        agregarProcedimiento();
+    </script>
+
+</body>
+</html>
