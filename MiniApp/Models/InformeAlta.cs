@@ -90,5 +90,6 @@
 
         public string? JefeServicio { get; set; }
         public string? MedicoTratante { get; set; }
+        public string? HuellaDigitalIletrado { get; set; }
     }
 }

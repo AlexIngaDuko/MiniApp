@@ -27,6 +27,7 @@ using (var scope = app.Services.CreateScope())
 
     db.Database.Migrate();
 
+
     db.Database.ExecuteSqlRaw(@"
         IF OBJECT_ID('InformesAlta', 'U') IS NULL
         CREATE TABLE InformesAlta (
@@ -119,6 +120,11 @@ using (var scope = app.Services.CreateScope())
             JefeServicio nvarchar(max) NULL,
             MedicoTratante nvarchar(max) NULL
         );
+    ");
+
+    db.Database.ExecuteSqlRaw(@"
+        IF COL_LENGTH('InformesAlta', 'HuellaDigitalIletrado') IS NULL
+        ALTER TABLE InformesAlta ADD HuellaDigitalIletrado nvarchar(max) NULL;
     ");
 }
 
