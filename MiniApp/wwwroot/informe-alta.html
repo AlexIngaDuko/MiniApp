@@ -305,6 +305,51 @@
             color: white;
             height: 30px;
         }
+
+        .fila-firmas {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 15px;
+        }
+
+        .col-firma {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+            .col-firma label {
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+
+        .input-firma {
+            width: 100%;
+            max-width: 250px;
+            margin-bottom: 10px;
+        }
+
+        .btn-firma {
+            width: 200px;
+            height: 60px;
+            background-color: #0d6efd; 
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .btn-firma:hover {
+            background-color: #0b5ed7; 
+            }
+
     </style>
 </head>
 
@@ -621,6 +666,28 @@
                     <label>Huella Digital en Iletrado</label>
                     <input id="huellaDigitalIletrado" type="text">
                 </div>
+
+                <div class="seccion">
+                    <div class="fila-firmas">
+
+              
+                        <div class="col-firma">
+                            <label>Jefe de Servicio</label>
+                            <input type="text" id="jefeServicio" class="input-firma">
+
+                            <button type="button" class="btn-firma">Firma</button>
+                        </div>
+
+                        
+                        <div class="col-firma">
+                            <label>Médico tratante</label>
+                            <input type="text" id="medicoTratante" class="input-firma">
+
+                            <button type="button" class="btn-firma">Firma</button>
+                        </div>
+
+                    </div>
+                </div>
             </div>
 
             <button>Guardar</button>
@@ -630,7 +697,7 @@
     </div>
 
     <script>
-
+    // @ts-nocheck
         function agregarCita() {
             const container = document.getElementById("citasContainer");
 
@@ -928,57 +995,139 @@
             return `${partes[2]}/${partes[1]}/${partes[0]}`;
         }
 
-        document.getElementById("form").addEventListener("submit", async e=>{
-        e.preventDefault()
+        document.getElementById("form").addEventListener("submit", async e => {
+            e.preventDefault();
 
-        let data = {
-        huellaDigitalIletrado: val("huellaDigitalIletrado"),
-        servicio: val("servicio"),
-        numeroCama: val("numeroCama"),
-        numeroHistoriaClinica: val("numeroHistoriaClinica"),
-        numeroSIS: val("numeroSIS"),
-        sala: val("sala"),
-        nombresApellidos: val("nombresApellidos"),
-        edad: val("edad") + " " + val("tipoEdad"),
-        fechaNacimiento: val("fechaNacimiento"),
-        sexo: val("sexo"),
-        domicilio: val("domicilio"),
-        fechaIngresoEmergenciaTexto: formatearFecha(val("fechaIngresoEmergencia")) + " " + val("horaIngresoEmergencia") + "h",
-        ingresoEmergencia: document.querySelector('input[name="ingreso"][value="Emergencia"]')?.checked || false,
-        ingresoConsultaExterna: document.querySelector('input[name="ingreso"][value="Consulta"]')?.checked || false,
-        fechaIngresoServicioTexto: formatearFecha(val("fechaIngresoServicio")) + " " + val("horaIngresoServicio") + "h",
-        fechaAltaServicioTexto: formatearFecha(val("fechaAltaServicio")) + " " + val("horaAltaServicio") + "h",
-        diagnosticoIngreso1: val("diagnosticoIngreso1"),
-        cieIngreso1: val("cieIngreso1"),
-        diagnosticoAlta1: val("diagnosticoAlta1"),
-        cieAlta1: val("cieAlta1"),
-        procedimientosCirugia: val("procedimientosCirugia"),
-        codigoCpt: val("codigoCpt"),
-        examenesImagen: val("examenesImagen"),
-        examenesLaboratorio: val("examenesLaboratorio"),
-        farmaco1: val("farmaco1"),
-        diasFarmaco1: val("diasFarmaco1"),
-        recomendacionesAlta: val("recomendacionesAlta"),
-        otrasIndicaciones: val("otrasIndicaciones"),
-        dieta: val("dieta"),
-        cuidadosHigienicos: val("cuidadosHigienicos"),
-        vacunas: val("vacunas"),
-        cuidadosTraslado: val("cuidadosTraslado"),
-        firmaPadreApoderado: val("firmaPadreApoderado"),
-        dniApoderado: val("dniApoderado"),
-        parentesco: val("parentesco"),
-        jefeServicio: val("jefeServicio"),
-        medicoTratante: val("medicoTratante")
-        }
+            const diagnosticosIngreso = [];
+            document.querySelectorAll(".diagnostico-ingreso-item").forEach((fila, index) => {
+                diagnosticosIngreso.push(`${index + 1}. ${fila.querySelector(".diagnosticoIngreso").value} | CIE: ${fila.querySelector(".cieIngreso").value}`);
+            });
 
-        await fetch("/api/InformesAlta", {
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify(data)
-        })
+            const diagnosticosAlta = [];
+            document.querySelectorAll(".diagnostico-alta-item").forEach((fila, index) => {
+                diagnosticosAlta.push(`${index + 1}. ${fila.querySelector(".diagnosticoAlta").value} | CIE: ${fila.querySelector(".cieAlta").value}`);
+            });
 
-        alert("Guardado")
-        })
+            const procedimientos = [];
+            document.querySelectorAll(".procedimiento-item").forEach((fila, index) => {
+                procedimientos.push(`${index + 1}. ${fila.querySelector(".procedimiento").value} | CPT: ${fila.querySelector(".codigoCptItem").value}`);
+            });
+
+            const examenesImagen = [];
+            document.querySelectorAll(".examen-imagen-item").forEach((fila, index) => {
+                examenesImagen.push(`${index + 1}. ${fila.querySelector(".examenImagen").value}`);
+            });
+
+            const examenesLaboratorio = [];
+            document.querySelectorAll(".examen-lab-item").forEach((fila, index) => {
+                examenesLaboratorio.push(`${index + 1}. ${fila.querySelector(".examenLaboratorio").value}`);
+            });
+
+            const tratamientos = [];
+            document.querySelectorAll(".tratamiento-item").forEach((fila, index) => {
+                tratamientos.push(`${index + 1}. ${fila.querySelector(".farmaco").value} | Días: ${fila.querySelector(".diasFarmaco").value}`);
+            });
+
+            const citas = [];
+            document.querySelectorAll(".fila-cita").forEach((fila) => {
+                citas.push({
+                    cita: fila.querySelector(".citaConsultorio").value,
+                    fecha: fila.querySelector(".fechaCita").value
+                });
+            });
+
+            const motivoAlta = document.querySelector('input[name="motivoAlta"]:checked')?.value || "";
+            const condicion = document.querySelector('input[name="condicion"]:checked')?.value || "";
+            const pronostico = document.querySelector('input[name="pronostico"]:checked')?.value || "";
+
+            let data = {
+                huellaDigitalIletrado: val("huellaDigitalIletrado"),
+
+                servicio: val("servicio"),
+                numeroCama: val("numeroCama"),
+                numeroHistoriaClinica: val("numeroHistoriaClinica"),
+                numeroSIS: val("numeroSIS"),
+                sala: val("sala"),
+
+                nombresApellidos: val("nombresApellidos"),
+                edad: val("edad") + " " + val("tipoEdad"),
+                fechaNacimiento: val("fechaNacimiento"),
+                sexo: val("sexo"),
+                domicilio: val("domicilio"),
+
+                fechaIngresoEmergenciaTexto: formatearFecha(val("fechaIngresoEmergencia")) + " " + val("horaIngresoEmergencia") + "h",
+                ingresoEmergencia: document.querySelector('input[name="ingreso"][value="Emergencia"]')?.checked || false,
+                ingresoConsultaExterna: document.querySelector('input[name="ingreso"][value="Consulta"]')?.checked || false,
+
+                fechaIngresoServicioTexto: formatearFecha(val("fechaIngresoServicio")) + " " + val("horaIngresoServicio") + "h",
+                fechaAltaServicioTexto: formatearFecha(val("fechaAltaServicio")) + " " + val("horaAltaServicio") + "h",
+
+                diagnosticoIngreso1: diagnosticosIngreso.join("\n"),
+                cieIngreso1: "",
+
+                diagnosticoAlta1: diagnosticosAlta.join("\n"),
+                cieAlta1: "",
+
+                procedimientosCirugia: procedimientos.join("\n"),
+                codigoCpt: "",
+
+                examenesImagen: examenesImagen.join("\n"),
+                examenesLaboratorio: examenesLaboratorio.join("\n"),
+
+                farmaco1: tratamientos.join("\n"),
+                diasFarmaco1: "",
+
+                recomendacionesAlta: val("recomendacionesAlta"),
+                otrasIndicaciones: val("otrasIndicaciones"),
+                dieta: val("dieta"),
+                cuidadosHigienicos: val("cuidadosHigienicos"),
+                vacunas: val("vacunas"),
+                cuidadosTraslado: val("cuidadosTraslado"),
+
+                motivoAltaMedica: motivoAlta === "Medica",
+                motivoRetiroVoluntario: motivoAlta === "Voluntario",
+                motivoReferencia: motivoAlta === "Referencia",
+                motivoContrarreferencia: motivoAlta === "Referencia",
+                motivoFuga: motivoAlta === "Fuga",
+                motivoFallecido: motivoAlta === "Fallecido",
+
+                condicionCurado: condicion === "Curado",
+                condicionMejorado: condicion === "Mejorado",
+                condicionEstacionario: condicion === "Estacionario",
+                condicionEmpeorado: condicion === "Empeorado",
+                condicionFallecido: condicion === "Fallecido",
+
+                pronosticoBueno: pronostico === "Bueno",
+                pronosticoReservado: pronostico === "Reservado",
+
+                citaConsultorio1: citas[0]?.cita || "",
+                fechaCita1: citas[0]?.fecha || "",
+                citaConsultorio2: citas[1]?.cita || "",
+                fechaCita2: citas[1]?.fecha || "",
+                citaConsultorio3: citas[2]?.cita || "",
+                fechaCita3: citas[2]?.fecha || "",
+
+                firmaPadreApoderado: val("firmaPadreApoderado"),
+                dniApoderado: val("dniApoderado"),
+                parentesco: val("parentesco"),
+
+                jefeServicio: val("jefeServicio"),
+                medicoTratante: val("medicoTratante")
+            };
+
+            const response = await fetch("/api/InformesAlta", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                alert("Guardado correctamente");
+                document.getElementById("form").reset();
+            } else {
+                alert("Error al guardar");
+            }
+        });
 
         agregarTratamiento();
         agregarExamenImagen();
