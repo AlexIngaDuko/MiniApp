@@ -32,7 +32,7 @@
 
         .seccion {
             border: 1px solid #333;
-            margin-top: 15px;
+            margin-top: 10px;
             padding: 10px;
         }
 
@@ -45,14 +45,15 @@
 
         .fila {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 10px;
-            margin-bottom: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 8px;
+            margin-bottom: 8px;
         }
 
         .campo {
             display: flex;
             flex-direction: column;
+            gap: 3px;
             min-width: 0;
         }
 
@@ -62,8 +63,8 @@
             margin-bottom: 4px;
         }
 
-        input, textarea {
-            padding: 8px;
+        input, textarea, select {
+            padding: 7px;
             border: 1px solid #555;
             width: 100%;
             background: #f8f8f8;
@@ -71,12 +72,13 @@
 
         textarea {
             min-height: 70px;
+            resize: vertical;
         }
 
         .radio-group {
             display: flex;
             justify-content: center;
-            gap: 35px;
+            gap: 30px;
             flex-wrap: wrap;
         }
 
@@ -84,10 +86,143 @@
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                gap: 6px;
-                font-weight: normal;
                 text-align: center;
+                font-size: 13px;
+                font-weight: normal;
             }
+
+        .linea-formulario {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            border-bottom: 1px solid #555;
+            align-items: stretch;
+        }
+
+            .linea-formulario label {
+                padding: 10px;
+                font-weight: bold;
+                border-right: 1px solid #555;
+                text-transform: uppercase;
+            }
+
+            .linea-formulario textarea {
+                border: none;
+                min-height: 45px;
+                padding: 10px;
+                background: #f8f8f8;
+            }
+
+        .tabla-dinamica {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .fila-dinamica {
+            display: grid;
+            grid-template-columns: 40px 1fr;
+            gap: 8px;
+            align-items: start;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 8px;
+        }
+
+        .numero-fila {
+            font-weight: bold;
+            text-align: center;
+            padding-top: 8px;
+        }
+
+        .tabla-citas {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .fila-cita {
+            display: grid;
+            grid-template-columns: 1fr 200px;
+            border-bottom: 1px solid #333;
+            align-items: center;
+        }
+
+        .col-texto {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px;
+        }
+
+        .col-fecha {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-left: 1px solid #333;
+            padding: 6px;
+        }
+
+        .label-fijo {
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .col-texto input,
+        .col-fecha input {
+            border: none;
+            width: 100%;
+            background: #f8f8f8;
+        }
+
+        .linea-final {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            border-top: 1px solid #333;
+            margin-top: 10px;
+        }
+
+            .linea-final label {
+                padding: 8px;
+                font-weight: bold;
+            }
+
+            .linea-final input {
+                border: none;
+                border-left: 1px solid #333;
+                padding: 8px;
+                background: #f8f8f8;
+            }
+
+        .fila-firmas {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 15px;
+        }
+
+        .col-firma {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .input-firma {
+            width: 100%;
+            max-width: 250px;
+            margin-bottom: 10px;
+        }
+
+        .btn-firma {
+            width: 200px;
+            height: 60px;
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
         @media (max-width: 768px) {
             body {
@@ -96,6 +231,37 @@
 
             .formulario {
                 padding: 15px;
+            }
+
+            .linea-formulario {
+                grid-template-columns: 1fr;
+            }
+
+                .linea-formulario label {
+                    border-right: none;
+                    border-bottom: 1px solid #555;
+                }
+
+            .fila-cita {
+                grid-template-columns: 1fr;
+            }
+
+            .col-fecha {
+                border-left: none;
+                border-top: 1px solid #333;
+            }
+
+            .linea-final {
+                grid-template-columns: 1fr;
+            }
+
+                .linea-final input {
+                    border-left: none;
+                    border-top: 1px solid #333;
+                }
+
+            .fila-firmas {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -108,7 +274,7 @@
         <h1>INFORME DE ALTA</h1>
 
         <div class="seccion">
-            <h3>Datos del paciente</h3>
+            <h3>Datos</h3>
 
             <div class="fila">
                 <div class="campo">
@@ -122,7 +288,7 @@
                 </div>
 
                 <div class="campo">
-                    <label>N° HC</label>
+                    <label>N° Historia Clínica</label>
                     <input id="numeroHistoriaClinica" readonly>
                 </div>
 
@@ -149,7 +315,7 @@
                 </div>
 
                 <div class="campo">
-                    <label>Fecha nacimiento</label>
+                    <label>Fecha de nacimiento</label>
                     <input id="fechaNacimiento" readonly>
                 </div>
 
@@ -168,152 +334,110 @@
         <div class="seccion">
             <h3>Ingreso</h3>
 
-            <div class="radio-group">
-                <label><input id="ingresoEmergencia" type="radio" disabled> Emergencia</label>
-                <label><input id="ingresoConsultaExterna" type="radio" disabled> Consulta externa</label>
-            </div>
-
             <div class="fila">
                 <div class="campo">
-                    <label>Fecha ingreso emergencia</label>
+                    <label>Ingreso por</label>
+                    <div class="radio-group">
+                        <label><input id="ingresoEmergencia" type="radio" disabled> Emergencia</label>
+                        <label><input id="ingresoConsultaExterna" type="radio" disabled> Consulta externa</label>
+                    </div>
+                </div>
+
+                <div class="campo">
+                    <label>Fecha y hora</label>
                     <input id="fechaIngresoEmergenciaTexto" readonly>
                 </div>
-
-                <div class="campo">
-                    <label>Fecha ingreso al servicio</label>
-                    <input id="fechaIngresoServicioTexto" readonly>
-                </div>
-
-                <div class="campo">
-                    <label>Fecha alta del servicio</label>
-                    <input id="fechaAltaServicioTexto" readonly>
-                </div>
-            </div>
-        </div>
-
-        <div class="seccion">
-            <h3>Diagnósticos de ingreso</h3>
-
-            <div class="fila">
-                <div class="campo"><label>1</label><input id="diagnosticoIngreso1" readonly></div>
-                <div class="campo"><label>CIE 1</label><input id="cieIngreso1" readonly></div>
-            </div>
-
-            <div class="fila">
-                <div class="campo"><label>2</label><input id="diagnosticoIngreso2" readonly></div>
-                <div class="campo"><label>CIE 2</label><input id="cieIngreso2" readonly></div>
-            </div>
-
-            <div class="fila">
-                <div class="campo"><label>3</label><input id="diagnosticoIngreso3" readonly></div>
-                <div class="campo"><label>CIE 3</label><input id="cieIngreso3" readonly></div>
-            </div>
-
-            <div class="fila">
-                <div class="campo"><label>4</label><input id="diagnosticoIngreso4" readonly></div>
-                <div class="campo"><label>CIE 4</label><input id="cieIngreso4" readonly></div>
-            </div>
-        </div>
-
-        <div class="seccion">
-            <h3>Diagnósticos de alta</h3>
-
-            <div class="fila">
-                <div class="campo"><label>1</label><input id="diagnosticoAlta1" readonly></div>
-                <div class="campo"><label>CIE 1</label><input id="cieAlta1" readonly></div>
-            </div>
-
-            <div class="fila">
-                <div class="campo"><label>2</label><input id="diagnosticoAlta2" readonly></div>
-                <div class="campo"><label>CIE 2</label><input id="cieAlta2" readonly></div>
-            </div>
-
-            <div class="fila">
-                <div class="campo"><label>3</label><input id="diagnosticoAlta3" readonly></div>
-                <div class="campo"><label>CIE 3</label><input id="cieAlta3" readonly></div>
-            </div>
-
-            <div class="fila">
-                <div class="campo"><label>4</label><input id="diagnosticoAlta4" readonly></div>
-                <div class="campo"><label>CIE 4</label><input id="cieAlta4" readonly></div>
-            </div>
-        </div>
-
-        <div class="seccion">
-            <h3>Procedimientos y/o cirugía médico/odontológico</h3>
-
-            <div class="fila">
-                <div class="campo">
-                    <label>Procedimientos</label>
-                    <textarea id="procedimientosCirugia" readonly></textarea>
-                </div>
-
-                <div class="campo">
-                    <label>Código CPT</label>
-                    <input id="codigoCpt" readonly>
-                </div>
-            </div>
-        </div>
-
-        <div class="seccion">
-            <h3>Exámenes</h3>
-
-            <div class="campo">
-                <label>Exámenes de ayuda diagnóstica por imagen</label>
-                <textarea id="examenesImagen" readonly></textarea>
             </div>
 
             <div class="campo">
-                <label>Exámenes de anatomía patológica y laboratorio clínico</label>
-                <textarea id="examenesLaboratorio" readonly></textarea>
+                <label>Ingreso al servicio</label>
+                <input id="fechaIngresoServicioTexto" readonly>
             </div>
+
+            <div class="campo">
+                <label>Alta del servicio</label>
+                <input id="fechaAltaServicioTexto" readonly>
+            </div>
+        </div>
+
+        <div class="seccion">
+            <h3>Diagnóstico de ingreso</h3>
+            <div id="diagnosticosIngresoVer" class="tabla-dinamica"></div>
+        </div>
+
+        <div class="seccion">
+            <h3>Diagnóstico de alta</h3>
+            <div id="diagnosticosAltaVer" class="tabla-dinamica"></div>
+        </div>
+
+        <div class="seccion">
+            <h3>Procedimientos Y/O Cirugías (s) Médico / Odontológico</h3>
+            <div id="procedimientosVer" class="tabla-dinamica"></div>
+        </div>
+
+        <div class="seccion">
+            <h3>Exámenes de ayuda diagnóstica por imagen</h3>
+            <div id="examenesImagenVer" class="tabla-dinamica"></div>
+        </div>
+
+        <div class="seccion">
+            <h3>Exámenes de anatomía patológica y laboratorio clínico</h3>
+            <div id="examenesLaboratorioVer" class="tabla-dinamica"></div>
         </div>
 
         <div class="seccion">
             <h3>Tratamiento recibido</h3>
-
-            <div class="fila">
-                <div class="campo"><label>Fármaco 1</label><input id="farmaco1" readonly></div>
-                <div class="campo"><label>N° días 1</label><input id="diasFarmaco1" readonly></div>
-            </div>
-
-            <div class="fila">
-                <div class="campo"><label>Fármaco 2</label><input id="farmaco2" readonly></div>
-                <div class="campo"><label>N° días 2</label><input id="diasFarmaco2" readonly></div>
-            </div>
-
-            <div class="fila">
-                <div class="campo"><label>Fármaco 3</label><input id="farmaco3" readonly></div>
-                <div class="campo"><label>N° días 3</label><input id="diasFarmaco3" readonly></div>
-            </div>
+            <div id="tratamientoVer" class="tabla-dinamica"></div>
         </div>
 
         <div class="seccion">
             <h3>Recomendaciones al alta</h3>
 
-            <div class="campo"><label>Recomendaciones</label><textarea id="recomendacionesAlta" readonly></textarea></div>
-            <div class="campo"><label>Otras indicaciones</label><textarea id="otrasIndicaciones" readonly></textarea></div>
-            <div class="campo"><label>Dieta</label><textarea id="dieta" readonly></textarea></div>
-            <div class="campo"><label>Cuidados higiénicos</label><textarea id="cuidadosHigienicos" readonly></textarea></div>
-            <div class="campo"><label>Vacunas</label><textarea id="vacunas" readonly></textarea></div>
-            <div class="campo"><label>Cuidados de traslado</label><textarea id="cuidadosTraslado" readonly></textarea></div>
+            <div class="linea-formulario">
+                <label>Recomendaciones</label>
+                <textarea id="recomendacionesAlta" readonly></textarea>
+            </div>
+
+            <div class="linea-formulario">
+                <label>Otras indicaciones</label>
+                <textarea id="otrasIndicaciones" readonly></textarea>
+            </div>
+
+            <div class="linea-formulario">
+                <label>Dieta</label>
+                <textarea id="dieta" readonly></textarea>
+            </div>
+
+            <div class="linea-formulario">
+                <label>Cuidados higiénicos</label>
+                <textarea id="cuidadosHigienicos" readonly></textarea>
+            </div>
+
+            <div class="linea-formulario">
+                <label>Vacunas</label>
+                <textarea id="vacunas" readonly></textarea>
+            </div>
+
+            <div class="linea-formulario">
+                <label>Cuidados de traslado</label>
+                <textarea id="cuidadosTraslado" readonly></textarea>
+            </div>
         </div>
 
         <div class="seccion">
             <h3>Motivo de alta</h3>
 
             <div class="radio-group">
-                <label><input id="motivoAltaMedica" type="radio" disabled> Alta médica</label>
-                <label><input id="motivoRetiroVoluntario" type="radio" disabled> Retiro voluntario</label>
-                <label><input id="motivoReferencia" type="radio" disabled> Referencia</label>
-                <label><input id="motivoContrarreferencia" type="radio" disabled> Contrarreferencia</label>
+                <label><input id="motivoAltaMedica" type="radio" disabled> Alta Médica</label>
+                <label><input id="motivoRetiroVoluntario" type="radio" disabled> Retiro Voluntario</label>
+                <label><input id="motivoReferencia" type="radio" disabled> Referencia o Contrarreferencia</label>
                 <label><input id="motivoFuga" type="radio" disabled> Fuga</label>
                 <label><input id="motivoFallecido" type="radio" disabled> Fallecido</label>
             </div>
         </div>
 
         <div class="seccion">
-            <h3>Condición de alta</h3>
+            <h3>Condición</h3>
 
             <div class="radio-group">
                 <label><input id="condicionCurado" type="radio" disabled> Curado</label>
@@ -334,49 +458,63 @@
         </div>
 
         <div class="seccion">
-            <h3>Citas en consultorio</h3>
+            <h3>Citas</h3>
+            <div id="citasVer" class="tabla-citas"></div>
+        </div>
 
-            <div class="fila">
-                <div class="campo"><label>Cita 1</label><input id="citaConsultorio1" readonly></div>
-                <div class="campo"><label>Fecha 1</label><input id="fechaCita1" readonly></div>
-            </div>
-
-            <div class="fila">
-                <div class="campo"><label>Cita 2</label><input id="citaConsultorio2" readonly></div>
-                <div class="campo"><label>Fecha 2</label><input id="fechaCita2" readonly></div>
-            </div>
-
-            <div class="fila">
-                <div class="campo"><label>Cita 3</label><input id="citaConsultorio3" readonly></div>
-                <div class="campo"><label>Fecha 3</label><input id="fechaCita3" readonly></div>
+        <div class="seccion">
+            <div class="linea-final">
+                <label>PRESENTAR ESTE INFORME DE ALTA AL MÉDICO DE TURNO</label>
+                <input id="medicoTurno" readonly>
             </div>
         </div>
 
         <div class="seccion">
-            <h3>Firma del padre o apoderado</h3>
+            <h3>Firmas</h3>
 
             <div class="fila">
-                <div class="campo"><label>Firma / Nombre</label><input id="firmaPadreApoderado" readonly></div>
-                <div class="campo"><label>DNI</label><input id="dniApoderado" readonly></div>
-                <div class="campo"><label>Parentesco</label><input id="parentesco" readonly></div>
+                <div class="campo">
+                    <label>Firma del Padre o Apoderado</label>
+                    <input id="firmaPadreApoderado" readonly>
+                </div>
+
+                <div class="campo" style="max-width:180px;">
+                    <label>DNI</label>
+                    <input id="dniApoderado" readonly>
+                </div>
             </div>
-        </div>
 
-        <div class="seccion">
-            <h3>Firmas del personal médico</h3>
+            <div class="campo">
+                <label>Parentesco</label>
+                <input id="parentesco" readonly>
+            </div>
 
-            <div class="fila">
-                <div class="campo"><label>Jefe de servicio</label><input id="jefeServicio" readonly></div>
-                <div class="campo"><label>Médico tratante</label><input id="medicoTratante" readonly></div>
+            <div class="campo">
+                <label>Huella Digital en Iletrado</label>
+                <input id="huellaDigitalIletrado" readonly>
+            </div>
+
+            <div class="seccion">
+                <div class="fila-firmas">
+                    <div class="col-firma">
+                        <label>Jefe de Servicio</label>
+                        <input id="jefeServicio" class="input-firma" readonly>
+                        <div class="btn-firma">Firma</div>
+                    </div>
+
+                    <div class="col-firma">
+                        <label>Médico tratante</label>
+                        <input id="medicoTratante" class="input-firma" readonly>
+                        <div class="btn-firma">Firma</div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-function formatearFechaHora(texto) {
-    if (!texto) return "";
-    return texto.replace("-", "/");
-        }
+// @ts-nocheck
+
 function setValor(id, valor) {
     const elemento = document.getElementById(id);
     if (elemento) elemento.value = valor ?? "";
@@ -390,6 +528,67 @@ function setCheck(id, valor) {
 function fechaCorta(fecha) {
     if (!fecha) return "";
     return fecha.split("T")[0];
+}
+
+function pintarLineasTexto(containerId, texto) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = "";
+
+    if (!texto || texto.trim() === "") {
+        container.innerHTML = "<p>No registrado.</p>";
+        return;
+    }
+
+    const lineas = texto.split("\n").filter(x => x.trim() !== "");
+
+    lineas.forEach((linea, index) => {
+        const div = document.createElement("div");
+        div.className = "fila-dinamica";
+
+        div.innerHTML = `
+            <div class="numero-fila">${index + 1}</div>
+            <div class="campo">
+                <textarea readonly>${linea}</textarea>
+            </div>
+        `;
+
+        container.appendChild(div);
+    });
+}
+
+function pintarCitas(e) {
+    const container = document.getElementById("citasVer");
+    container.innerHTML = "";
+
+    const citas = [
+        { cita: e.citaConsultorio1, fecha: e.fechaCita1 },
+        { cita: e.citaConsultorio2, fecha: e.fechaCita2 },
+        { cita: e.citaConsultorio3, fecha: e.fechaCita3 }
+    ].filter(x => (x.cita && x.cita.trim() !== "") || (x.fecha && x.fecha.trim() !== ""));
+
+    if (citas.length === 0) {
+        container.innerHTML = "<p>No hay citas registradas.</p>";
+        return;
+    }
+
+    citas.forEach(cita => {
+        const div = document.createElement("div");
+        div.className = "fila-cita";
+
+        div.innerHTML = `
+            <div class="col-texto">
+                <span class="label-fijo">CITA EN EL CONSULTORIO (S)</span>
+                <input value="${cita.cita ?? ""}" readonly>
+            </div>
+
+            <div class="col-fecha">
+                <span class="label-fijo">FECHA</span>
+                <input value="${cita.fecha ?? ""}" readonly>
+            </div>
+        `;
+
+        container.appendChild(div);
+    });
 }
 
 async function cargarInformeAlta() {
@@ -429,36 +628,12 @@ async function cargarInformeAlta() {
     setValor("fechaIngresoServicioTexto", e.fechaIngresoServicioTexto);
     setValor("fechaAltaServicioTexto", e.fechaAltaServicioTexto);
 
-    setValor("diagnosticoIngreso1", e.diagnosticoIngreso1);
-    setValor("cieIngreso1", e.cieIngreso1);
-    setValor("diagnosticoIngreso2", e.diagnosticoIngreso2);
-    setValor("cieIngreso2", e.cieIngreso2);
-    setValor("diagnosticoIngreso3", e.diagnosticoIngreso3);
-    setValor("cieIngreso3", e.cieIngreso3);
-    setValor("diagnosticoIngreso4", e.diagnosticoIngreso4);
-    setValor("cieIngreso4", e.cieIngreso4);
-
-    setValor("diagnosticoAlta1", e.diagnosticoAlta1);
-    setValor("cieAlta1", e.cieAlta1);
-    setValor("diagnosticoAlta2", e.diagnosticoAlta2);
-    setValor("cieAlta2", e.cieAlta2);
-    setValor("diagnosticoAlta3", e.diagnosticoAlta3);
-    setValor("cieAlta3", e.cieAlta3);
-    setValor("diagnosticoAlta4", e.diagnosticoAlta4);
-    setValor("cieAlta4", e.cieAlta4);
-
-    setValor("procedimientosCirugia", e.procedimientosCirugia);
-    setValor("codigoCpt", e.codigoCpt);
-
-    setValor("examenesImagen", e.examenesImagen);
-    setValor("examenesLaboratorio", e.examenesLaboratorio);
-
-    setValor("farmaco1", e.farmaco1);
-    setValor("diasFarmaco1", e.diasFarmaco1);
-    setValor("farmaco2", e.farmaco2);
-    setValor("diasFarmaco2", e.diasFarmaco2);
-    setValor("farmaco3", e.farmaco3);
-    setValor("diasFarmaco3", e.diasFarmaco3);
+    pintarLineasTexto("diagnosticosIngresoVer", e.diagnosticoIngreso1);
+    pintarLineasTexto("diagnosticosAltaVer", e.diagnosticoAlta1);
+    pintarLineasTexto("procedimientosVer", e.procedimientosCirugia);
+    pintarLineasTexto("examenesImagenVer", e.examenesImagen);
+    pintarLineasTexto("examenesLaboratorioVer", e.examenesLaboratorio);
+    pintarLineasTexto("tratamientoVer", e.farmaco1);
 
     setValor("recomendacionesAlta", e.recomendacionesAlta);
     setValor("otrasIndicaciones", e.otrasIndicaciones);
@@ -469,8 +644,7 @@ async function cargarInformeAlta() {
 
     setCheck("motivoAltaMedica", e.motivoAltaMedica);
     setCheck("motivoRetiroVoluntario", e.motivoRetiroVoluntario);
-    setCheck("motivoReferencia", e.motivoReferencia);
-    setCheck("motivoContrarreferencia", e.motivoContrarreferencia);
+    setCheck("motivoReferencia", e.motivoReferencia || e.motivoContrarreferencia);
     setCheck("motivoFuga", e.motivoFuga);
     setCheck("motivoFallecido", e.motivoFallecido);
 
@@ -483,16 +657,13 @@ async function cargarInformeAlta() {
     setCheck("pronosticoBueno", e.pronosticoBueno);
     setCheck("pronosticoReservado", e.pronosticoReservado);
 
-    setValor("citaConsultorio1", e.citaConsultorio1);
-    setValor("fechaCita1", e.fechaCita1);
-    setValor("citaConsultorio2", e.citaConsultorio2);
-    setValor("fechaCita2", e.fechaCita2);
-    setValor("citaConsultorio3", e.citaConsultorio3);
-    setValor("fechaCita3", e.fechaCita3);
+    pintarCitas(e);
 
+    setValor("medicoTurno", e.medicoTurno);
     setValor("firmaPadreApoderado", e.firmaPadreApoderado);
     setValor("dniApoderado", e.dniApoderado);
     setValor("parentesco", e.parentesco);
+    setValor("huellaDigitalIletrado", e.huellaDigitalIletrado);
 
     setValor("jefeServicio", e.jefeServicio);
     setValor("medicoTratante", e.medicoTratante);
