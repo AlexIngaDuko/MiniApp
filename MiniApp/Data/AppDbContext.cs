@@ -14,6 +14,7 @@ namespace MiniApp.Data
 
         public DbSet<Epicrisis> Epicrisis { get; set; }
         public DbSet<ExamenAuxiliar> ExamenesAuxiliares { get; set; }
+        public DbSet<ProcedimientoTerapeuticoEpicrisis> ProcedimientosTerapeuticosEpicrisis { get; set; }
         public DbSet<InformeAlta> InformesAlta { get; set; }
     }
 }

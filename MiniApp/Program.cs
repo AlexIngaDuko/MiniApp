@@ -27,6 +27,17 @@ using (var scope = app.Services.CreateScope())
 
     db.Database.Migrate();
 
+    db.Database.ExecuteSqlRaw(@"
+        IF OBJECT_ID('ProcedimientosTerapeuticosEpicrisis', 'U') IS NULL
+        CREATE TABLE ProcedimientosTerapeuticosEpicrisis (
+            Id int IDENTITY(1,1) PRIMARY KEY,
+            Procedimiento nvarchar(max) NULL,
+            Codigo nvarchar(max) NULL,
+            EpicrisisId int NOT NULL,
+            CONSTRAINT FK_ProcedimientosTerapeuticosEpicrisis_Epicrisis
+            FOREIGN KEY (EpicrisisId) REFERENCES Epicrisis(Id) ON DELETE CASCADE
+        );
+    ");
 
     db.Database.ExecuteSqlRaw(@"
         IF OBJECT_ID('InformesAlta', 'U') IS NULL
@@ -127,6 +138,7 @@ using (var scope = app.Services.CreateScope())
         ALTER TABLE InformesAlta ADD HuellaDigitalIletrado nvarchar(max) NULL;
     ");
 }
+    
 
 if (app.Environment.IsDevelopment())
 {

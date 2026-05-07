@@ -500,41 +500,11 @@
             <div class="seccion">
                 <h3>Procedimientos terapéuticos</h3>
 
-                <div class="fila">
-                    <div class="campo">
-                        <label>Procedimiento 1</label>
-                        <input id="procedimientoTerapeutico1" type="text">
-                    </div>
+                <div id="procedimientosTerapeuticosContainer"></div>
 
-                    <div class="campo">
-                        <label>Código 1</label>
-                        <input id="codigoProcedimiento1" type="text">
-                    </div>
-                </div>
-
-                <div class="fila">
-                    <div class="campo">
-                        <label>Procedimiento 2</label>
-                        <input id="procedimientoTerapeutico2" type="text">
-                    </div>
-
-                    <div class="campo">
-                        <label>Código 2</label>
-                        <input id="codigoProcedimiento2" type="text">
-                    </div>
-                </div>
-
-                <div class="fila">
-                    <div class="campo">
-                        <label>Procedimiento 3</label>
-                        <input id="procedimientoTerapeutico3" type="text">
-                    </div>
-
-                    <div class="campo">
-                        <label>Código 3</label>
-                        <input id="codigoProcedimiento3" type="text">
-                    </div>
-                </div>
+                <button type="button" class="btn-secundario" onclick="agregarProcedimientoTerapeutico()">
+                    + Agregar procedimiento terapéutico
+                </button>
             </div>
 
             <div class="seccion">
@@ -758,6 +728,33 @@
             container.appendChild(div);
         }
 
+        function agregarProcedimientoTerapeutico() {
+            const container = document.getElementById("procedimientosTerapeuticosContainer");
+
+            const div = document.createElement("div");
+            div.className = "examen-item procedimiento-terapeutico-item";
+
+            div.innerHTML = `
+                <div class="fila">
+                    <div class="campo">
+                        <label>Procedimiento terapéutico</label>
+                        <input class="procedimientoTerapeutico" type="text">
+                    </div>
+
+                    <div class="campo">
+                        <label>Código</label>
+                        <input class="codigoProcedimiento" type="text">
+                    </div>
+                </div>
+
+                <button type="button" class="btn-eliminar" onclick="this.parentElement.remove()">
+                    Eliminar procedimiento
+                </button>
+            `;
+
+            container.appendChild(div);
+        }
+
         document.getElementById("epicrisisForm").addEventListener("submit", async function (e) {
             e.preventDefault();
 
@@ -776,6 +773,24 @@
             const tipoAltaSeleccionada = radio("tipoAlta");
             const inmunizacionSeleccionada = radio("inmunizacion");
             const necropsiaSeleccionada = radio("necropsia");
+
+            const procedimientosTerapeuticos = [];
+
+            document.querySelectorAll(".procedimiento-terapeutico-item").forEach(item => {
+                procedimientosTerapeuticos.push({
+                    procedimiento: item.querySelector(".procedimientoTerapeutico").value,
+                    codigo: item.querySelector(".codigoProcedimiento").value
+                });
+            });
+
+            const procedimientosTerapeuticos = [];
+
+            document.querySelectorAll(".procedimiento-terapeutico-item").forEach(item => {
+                procedimientosTerapeuticos.push({
+                    procedimiento: item.querySelector(".procedimientoTerapeutico").value,
+                    codigo: item.querySelector(".codigoProcedimiento").value
+                });
+            });
 
             const epicrisis = {
                 servicio: valor("servicio"),
@@ -850,14 +865,16 @@
                 via3: valor("via3"),
                 tiempoAdministracion3: valor("tiempoAdministracion3"),
 
-                procedimientoTerapeutico1: valor("procedimientoTerapeutico1"),
-                codigoProcedimiento1: valor("codigoProcedimiento1"),
+                procedimientosTerapeuticos: procedimientosTerapeuticos,
 
-                procedimientoTerapeutico2: valor("procedimientoTerapeutico2"),
-                codigoProcedimiento2: valor("codigoProcedimiento2"),
+                procedimientoTerapeutico1: procedimientosTerapeuticos[0]?.procedimiento || "",
+                codigoProcedimiento1: procedimientosTerapeuticos[0]?.codigo || "",
 
-                procedimientoTerapeutico3: valor("procedimientoTerapeutico3"),
-                codigoProcedimiento3: valor("codigoProcedimiento3"),
+                procedimientoTerapeutico2: procedimientosTerapeuticos[1]?.procedimiento || "",
+                codigoProcedimiento2: procedimientosTerapeuticos[1]?.codigo || "",
+
+                procedimientoTerapeutico3: procedimientosTerapeuticos[2]?.procedimiento || "",
+                codigoProcedimiento3: procedimientosTerapeuticos[2]?.codigo || "",
 
                 diagnosticoAlta: valor("diagnosticoAlta"),
                 cie10Alta: valor("cie10Alta"),
@@ -915,6 +932,7 @@
         });
 
         agregarExamen();
+        agregarProcedimientoTerapeutico();
     </script>
 
 </body>

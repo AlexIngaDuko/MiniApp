@@ -19,11 +19,10 @@ namespace MiniApp.Controllers
         [HttpGet]
         public async Task<IActionResult> GetEpicrisis()
         {
-            var epicrisis = await _context.Epicrisis
+            return Ok(await _context.Epicrisis
                 .Include(e => e.ExamenesAuxiliares)
-                .ToListAsync();
-
-            return Ok(epicrisis);
+                .Include(e => e.ProcedimientosTerapeuticos)
+                .ToListAsync());
         }
 
         [HttpGet("count")]
@@ -38,10 +37,11 @@ namespace MiniApp.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetEpicrisisById(int id)
+        public async Task<IActionResult> GetEpicrisis(int id)
         {
             var epicrisis = await _context.Epicrisis
                 .Include(e => e.ExamenesAuxiliares)
+                .Include(e => e.ProcedimientosTerapeuticos)
                 .FirstOrDefaultAsync(e => e.Id == id);
 
             if (epicrisis == null)

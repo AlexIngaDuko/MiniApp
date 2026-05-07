@@ -2,6 +2,7 @@
 {
     public class Epicrisis
     {
+        public List<ProcedimientoTerapeuticoEpicrisis> ProcedimientosTerapeuticos { get; set; } = new();
         public int Id { get; set; }
 
         public string? Servicio { get; set; }
