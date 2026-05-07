@@ -7,6 +7,7 @@
         public string? Servicio { get; set; }
         public string? NumeroCama { get; set; }
         public string? NumeroHistoriaClinica { get; set; }
+        public string? DniPaciente { get; set; }
         public string? NumeroSIS { get; set; }
         public string? Sala { get; set; }
 

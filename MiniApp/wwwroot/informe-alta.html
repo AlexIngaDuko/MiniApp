@@ -383,6 +383,16 @@
                     </div>
 
                     <div class="campo">
+                        <label>DNI Paciente</label>
+                        <input id="dniPaciente"
+                               maxlength="8"
+                               minlength="8"
+                               oninput="soloNumeros(this)"
+                               inputmode="numeric"
+                               required>
+                    </div>
+
+                    <div class="campo">
                         <label>N° SIS</label>
                         <input id="numeroSIS" oninput="soloNumeros(this)" inputmode="numeric">
                     </div>
@@ -481,9 +491,30 @@
                 <div class="campo buscador-diagnostico">
                     <label>Buscar diagnóstico previo</label>
 
-                    <div class="input-con-icono">
-                        <span class="icono-lupa">🔍</span>
-                        <input id="buscarDiagnosticoIngreso" type="text">
+                    <div class="fila">
+                        <div class="campo">
+                            <label>DNI</label>
+                            <div class="input-con-icono">
+                                <span class="icono-lupa">🔍</span>
+                                <input id="buscarDiagnosticoDni" type="text" inputmode="numeric" oninput="soloNumeros(this)">
+                            </div>
+                        </div>
+
+                        <div class="campo">
+                            <label>N° Historia Clínica</label>
+                            <div class="input-con-icono">
+                                <span class="icono-lupa">🔍</span>
+                                <input id="buscarDiagnosticoHistoria" type="text" inputmode="numeric" oninput="soloNumeros(this)">
+                            </div>
+                        </div>
+
+                        <div class="campo">
+                            <label>Nombre completo</label>
+                            <div class="input-con-icono">
+                                <span class="icono-lupa">🔍</span>
+                                <input id="buscarDiagnosticoNombre" type="text">
+                            </div>
+                        </div>
                     </div>
 
                     <div id="resultadosDiagnosticoIngreso" class="resultados-busqueda"></div>
@@ -753,12 +784,19 @@
             diagnosticosPreviosIngreso = [];
 
             informes.forEach(informe => {
+                const nombre = informe.nombresApellidos || "";
+                const historia = informe.numeroHistoriaClinica || "";
+                const dni = informe.dniPaciente || "";
+
                 for (let i = 1; i <= 4; i++) {
                     const diagnostico = informe[`diagnosticoIngreso${i}`];
                     const cie = informe[`cieIngreso${i}`];
 
                     if (diagnostico && diagnostico.trim() !== "") {
                         diagnosticosPreviosIngreso.push({
+                            nombre: nombre,
+                            historia: historia,
+                            dni: dni,
                             diagnostico: diagnostico,
                             cie: cie || ""
                         });
@@ -767,32 +805,46 @@
             });
         }
 
-        function buscarDiagnosticoIngreso(texto) {
+        function buscarDiagnosticoIngreso() {
+            const dni = document.getElementById("buscarDiagnosticoDni").value.toLowerCase();
+            const historia = document.getElementById("buscarDiagnosticoHistoria").value.toLowerCase();
+            const nombre = document.getElementById("buscarDiagnosticoNombre").value.toLowerCase();
+
             const contenedor = document.getElementById("resultadosDiagnosticoIngreso");
             contenedor.innerHTML = "";
 
-            if (!texto.trim()) {
+            if (!dni && !historia && !nombre) {
                 contenedor.style.display = "none";
                 return;
             }
 
-            const resultados = diagnosticosPreviosIngreso.filter(x =>
-                x.diagnostico.toLowerCase().includes(texto.toLowerCase())
-            );
+            const resultados = diagnosticosPreviosIngreso.filter(x => {
+                const coincideDni = dni ? (x.dni || "").toLowerCase().includes(dni) : true;
+                const coincideHistoria = historia ? (x.historia || "").toLowerCase().includes(historia) : true;
+                const coincideNombre = nombre ? (x.nombre || "").toLowerCase().includes(nombre) : true;
+
+                return coincideDni && coincideHistoria && coincideNombre;
+            });
 
             if (resultados.length === 0) {
-                contenedor.style.display = "none";
+                contenedor.innerHTML = `<div class="resultado-item">No se encontraron diagnósticos previos</div>`;
+                contenedor.style.display = "block";
                 return;
             }
 
             resultados.slice(0, 10).forEach(item => {
                 const div = document.createElement("div");
                 div.className = "resultado-item";
-                div.innerText = `${item.diagnostico} ${item.cie ? "- " + item.cie : ""}`;
+
+                div.innerText = `${item.nombre || "Sin nombre"} | HC: ${item.historia || "-"} | DNI: ${item.dni || "-"} | ${item.diagnostico} ${item.cie ? "- " + item.cie : ""}`;
 
                 div.onclick = function () {
                     agregarDiagnosticoIngreso(item.diagnostico, item.cie);
-                    document.getElementById("buscarDiagnosticoIngreso").value = "";
+
+                    document.getElementById("buscarDiagnosticoDni").value = "";
+                    document.getElementById("buscarDiagnosticoHistoria").value = "";
+                    document.getElementById("buscarDiagnosticoNombre").value = "";
+
                     contenedor.style.display = "none";
                 };
 
@@ -802,9 +854,9 @@
             contenedor.style.display = "block";
         }
 
-        document.getElementById("buscarDiagnosticoIngreso").addEventListener("input", function () {
-            buscarDiagnosticoIngreso(this.value);
-        });
+        document.getElementById("buscarDiagnosticoDni").addEventListener("input", buscarDiagnosticoIngreso);
+        document.getElementById("buscarDiagnosticoHistoria").addEventListener("input", buscarDiagnosticoIngreso);
+        document.getElementById("buscarDiagnosticoNombre").addEventListener("input", buscarDiagnosticoIngreso);
 
         cargarDiagnosticosPreviosIngreso();
 
@@ -998,6 +1050,13 @@
         document.getElementById("form").addEventListener("submit", async e => {
             e.preventDefault();
 
+            const dniPaciente = val("dniPaciente");
+
+            if (dniPaciente.length !== 8) {
+                alert("El DNI del paciente debe contener exactamente 8 dígitos.");
+                return;
+            }
+
             const diagnosticosIngreso = [];
             document.querySelectorAll(".diagnostico-ingreso-item").forEach((fila, index) => {
                 diagnosticosIngreso.push(`${index + 1}. ${fila.querySelector(".diagnosticoIngreso").value} | CIE: ${fila.querySelector(".cieIngreso").value}`);
@@ -1046,6 +1105,7 @@
                 servicio: val("servicio"),
                 numeroCama: val("numeroCama"),
                 numeroHistoriaClinica: val("numeroHistoriaClinica"),
+                dniPaciente: val("dniPaciente"),
                 numeroSIS: val("numeroSIS"),
                 sala: val("sala"),
 

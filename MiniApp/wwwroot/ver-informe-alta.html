@@ -293,6 +293,11 @@
                 </div>
 
                 <div class="campo">
+                    <label>DNI Paciente</label>
+                    <input id="dniPaciente" readonly>
+                </div>
+
+                <div class="campo">
                     <label>N° SIS</label>
                     <input id="numeroSIS" readonly>
                 </div>
@@ -612,6 +617,7 @@ async function cargarInformeAlta() {
     setValor("servicio", e.servicio);
     setValor("numeroCama", e.numeroCama);
     setValor("numeroHistoriaClinica", e.numeroHistoriaClinica);
+    setValor("dniPaciente", e.dniPaciente);
     setValor("numeroSIS", e.numeroSIS);
     setValor("sala", e.sala);
 
