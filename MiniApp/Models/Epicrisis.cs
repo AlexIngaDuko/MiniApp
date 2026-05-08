@@ -115,6 +115,10 @@
         public string? NombreFirmaMedicoResidente1 { get; set; }
         public string? NombreFirmaMedicoTratante { get; set; }
         public string? NombreFirmaMedicoResidente2 { get; set; }
+        public string? NombresFinales { get; set; }
+        public string? ApellidosFinales { get; set; }
+        public string? HcFinal { get; set; }
+        public string? CamaFinal { get; set; }
 
         public List<ExamenAuxiliar> ExamenesAuxiliares { get; set; } = new();
     }

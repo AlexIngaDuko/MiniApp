@@ -616,6 +616,32 @@
                 </div>
             </div>
 
+            <div class="seccion">
+                <h3>Datos finales del paciente</h3>
+
+                <div class="fila">
+                    <div class="campo">
+                        <label>Nombres</label>
+                        <input id="nombresFinales" type="text" oninput="soloLetras(this)">
+                    </div>
+
+                    <div class="campo">
+                        <label>Apellidos</label>
+                        <input id="apellidosFinales" type="text" oninput="soloLetras(this)">
+                    </div>
+
+                    <div class="campo">
+                        <label>N° HC</label>
+                        <input id="hcFinal" type="text" inputmode="numeric" onkeydown="bloquearNoNumerico(event)">
+                    </div>
+
+                    <div class="campo">
+                        <label>N° Cama</label>
+                        <input id="camaFinal" type="text" oninput="soloCama(this)">
+                    </div>
+                </div>
+            </div>
+
             <button type="submit" class="btn-principal">
                 Guardar Epicrisis
             </button>
@@ -695,7 +721,7 @@
             const container = document.getElementById("examenesContainer");
 
             const div = document.createElement("div");
-            div.className = "examen-item";
+            div.className = "examen-item examen-auxiliar-item";
 
             div.innerHTML = `
                 <div class="fila">
@@ -760,7 +786,7 @@
 
             const examenes = [];
 
-            document.querySelectorAll(".examen-item").forEach(item => {
+            document.querySelectorAll(".examen-auxiliar-item").forEach(item => {
                 examenes.push({
                     nombreExamen: item.querySelector(".nombreExamen").value,
                     resultado: item.querySelector(".resultadoExamen").value,
@@ -773,15 +799,6 @@
             const tipoAltaSeleccionada = radio("tipoAlta");
             const inmunizacionSeleccionada = radio("inmunizacion");
             const necropsiaSeleccionada = radio("necropsia");
-
-            const procedimientosTerapeuticos = [];
-
-            document.querySelectorAll(".procedimiento-terapeutico-item").forEach(item => {
-                procedimientosTerapeuticos.push({
-                    procedimiento: item.querySelector(".procedimientoTerapeutico").value,
-                    codigo: item.querySelector(".codigoProcedimiento").value
-                });
-            });
 
             const procedimientosTerapeuticos = [];
 
@@ -867,15 +884,6 @@
 
                 procedimientosTerapeuticos: procedimientosTerapeuticos,
 
-                procedimientoTerapeutico1: procedimientosTerapeuticos[0]?.procedimiento || "",
-                codigoProcedimiento1: procedimientosTerapeuticos[0]?.codigo || "",
-
-                procedimientoTerapeutico2: procedimientosTerapeuticos[1]?.procedimiento || "",
-                codigoProcedimiento2: procedimientosTerapeuticos[1]?.codigo || "",
-
-                procedimientoTerapeutico3: procedimientosTerapeuticos[2]?.procedimiento || "",
-                codigoProcedimiento3: procedimientosTerapeuticos[2]?.codigo || "",
-
                 diagnosticoAlta: valor("diagnosticoAlta"),
                 cie10Alta: valor("cie10Alta"),
                 nutricional: valor("nutricional"),
@@ -905,7 +913,10 @@
                 nombreFirmaMedicoResidente1: valor("nombreFirmaMedicoResidente1"),
                 nombreFirmaMedicoTratante: valor("nombreFirmaMedicoTratante"),
                 nombreFirmaMedicoResidente2: valor("nombreFirmaMedicoResidente2"),
-
+                nombresFinales: valor("nombresFinales"),
+                apellidosFinales: valor("apellidosFinales"),
+                hcFinal: valor("hcFinal"),
+                camaFinal: valor("camaFinal"),
                 examenesAuxiliares: examenes
             };
 
@@ -920,14 +931,26 @@
             const mensaje = document.getElementById("mensaje");
 
             if (response.ok) {
+
                 mensaje.style.color = "green";
                 mensaje.innerText = "Epicrisis guardada correctamente.";
+
                 document.getElementById("epicrisisForm").reset();
+
                 document.getElementById("examenesContainer").innerHTML = "";
+                document.getElementById("procedimientosTerapeuticosContainer").innerHTML = "";
+
                 agregarExamen();
+                agregarProcedimientoTerapeutico();
+
             } else {
+
+                const errorTexto = await response.text();
+
                 mensaje.style.color = "red";
-                mensaje.innerText = "Error al guardar la epicrisis.";
+                mensaje.innerText = "Error al guardar la epicrisis: " + errorTexto;
+
+                console.error("Error al guardar epicrisis:", errorTexto);
             }
         });
 

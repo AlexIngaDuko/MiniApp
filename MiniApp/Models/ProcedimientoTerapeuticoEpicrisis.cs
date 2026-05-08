@@ -1,4 +1,6 @@
-﻿namespace MiniApp.Models
+﻿using System.Text.Json.Serialization;
+namespace MiniApp.Models
+
 {
     public class ProcedimientoTerapeuticoEpicrisis
     {
@@ -8,6 +10,7 @@
         public string? Codigo { get; set; }
 
         public int EpicrisisId { get; set; }
+        [JsonIgnore]
         public Epicrisis? Epicrisis { get; set; }
     }
 }

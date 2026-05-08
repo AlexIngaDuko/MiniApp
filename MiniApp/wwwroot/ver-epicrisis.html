@@ -579,6 +579,32 @@
                 </div>
             </div>
         </div>
+
+        <div class="seccion">
+            <h3>Datos finales del paciente</h3>
+
+            <div class="fila">
+                <div class="campo">
+                    <label>Nombres</label>
+                    <input id="nombresFinales" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>Apellidos</label>
+                    <input id="apellidosFinales" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>N° HC</label>
+                    <input id="hcFinal" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>N° Cama</label>
+                    <input id="camaFinal" readonly>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -721,6 +747,11 @@
             setValor("nombreFirmaMedicoResidente1", e.nombreFirmaMedicoResidente1);
             setValor("nombreFirmaMedicoTratante", e.nombreFirmaMedicoTratante);
             setValor("nombreFirmaMedicoResidente2", e.nombreFirmaMedicoResidente2);
+
+            setValor("nombresFinales", e.nombresFinales);
+            setValor("apellidosFinales", e.apellidosFinales);
+            setValor("hcFinal", e.hcFinal);
+            setValor("camaFinal", e.camaFinal);
 
             const contenedor = document.getElementById("examenesAuxiliares");
             contenedor.innerHTML = "";

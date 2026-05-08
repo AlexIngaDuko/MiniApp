@@ -28,6 +28,20 @@ using (var scope = app.Services.CreateScope())
     db.Database.Migrate();
 
     db.Database.ExecuteSqlRaw(@"
+        IF COL_LENGTH('Epicrisis', 'NombresFinales') IS NULL
+            ALTER TABLE Epicrisis ADD NombresFinales nvarchar(max) NULL;
+
+        IF COL_LENGTH('Epicrisis', 'ApellidosFinales') IS NULL
+            ALTER TABLE Epicrisis ADD ApellidosFinales nvarchar(max) NULL;
+
+        IF COL_LENGTH('Epicrisis', 'HcFinal') IS NULL
+            ALTER TABLE Epicrisis ADD HcFinal nvarchar(max) NULL;
+
+        IF COL_LENGTH('Epicrisis', 'CamaFinal') IS NULL
+            ALTER TABLE Epicrisis ADD CamaFinal nvarchar(max) NULL;
+    ");
+
+    db.Database.ExecuteSqlRaw(@"
         IF OBJECT_ID('ProcedimientosTerapeuticosEpicrisis', 'U') IS NULL
         CREATE TABLE ProcedimientosTerapeuticosEpicrisis (
             Id int IDENTITY(1,1) PRIMARY KEY,
