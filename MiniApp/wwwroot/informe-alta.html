@@ -350,6 +350,52 @@
             background-color: #0b5ed7; 
             }
 
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+        }
+
+        .modal-contenido {
+            background: white;
+            max-width: 520px;
+            margin: 80px auto;
+            padding: 20px;
+            border: 2px solid #333;
+            border-radius: 8px;
+        }
+
+        .btn-principal {
+            background: #16a34a;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+            .btn-principal:hover {
+                background: #15803d;
+            }
+
+        .btn-secundario {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+            .btn-secundario:hover {
+                background: #1d4ed8;
+            }
+
     </style>
 </head>
 
@@ -701,7 +747,7 @@
                 <div class="seccion">
                     <div class="fila-firmas">
 
-              
+
                         <div class="col-firma">
                             <label>Jefe de Servicio</label>
                             <input type="text" id="jefeServicio" class="input-firma">
@@ -709,7 +755,7 @@
                             <button type="button" class="btn-firma">Firma</button>
                         </div>
 
-                        
+
                         <div class="col-firma">
                             <label>Médico tratante</label>
                             <input type="text" id="medicoTratante" class="input-firma">
@@ -721,7 +767,11 @@
                 </div>
             </div>
 
-            <button>Guardar</button>
+            <button type="button" class="btn-principal" onclick="abrirModalReceta()">
+                Enviar receta médica
+            </button>
+
+            <button>Guardar Informe de Alta</button>
 
         </form>
 
@@ -1047,6 +1097,76 @@
             return `${partes[2]}/${partes[1]}/${partes[0]}`;
         }
 
+        function abrirModalReceta() {
+            document.getElementById("modalReceta").style.display = "block";
+            document.getElementById("mensajeEnvioReceta").innerText = "";
+        }
+
+        function cerrarModalReceta() {
+            document.getElementById("modalReceta").style.display = "none";
+        }
+
+        function soloNumerosInput(input) {
+            input.value = input.value.replace(/[^0-9]/g, "");
+        }
+
+        function obtenerTratamientoRecibido() {
+            const tratamientos = [];
+
+            document.querySelectorAll(".tratamiento-item").forEach((fila, index) => {
+                const farmaco = fila.querySelector(".farmaco")?.value || "";
+                const dias = fila.querySelector(".diasFarmaco")?.value || "";
+
+                if (farmaco.trim() !== "" || dias.trim() !== "") {
+                    tratamientos.push(`${index + 1}. ${farmaco} | Días: ${dias}`);
+                }
+            });
+
+            return tratamientos.join("\n");
+        }
+
+        async function enviarRecetaCorreo() {
+            const correo = val("correoPaciente");
+            const receta = obtenerTratamientoRecibido();
+
+            if (!correo) {
+                alert("Ingrese el correo del paciente.");
+                return;
+            }
+
+            const response = await fetch("/api/Recetas/enviar-correo", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ correo, receta })
+            });
+
+            const texto = await response.text();
+
+            document.getElementById("mensajeEnvioReceta").style.color = response.ok ? "green" : "red";
+            document.getElementById("mensajeEnvioReceta").innerText = texto;
+        }
+
+        async function enviarRecetaSMS() {
+            const celular = val("celularPaciente");
+            const receta = obtenerTratamientoRecibido();
+
+            if (!celular) {
+                alert("Ingrese el número de celular.");
+                return;
+            }
+
+            const response = await fetch("/api/Recetas/enviar-sms", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ celular, receta })
+            });
+
+            const texto = await response.text();
+
+            document.getElementById("mensajeEnvioReceta").style.color = response.ok ? "green" : "red";
+            document.getElementById("mensajeEnvioReceta").innerText = texto;
+        }
+
         document.getElementById("form").addEventListener("submit", async e => {
             e.preventDefault();
 
@@ -1197,5 +1317,34 @@
         agregarProcedimiento();
     </script>
 
+    <div id="modalReceta" class="modal">
+        <div class="modal-contenido">
+            <h3>Enviar receta médica</h3>
+
+            <div class="campo">
+                <label>Correo del paciente</label>
+                <input id="correoPaciente" type="email">
+
+                <button type="button" class="btn-principal" onclick="enviarRecetaCorreo()">
+                    Enviar a correo
+                </button>
+            </div>
+
+            <div class="campo">
+                <label>Número de celular</label>
+                <input id="celularPaciente" type="text" inputmode="numeric" oninput="soloNumerosInput(this)">
+
+                <button type="button" class="btn-secundario" onclick="enviarRecetaSMS()">
+                    Enviar por SMS
+                </button>
+            </div>
+
+            <button type="button" class="btn-eliminar" onclick="cerrarModalReceta()">
+                Cerrar
+            </button>
+
+            <div id="mensajeEnvioReceta" class="mensaje"></div>
+        </div>
+    </div>
 </body>
 </html>

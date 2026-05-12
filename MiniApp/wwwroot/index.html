@@ -157,6 +157,27 @@
                 gap: 6px;
                 text-align: center;
         }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+        }
+
+        .modal-contenido {
+            background: white;
+            max-width: 520px;
+            margin: 80px auto;
+            padding: 20px;
+            border: 2px solid #333;
+            border-radius: 8px;
+        }
+
     </style>
 </head>
 
@@ -642,6 +663,10 @@
                 </div>
             </div>
 
+            <button type="button" class="btn-secundario" onclick="abrirModalReceta()">
+                Enviar receta médica
+            </button>
+
             <button type="submit" class="btn-principal">
                 Guardar Epicrisis
             </button>
@@ -780,6 +805,80 @@
 
             container.appendChild(div);
         }
+
+function abrirModalReceta() {
+    document.getElementById("modalReceta").style.display = "block";
+    document.getElementById("mensajeEnvioReceta").innerText = "";
+}
+
+function cerrarModalReceta() {
+    document.getElementById("modalReceta").style.display = "none";
+}
+
+function soloNumerosInput(input) {
+    input.value = input.value.replace(/[^0-9]/g, "");
+}
+
+function obtenerTratamientoRecibido() {
+    return `
+Medicamento 1: ${valor("medicamento1")}
+Dosis mg/kg 1: ${valor("dosisMgKg1")}
+Vía 1: ${valor("via1")}
+Tiempo administración 1: ${valor("tiempoAdministracion1")}
+
+Medicamento 2: ${valor("medicamento2")}
+Dosis mg/kg 2: ${valor("dosisMgKg2")}
+Vía 2: ${valor("via2")}
+Tiempo administración 2: ${valor("tiempoAdministracion2")}
+
+Medicamento 3: ${valor("medicamento3")}
+Dosis mg/kg 3: ${valor("dosisMgKg3")}
+Vía 3: ${valor("via3")}
+Tiempo administración 3: ${valor("tiempoAdministracion3")}
+`;
+}
+
+    async function enviarRecetaCorreo() {
+        const correo = valor("correoPaciente");
+        const receta = obtenerTratamientoRecibido();
+
+        if (!correo) {
+            alert("Ingrese el correo del paciente.");
+            return;
+        }
+
+        const response = await fetch("/api/Recetas/enviar-correo", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ correo, receta })
+        });
+
+        const texto = await response.text();
+
+        document.getElementById("mensajeEnvioReceta").style.color = response.ok ? "green" : "red";
+        document.getElementById("mensajeEnvioReceta").innerText = texto;
+    }
+
+    async function enviarRecetaSMS() {
+        const celular = valor("celularPaciente");
+        const receta = obtenerTratamientoRecibido();
+
+        if (!celular) {
+            alert("Ingrese el número de celular.");
+            return;
+        }
+
+        const response = await fetch("/api/Recetas/enviar-sms", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ celular, receta })
+        });
+
+        const texto = await response.text();
+
+        document.getElementById("mensajeEnvioReceta").style.color = response.ok ? "green" : "red";
+        document.getElementById("mensajeEnvioReceta").innerText = texto;
+    }
 
         document.getElementById("epicrisisForm").addEventListener("submit", async function (e) {
             e.preventDefault();
@@ -946,7 +1045,7 @@
             } else {
 
                 const errorTexto = await response.text();
-
+                
                 mensaje.style.color = "red";
                 mensaje.innerText = "Error al guardar la epicrisis: " + errorTexto;
 
@@ -957,6 +1056,35 @@
         agregarExamen();
         agregarProcedimientoTerapeutico();
     </script>
+    <div id="modalReceta" class="modal">
+        <div class="modal-contenido">
+            <h3>Enviar receta médica</h3>
+
+            <div class="campo">
+                <label>Correo del paciente</label>
+                <input id="correoPaciente" type="email">
+
+                <button type="button" class="btn-principal" onclick="enviarRecetaCorreo()">
+                    Enviar a correo
+                </button>
+            </div>
+
+            <div class="campo">
+                <label>Número de celular</label>
+                <input id="celularPaciente" type="text" inputmode="numeric" oninput="soloNumerosInput(this)">
+
+                <button type="button" class="btn-secundario" onclick="enviarRecetaSMS()">
+                    Enviar por SMS
+                </button>
+            </div>
+
+            <button type="button" class="btn-eliminar" onclick="cerrarModalReceta()">
+                Cerrar
+            </button>
+
+            <div id="mensajeEnvioReceta" class="mensaje"></div>
+        </div>
+    </div>
 
 </body>
 </html>
