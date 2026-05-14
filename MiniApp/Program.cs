@@ -28,6 +28,56 @@ using (var scope = app.Services.CreateScope())
     db.Database.Migrate();
 
     db.Database.ExecuteSqlRaw(@"
+    IF OBJECT_ID('Contrarreferencias', 'U') IS NULL
+    CREATE TABLE Contrarreferencias (
+        Id int IDENTITY(1,1) PRIMARY KEY,
+
+        Fecha nvarchar(max) NULL,
+        Hora nvarchar(max) NULL,
+        NumeroContrarreferencia nvarchar(max) NULL,
+
+        Asegurado nvarchar(max) NULL,
+
+        EstablecimientoOrigen nvarchar(max) NULL,
+        EstablecimientoDestino nvarchar(max) NULL,
+
+        CodigoSis nvarchar(max) NULL,
+        HistoriaClinica nvarchar(max) NULL,
+        DniPaciente nvarchar(max) NULL,
+
+        ApellidoPaterno nvarchar(max) NULL,
+        ApellidoMaterno nvarchar(max) NULL,
+        Nombres nvarchar(max) NULL,
+
+        Sexo nvarchar(max) NULL,
+        FechaNacimiento nvarchar(max) NULL,
+        Edad nvarchar(max) NULL,
+        Direccion nvarchar(max) NULL,
+
+        FechaIngreso nvarchar(max) NULL,
+        FechaEgreso nvarchar(max) NULL,
+
+        DiagnosticoIngreso nvarchar(max) NULL,
+        DiagnosticoEgreso nvarchar(max) NULL,
+        TratamientoProcedimientos nvarchar(max) NULL,
+        ReportesProcedimientos nvarchar(max) NULL,
+
+        OrigenReferencia nvarchar(max) NULL,
+        CalificacionReferencia nvarchar(max) NULL,
+        UpsContrarreferencia nvarchar(max) NULL,
+        Especialidad nvarchar(max) NULL,
+
+        Recomendaciones nvarchar(max) NULL,
+
+        CondicionUsuario nvarchar(max) NULL,
+        NombreResponsable nvarchar(max) NULL,
+        NumeroColegiatura nvarchar(max) NULL,
+
+        FechaRegistro datetime2 NOT NULL DEFAULT GETDATE()
+    );
+");
+
+    db.Database.ExecuteSqlRaw(@"
         IF COL_LENGTH('Epicrisis', 'NombresFinales') IS NULL
             ALTER TABLE Epicrisis ADD NombresFinales nvarchar(max) NULL;
 

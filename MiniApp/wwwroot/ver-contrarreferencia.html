@@ -1,0 +1,395 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ver Contrarreferencia</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #e9e9e9;
+            padding: 25px;
+        }
+
+        .formulario {
+            background: white;
+            max-width: 1100px;
+            margin: auto;
+            padding: 20px;
+            border: 2px solid #333;
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin: 5px 0;
+        }
+
+        .seccion {
+            border: 1px solid #333;
+            margin-top: 12px;
+            padding: 12px;
+        }
+
+            .seccion h3 {
+                margin-top: 0;
+                background: #eee;
+                padding: 8px;
+                border-bottom: 1px solid #333;
+            }
+
+        .fila {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .campo {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        input, textarea {
+            padding: 7px;
+            border: 1px solid #555;
+            font-size: 14px;
+            width: 100%;
+            box-sizing: border-box;
+            background: #f9f9f9;
+        }
+
+        textarea {
+            min-height: 70px;
+            resize: vertical;
+        }
+
+        .btn-principal {
+            background: #0d6efd;
+            color: white;
+            padding: 10px 18px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="formulario">
+        <h2>INSTITUTO NACIONAL DE SALUD DEL NIÑO</h2>
+        <h1>HOJA DE CONTRARREFERENCIA</h1>
+
+        <div class="seccion">
+            <h3>1. Datos generales</h3>
+
+            <div class="fila">
+                <div class="campo">
+                    <label>Fecha</label>
+                    <input id="fecha" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>Hora</label>
+                    <input id="hora" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>N°</label>
+                    <input id="numeroContrarreferencia" readonly>
+                </div>
+            </div>
+
+            <div class="fila">
+                <div class="campo">
+                    <label>Establecimiento origen</label>
+                    <input id="establecimientoOrigen" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>Establecimiento destino</label>
+                    <input id="establecimientoDestino" readonly>
+                </div>
+            </div>
+
+            <div class="fila">
+                <div class="campo">
+                    <label>Asegurado</label>
+                    <input id="asegurado" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>Tipo</label>
+                    <input id="tipoAsegurado" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>Plan SIS</label>
+                    <input id="planesSis" readonly>
+                </div>
+            </div>
+        </div>
+
+        <div class="seccion">
+            <h3>2. Identificación del usuario</h3>
+
+            <div class="fila">
+                <div class="campo">
+                    <label>Código afiliación SIS</label>
+                    <input id="codigoSis" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>N° Historia Clínica</label>
+                    <input id="historiaClinica" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>DNI</label>
+                    <input id="dniPaciente" readonly>
+                </div>
+            </div>
+
+            <div class="fila">
+                <div class="campo">
+                    <label>Apellido paterno</label>
+                    <input id="apellidoPaterno" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>Apellido materno</label>
+                    <input id="apellidoMaterno" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>Nombres</label>
+                    <input id="nombres" readonly>
+                </div>
+            </div>
+
+            <div class="fila">
+                <div class="campo">
+                    <label>Sexo</label>
+                    <input id="sexo" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>Fecha nacimiento</label>
+                    <input id="fechaNacimiento" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>Edad</label>
+                    <input id="edad" readonly>
+                </div>
+            </div>
+
+            <div class="fila">
+                <div class="campo">
+                    <label>Dirección</label>
+                    <input id="direccion" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>Distrito</label>
+                    <input id="distrito" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>Departamento</label>
+                    <input id="departamento" readonly>
+                </div>
+            </div>
+        </div>
+
+        <div class="seccion">
+            <h3>3. Resumen de historia clínica</h3>
+
+            <div class="fila">
+                <div class="campo">
+                    <label>Fecha ingreso</label>
+                    <input id="fechaIngreso" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>Fecha egreso</label>
+                    <input id="fechaEgreso" readonly>
+                </div>
+            </div>
+
+            <div class="campo">
+                <label>Diagnóstico de ingreso</label>
+                <textarea id="diagnosticoIngreso" readonly></textarea>
+            </div>
+
+            <div class="campo">
+                <label>Diagnóstico de egreso</label>
+                <textarea id="diagnosticoEgreso" readonly></textarea>
+            </div>
+
+            <div class="campo">
+                <label>CIE-10 diagnóstico egreso</label>
+                <input id="cie10DiagnosticoEgreso" readonly>
+            </div>
+
+            <div class="campo">
+                <label>D / P / R</label>
+                <input id="dprDiagnosticoEgreso" readonly>
+            </div>
+
+            <div class="campo">
+                <label>Tratamiento y/o procedimientos realizados</label>
+                <textarea id="tratamientoProcedimientos" readonly></textarea>
+            </div>
+
+            <div class="campo">
+                <label>Informes y reportes de procedimientos</label>
+                <textarea id="reportesProcedimientos" readonly></textarea>
+            </div>
+        </div>
+
+        <div class="seccion">
+            <h3>4. Datos de la referencia</h3>
+
+            <div class="fila">
+                <div class="campo">
+                    <label>Origen referencia</label>
+                    <input id="origenReferencia" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>Calificación referencia</label>
+                    <input id="calificacionReferencia" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>UPS contrarreferencia</label>
+                    <input id="upsContrarreferencia" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>Especialidad</label>
+                    <input id="especialidad" readonly>
+                </div>
+            </div>
+        </div>
+
+        <div class="seccion">
+            <h3>Recomendaciones e indicaciones para el seguimiento</h3>
+            <textarea id="recomendaciones" readonly></textarea>
+        </div>
+
+        <div class="seccion">
+            <h3>Responsable de la contrarreferencia</h3>
+
+            <div class="fila">
+                <div class="campo">
+                    <label>Condición usuario</label>
+                    <input id="condicionUsuario" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>Nombre responsable</label>
+                    <input id="nombreResponsable" readonly>
+                </div>
+
+                <div class="campo">
+                    <label>N° colegiatura</label>
+                    <input id="numeroColegiatura" readonly>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn-principal" onclick="window.print()">
+            Imprimir
+        </button>
+    </div>
+
+    <script>
+    function setValor(id, valor) {
+        const elemento = document.getElementById(id);
+        if (elemento) {
+            elemento.value = valor || "";
+        }
+    }
+
+    async function cargarContrarreferencia() {
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get("id");
+
+        if (!id) {
+            alert("No se recibió el ID de la contrarreferencia.");
+            return;
+        }
+
+        const response = await fetch(`/api/Contrarreferencia/${id}`);
+
+        if (!response.ok) {
+            alert("No se pudo cargar la contrarreferencia.");
+            return;
+        }
+
+        const c = await response.json();
+
+        setValor("fecha", c.fecha);
+        setValor("hora", c.hora);
+        setValor("numeroContrarreferencia", c.numeroContrarreferencia);
+
+        setValor("asegurado", c.asegurado);
+        setValor("tipoAsegurado", c.tipoAsegurado);
+        setValor("planesSis", c.planesSis);
+
+        setValor("establecimientoOrigen", c.establecimientoOrigen);
+        setValor("establecimientoDestino", c.establecimientoDestino);
+
+        setValor("codigoSis", c.codigoSis);
+        setValor("historiaClinica", c.historiaClinica);
+        setValor("dniPaciente", c.dniPaciente);
+
+        setValor("apellidoPaterno", c.apellidoPaterno);
+        setValor("apellidoMaterno", c.apellidoMaterno);
+        setValor("nombres", c.nombres);
+
+        setValor("sexo", c.sexo);
+        setValor("fechaNacimiento", c.fechaNacimiento);
+        setValor("edad", c.edad);
+
+        setValor("direccion", c.direccion);
+        setValor("distrito", c.distrito);
+        setValor("departamento", c.departamento);
+
+        setValor("fechaIngreso", c.fechaIngreso);
+        setValor("fechaEgreso", c.fechaEgreso);
+
+        setValor("diagnosticoIngreso", c.diagnosticoIngreso);
+        setValor("diagnosticoEgreso", c.diagnosticoEgreso);
+        setValor("cie10DiagnosticoEgreso", c.cie10DiagnosticoEgreso);
+        setValor("dprDiagnosticoEgreso", c.dprDiagnosticoEgreso);
+
+        setValor("tratamientoProcedimientos", c.tratamientoProcedimientos);
+        setValor("reportesProcedimientos", c.reportesProcedimientos);
+
+        setValor("origenReferencia", c.origenReferencia);
+        setValor("calificacionReferencia", c.calificacionReferencia);
+        setValor("upsContrarreferencia", c.upsContrarreferencia);
+        setValor("especialidad", c.especialidad);
+
+        setValor("recomendaciones", c.recomendaciones);
+
+        setValor("condicionUsuario", c.condicionUsuario);
+        setValor("nombreResponsable", c.nombreResponsable);
+        setValor("numeroColegiatura", c.numeroColegiatura);
+    }
+
+    cargarContrarreferencia();
+    </script>
+
+</body>
+</html>

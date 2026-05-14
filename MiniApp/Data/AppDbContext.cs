@@ -16,5 +16,6 @@ namespace MiniApp.Data
         public DbSet<ExamenAuxiliar> ExamenesAuxiliares { get; set; }
         public DbSet<ProcedimientoTerapeuticoEpicrisis> ProcedimientosTerapeuticosEpicrisis { get; set; }
         public DbSet<InformeAlta> InformesAlta { get; set; }
+        public DbSet<Contrarreferencia> Contrarreferencias { get; set; }
     }
 }

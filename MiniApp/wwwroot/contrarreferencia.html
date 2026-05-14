@@ -1,0 +1,716 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Hoja de Contrarreferencia</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #e9e9e9;
+            padding: 25px;
+        }
+
+        .formulario {
+            background: white;
+            max-width: 1100px;
+            margin: auto;
+            padding: 20px;
+            border: 2px solid #333;
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin: 5px 0;
+        }
+
+        .seccion {
+            border: 1px solid #333;
+            margin-top: 12px;
+            padding: 12px;
+        }
+
+            .seccion h3 {
+                margin-top: 0;
+                background: #eee;
+                padding: 8px;
+                border-bottom: 1px solid #333;
+            }
+
+        .fila {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .campo {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        input, textarea, select {
+            padding: 7px;
+            border: 1px solid #555;
+            font-size: 14px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            min-height: 70px;
+            resize: vertical;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+            margin-top: 8px;
+        }
+
+            .radio-group label {
+                font-weight: normal;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+        button {
+            padding: 10px 18px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn-principal {
+            background: #0d6efd;
+            color: white;
+        }
+
+        .btn-secundario {
+            background: #198754;
+            color: white;
+        }
+
+        .btn-eliminar {
+            background: #dc3545;
+            color: white;
+        }
+
+        .resultado-item {
+            border: 1px dashed #555;
+            padding: 10px;
+            margin-top: 10px;
+            background: #fafafa;
+        }
+
+        .mensaje {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        .contenedor-asegurado {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .grupo-radio-horizontal {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 8px;
+        }
+
+        .grupo-checkbox-horizontal {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-top: 8px;
+            justify-content: center;
+        }
+
+        .contenedor-asegurado {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr 1.2fr;
+            gap: 35px;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .opciones-mini {
+            display: flex;
+            justify-content: center;
+            gap: 28px;
+            margin-top: 8px;
+        }
+
+        .opcion-mini {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            font-weight: normal;
+        }
+
+            .opcion-mini input {
+                width: auto;
+            }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="formulario">
+        <h2>INSTITUTO NACIONAL DE SALUD DEL NIÑO</h2>
+        <h1>HOJA DE CONTRARREFERENCIA</h1>
+
+        <form id="contrarreferenciaForm">
+
+            <div class="seccion" id="buscadorPaciente">
+                <h3>Buscar paciente</h3>
+
+                <div class="fila">
+                    <div class="campo">
+                        <label>DNI</label>
+                        <input id="buscarDNI" type="text" maxlength="8" inputmode="numeric" oninput="soloNumeros(this)">
+                    </div>
+
+                    <div class="campo">
+                        <label>Historia Clínica</label>
+                        <input id="buscarHC" type="text" inputmode="numeric" oninput="soloNumeros(this)">
+                    </div>
+                </div>
+
+                <div class="fila">
+                    <div class="campo">
+                        <label>Nombres</label>
+                        <input id="buscarNombres" type="text" maxlength="50" oninput="soloLetras(this)">
+                    </div>
+
+                    <div class="campo">
+                        <label>Apellidos</label>
+                        <input id="buscarApellidos" type="text" maxlength="50" oninput="soloLetras(this)">
+                    </div>
+                </div>
+
+                <button type="button" class="btn-secundario" onclick="buscarPaciente()">
+                    Buscar paciente
+                </button>
+
+                <div id="resultadosPacientes"></div>
+            </div>
+
+            <div id="contenidoFormulario" style="display:none;">
+
+                <div class="seccion">
+                    <h3>1. Datos generales</h3>
+
+                    <div class="fila">
+                        <div class="campo">
+                            <label>Fecha</label>
+                            <input id="fecha" type="date">
+                        </div>
+
+                        <div class="campo">
+                            <label>Hora</label>
+                            <input id="hora" type="time">
+                        </div>
+
+                        <div class="campo">
+                            <label>N°</label>
+                            <input id="numeroContrarreferencia" type="text">
+                        </div>
+                    </div>
+
+                    <div class="fila">
+                        <div class="campo">
+                            <label>Establecimiento de origen de la referencia</label>
+                            <input id="establecimientoOrigen" type="text">
+                        </div>
+
+                        <div class="campo">
+                            <label>Establecimiento destino de la referencia</label>
+                            <input id="establecimientoDestino" type="text">
+                        </div>
+                    </div>
+
+                    <div class="contenedor-asegurado">
+
+                        <div class="campo">
+                            <label style="text-align:center;">Asegurado</label>
+
+                            <div class="opciones-mini">
+                                <label class="opcion-mini">
+                                    <input type="radio" name="asegurado" value="Si">
+                                    <span>Sí</span>
+                                </label>
+
+                                <label class="opcion-mini">
+                                    <input type="radio" name="asegurado" value="No">
+                                    <span>No</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="campo">
+                            <label>Tipo</label>
+                            <input id="tipoAsegurado" type="text">
+                        </div>
+
+                        <div class="campo">
+                            <label style="text-align:center;">Planes de atención SIS</label>
+
+                            <div class="opciones-mini">
+                                <label class="opcion-mini">
+                                    <input type="radio" name="planSis" value="A">
+                                    <span>A</span>
+                                </label>
+
+                                <label class="opcion-mini">
+                                    <input type="radio" name="planSis" value="B">
+                                    <span>B</span>
+                                </label>
+
+                                <label class="opcion-mini">
+                                    <input type="radio" name="planSis" value="C">
+                                    <span>C</span>
+                                </label>
+
+                                <label class="opcion-mini">
+                                    <input type="radio" name="planSis" value="D">
+                                    <span>D</span>
+                                </label>
+
+                                <label class="opcion-mini">
+                                    <input type="radio" name="planSis" value="E">
+                                    <span>E</span>
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+
+                <div class="seccion">
+                    <h3>2. Identificación del usuario</h3>
+
+                    <div class="fila">
+                        <div class="campo">
+                            <label>Código de afiliación SIS</label>
+                            <input id="codigoSis" type="text" oninput="soloNumerosGuion(this)">
+                        </div>
+
+                        <div class="campo">
+                            <label>N° Historia Clínica</label>
+                            <input id="historiaClinica" type="text">
+                        </div>
+
+                        <div class="campo">
+                            <label>DNI</label>
+                            <input id="dniPaciente" type="text">
+                        </div>
+                    </div>
+
+                    <div class="fila">
+                        <div class="campo">
+                            <label>Apellido paterno</label>
+                            <input id="apellidoPaterno" type="text">
+                        </div>
+
+                        <div class="campo">
+                            <label>Apellido materno</label>
+                            <input id="apellidoMaterno" type="text">
+                        </div>
+
+                        <div class="campo">
+                            <label>Nombres</label>
+                            <input id="nombres" type="text">
+                        </div>
+                    </div>
+
+                    <div class="fila">
+                        <div class="campo">
+                            <label>Sexo</label>
+                            <select id="sexo">
+                                <option value="">Seleccione</option>
+                                <option value="M">Masculino</option>
+                                <option value="F">Femenino</option>
+                            </select>
+                        </div>
+
+                        <div class="campo">
+                            <label>Fecha de nacimiento</label>
+                            <input id="fechaNacimiento" type="date">
+                        </div>
+
+                        <div class="campo">
+                            <label>Edad</label>
+                            <input id="edad" type="text" readonly>
+                        </div>
+                    </div>
+
+                    <div class="fila">
+                        <div class="campo">
+                            <label>Dirección</label>
+                            <input id="direccion" type="text">
+                        </div>
+
+                        <div class="campo">
+                            <label>Distrito</label>
+                            <input id="distrito" type="text" oninput="soloLetras(this)">
+                        </div>
+
+                        <div class="campo">
+                            <label>Departamento</label>
+                            <input id="departamento" type="text" oninput="soloLetras(this)">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="seccion">
+                    <h3>3. Resumen de historia clínica</h3>
+
+                    <div class="fila">
+                        <div class="campo">
+                            <label>Fecha de ingreso</label>
+                            <input id="fechaIngreso" type="date">
+                        </div>
+
+                        <div class="campo">
+                            <label>Fecha de egreso</label>
+                            <input id="fechaEgreso" type="date">
+                        </div>
+                    </div>
+
+                    <div class="campo">
+                        <label>Diagnóstico de ingreso</label>
+                        <textarea id="diagnosticoIngreso"></textarea>
+                    </div>
+
+                    <div class="campo">
+                        <label>Diagnóstico de egreso</label>
+                        <textarea id="diagnosticoEgreso"></textarea>
+                    </div>
+
+                    <div class="campo">
+                        <label>Tratamiento y/o procedimientos realizados</label>
+                        <textarea id="tratamientoProcedimientos"></textarea>
+                    </div>
+
+                    <div class="campo">
+                        <label>Adjuntar informes y reportes de procedimientos</label>
+                        <textarea id="reportesProcedimientos"></textarea>
+                    </div>
+                </div>
+
+                <div class="seccion">
+                    <h3>4. Datos de la referencia</h3>
+
+                    <label>Origen de la referencia</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="origenReferencia" value="Comunidad"> De la comunidad</label>
+                        <label><input type="radio" name="origenReferencia" value="Establecimiento"> De un establecimiento de salud</label>
+                        <label><input type="radio" name="origenReferencia" value="Autorreferencia"> Autorreferencia</label>
+                    </div>
+
+                    <label>Calificación preliminar de la referencia</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="calificacionReferencia" value="Justificada"> Justificada</label>
+                        <label><input type="radio" name="calificacionReferencia" value="No Justificada"> No justificada</label>
+                    </div>
+
+                    <label>UPS que ordena la contrarreferencia</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="upsContrarreferencia" value="Consulta Externa"> Consulta Externa</label>
+                        <label><input type="radio" name="upsContrarreferencia" value="Emergencia"> Emergencia</label>
+                        <label><input type="radio" name="upsContrarreferencia" value="Apoyo al DX"> Apoyo al DX</label>
+                        <label><input type="radio" name="upsContrarreferencia" value="Hospitalizacion"> Hospitalización</label>
+                    </div>
+
+                    <label>Especialidad que ordena la contrarreferencia</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="especialidad" value="Pediatria"> Pediatría</label>
+                        <label><input type="radio" name="especialidad" value="Medicina"> Medicina</label>
+                        <label><input type="radio" name="especialidad" value="Cirugia"> Cirugía</label>
+                        <label><input type="radio" name="especialidad" value="Gineco-Obs"> Gineco-Obs</label>
+                        <label><input type="radio" name="especialidad" value="Lab"> Lab</label>
+                        <label><input type="radio" name="especialidad" value="DxImagen"> Dx Imagen</label>
+                        <label><input type="radio" name="especialidad" value="Otro"> Otro</label>
+                    </div>
+                </div>
+
+                <div class="seccion">
+                    <h3>Recomendaciones e indicaciones para el seguimiento</h3>
+                    <textarea id="recomendaciones"></textarea>
+                </div>
+
+                <div class="seccion">
+                    <h3>Responsable de la contrarreferencia</h3>
+
+                    <label>Condición del usuario para la contrarreferencia</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="condicionUsuario" value="Curado"> Curado</label>
+                        <label><input type="radio" name="condicionUsuario" value="Mejorado"> Mejorado</label>
+                        <label><input type="radio" name="condicionUsuario" value="Atencion Apoyo DX"> Atención x Apoyo al DX</label>
+                        <label><input type="radio" name="condicionUsuario" value="Desercion"> Deserción</label>
+                        <label><input type="radio" name="condicionUsuario" value="Retiro Voluntario"> Retiro voluntario</label>
+                        <label><input type="radio" name="condicionUsuario" value="Fallecido"> Fallecido</label>
+                    </div>
+
+                    <div class="fila">
+                        <div class="campo">
+                            <label>Nombre del responsable</label>
+                            <input id="nombreResponsable" type="text">
+                        </div>
+
+                        <div class="campo">
+                            <label>N° de colegiatura</label>
+                            <input id="numeroColegiatura" type="text">
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-principal">
+                    Guardar Contrarreferencia
+                </button>
+
+                <div id="mensaje" class="mensaje"></div>
+
+            </div>
+        </form>
+    </div>
+
+    <script>
+
+    function soloNumeros(input) {
+        input.value = input.value.replace(/[^0-9]/g, "");
+    }
+
+    function soloNumerosGuion(input) {
+        input.value = input.value.replace(/[^0-9-]/g, "");
+    }
+
+    function soloLetras(input) {
+        input.value = input.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, "");
+    }
+
+    function valor(id) {
+        return document.getElementById(id).value;
+    }
+
+    function radio(name) {
+        return document.querySelector(`input[name="${name}"]:checked`)?.value || "";
+    }
+
+    function limpiarDni(dni) {
+        return (dni || "").replace(/[^0-9]/g, "");
+    }
+
+    function calcularEdadCompleta(fechaNacimiento) {
+        if (!fechaNacimiento) return "";
+
+        const nacimiento = new Date(fechaNacimiento);
+        const hoy = new Date();
+
+        let anios = hoy.getFullYear() - nacimiento.getFullYear();
+        let meses = hoy.getMonth() - nacimiento.getMonth();
+        let dias = hoy.getDate() - nacimiento.getDate();
+
+        if (dias < 0) {
+            meses--;
+            const ultimoDiaMesAnterior = new Date(hoy.getFullYear(), hoy.getMonth(), 0).getDate();
+            dias += ultimoDiaMesAnterior;
+        }
+
+        if (meses < 0) {
+            anios--;
+            meses += 12;
+        }
+
+        return `${anios} años, ${meses} meses y ${dias} días`;
+    }
+
+    async function buscarPaciente() {
+        const dni = valor("buscarDNI").trim();
+        const hc = valor("buscarHC").trim();
+        const nombres = valor("buscarNombres").trim();
+        const apellidos = valor("buscarApellidos").trim();
+
+        if (dni !== "" && dni.length !== 8) {
+            alert("El Número de DNI debe ser de 8 dígitos.");
+            return;
+        }
+
+        if (!dni && !hc && !nombres && !apellidos) {
+            alert("Ingrese al menos un criterio de búsqueda.");
+            return;
+        }
+
+        const url = `/api/Pacientes/buscar?dni=${encodeURIComponent(dni)}&hc=${encodeURIComponent(hc)}&nombres=${encodeURIComponent(nombres)}&apellidos=${encodeURIComponent(apellidos)}`;
+
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            alert("Error al buscar paciente.");
+            return;
+        }
+
+        const pacientes = await response.json();
+        const contenedor = document.getElementById("resultadosPacientes");
+        contenedor.innerHTML = "";
+
+        if (pacientes.length === 0) {
+            contenedor.innerHTML = "<p>No se encontraron pacientes.</p>";
+            return;
+        }
+
+        pacientes.forEach(p => {
+            const div = document.createElement("div");
+            div.className = "resultado-item";
+
+            div.innerHTML = `
+                <strong>${p.apellidoPaterno || ""} ${p.apellidoMaterno || ""} ${p.nombres || ""}</strong><br>
+                HC: ${p.historiaClinica || "-"} |
+                DNI: ${limpiarDni(p.dni) || "-"}
+                <br>
+                <button type="button" class="btn-principal">Seleccionar</button>
+            `;
+
+            div.querySelector("button").onclick = function () {
+                cargarPaciente(p);
+            };
+
+            contenedor.appendChild(div);
+        });
+    }
+
+    function cargarPaciente(p) {
+        document.getElementById("buscadorPaciente").style.display = "none";
+        document.getElementById("contenidoFormulario").style.display = "block";
+
+        document.getElementById("historiaClinica").value = p.historiaClinica || "";
+        document.getElementById("dniPaciente").value = limpiarDni(p.dni);
+        document.getElementById("codigoSis").value = p.numeroSis || "";
+
+        document.getElementById("apellidoPaterno").value = p.apellidoPaterno || "";
+        document.getElementById("apellidoMaterno").value = p.apellidoMaterno || "";
+        document.getElementById("nombres").value = p.nombres || "";
+
+        document.getElementById("sexo").value = p.sexo || "";
+
+        if (p.fechaNacimiento) {
+            document.getElementById("fechaNacimiento").value = p.fechaNacimiento.split("T")[0];
+            document.getElementById("edad").value = calcularEdadCompleta(p.fechaNacimiento);
+        }
+
+        document.getElementById("direccion").value = p.procedencia || "";
+    }
+
+    ["buscarDNI", "buscarHC", "buscarNombres", "buscarApellidos"].forEach(id => {
+        const input = document.getElementById(id);
+
+        if (input) {
+            input.addEventListener("keydown", function (e) {
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    buscarPaciente();
+                }
+            });
+        }
+    });
+
+        document.querySelectorAll('input[type="time"]').forEach(input => {
+            input.addEventListener("input", function () {
+                if (this.value.length === 5) {
+                    this.blur();
+                }
+            });
+        });
+
+    document.getElementById("contrarreferenciaForm").addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const data = {
+            fecha: valor("fecha"),
+            hora: valor("hora"),
+            numeroContrarreferencia: valor("numeroContrarreferencia"),
+
+            asegurado: radio("asegurado"),
+            tipoAsegurado: valor("tipoAsegurado"),
+
+            planesSis: radio("planSis"),
+
+            establecimientoOrigen: valor("establecimientoOrigen"),
+            establecimientoDestino: valor("establecimientoDestino"),
+
+            codigoSis: valor("codigoSis"),
+            historiaClinica: valor("historiaClinica"),
+            dniPaciente: valor("dniPaciente"),
+
+            apellidoPaterno: valor("apellidoPaterno"),
+            apellidoMaterno: valor("apellidoMaterno"),
+            nombres: valor("nombres"),
+
+            sexo: valor("sexo"),
+            fechaNacimiento: valor("fechaNacimiento"),
+            edad: valor("edad"),
+            direccion: valor("direccion"),
+            distrito: valor("distrito"),
+            departamento: valor("departamento"),
+
+            fechaIngreso: valor("fechaIngreso"),
+            fechaEgreso: valor("fechaEgreso"),
+
+            diagnosticoIngreso: valor("diagnosticoIngreso"),
+            diagnosticoEgreso: valor("diagnosticoEgreso"),
+            tratamientoProcedimientos: valor("tratamientoProcedimientos"),
+            reportesProcedimientos: valor("reportesProcedimientos"),
+
+            origenReferencia: radio("origenReferencia"),
+            calificacionReferencia: radio("calificacionReferencia"),
+            upsContrarreferencia: radio("upsContrarreferencia"),
+            especialidad: radio("especialidad"),
+
+            recomendaciones: valor("recomendaciones"),
+
+            condicionUsuario: radio("condicionUsuario"),
+            nombreResponsable: valor("nombreResponsable"),
+            numeroColegiatura: valor("numeroColegiatura")
+        };
+
+        const response = await fetch("/api/Contrarreferencia", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        });
+
+        const mensaje = document.getElementById("mensaje");
+
+        if (response.ok) {
+            mensaje.style.color = "green";
+            mensaje.innerText = "Contrarreferencia guardada correctamente.";
+            document.getElementById("contrarreferenciaForm").reset();
+        } else {
+            const error = await response.text();
+            mensaje.style.color = "red";
+            mensaje.innerText = "Error al guardar: " + error;
+        }
+    });
+    </script>
+
+</body>
+</html>
