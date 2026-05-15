@@ -100,14 +100,108 @@
         }
 
         @media (max-width: 768px) {
+
             body {
-                padding: 10px;
+                padding: 15px;
             }
 
             .formulario {
                 padding: 15px;
             }
+
+            .fila {
+                grid-template-columns: 1fr;
+            }
+
+            .botones-acciones {
+                flex-direction: column;
+            }
         }
+
+
+              @media print {
+
+            .botones-acciones {
+                display: none !important;
+            }
+
+        }
+
+
+        .modal-firma {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .contenido-firma {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        #canvasFirma {
+            border: 2px solid #333;
+            background: white;
+            cursor: crosshair;
+        }
+
+        .botones-firma {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .botones-acciones {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            margin-bottom: 5px;
+        }
+
+            .botones-acciones button {
+                border: none;
+                padding: 10px 18px;
+                color: white;
+                font-size: 14px;
+                font-weight: bold;
+                cursor: pointer;
+                border-radius: 4px;
+            }
+
+        .btn-imprimir {
+            background: #0d6efd;
+        }
+
+        .btn-pdf {
+            background: #198754;
+        }
+
+        .btn-firma {
+            background: #6f42c1;
+        }
+
+        .grid-final {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 768px) {
+
+            .grid-final {
+                grid-template-columns: 1fr;
+            }
+        }
+
     </style>
 </head>
 
@@ -307,168 +401,27 @@
         </div>
 
         <div class="seccion">
+
             <h3>Interconsultas</h3>
 
-            <div class="fila">
-                <div class="campo">
-                    <label>Fecha 1</label>
-                    <input id="interconsultaFecha1" readonly>
-                </div>
+            <div id="interconsultasViewContainer"></div>
 
-                <div class="campo">
-                    <label>Especialidad 1</label>
-                    <input id="interconsultaEspecialidad1" readonly>
-                </div>
-
-                <div class="campo">
-                    <label>Conclusión 1</label>
-                    <input id="interconsultaConclusion1" readonly>
-                </div>
-            </div>
-
-            <div class="fila">
-                <div class="campo">
-                    <label>Fecha 2</label>
-                    <input id="interconsultaFecha2" readonly>
-                </div>
-
-                <div class="campo">
-                    <label>Especialidad 2</label>
-                    <input id="interconsultaEspecialidad2" readonly>
-                </div>
-
-                <div class="campo">
-                    <label>Conclusión 2</label>
-                    <input id="interconsultaConclusion2" readonly>
-                </div>
-            </div>
-
-            <div class="fila">
-                <div class="campo">
-                    <label>Fecha 3</label>
-                    <input id="interconsultaFecha3" readonly>
-                </div>
-
-                <div class="campo">
-                    <label>Especialidad 3</label>
-                    <input id="interconsultaEspecialidad3" readonly>
-                </div>
-
-                <div class="campo">
-                    <label>Conclusión 3</label>
-                    <input id="interconsultaConclusion3" readonly>
-                </div>
-            </div>
         </div>
 
         <div class="seccion">
+
             <h3>Tratamiento recibido</h3>
 
-            <div class="fila">
-                <div class="campo">
-                    <label>Medicamento 1</label>
-                    <input id="medicamento1" readonly>
-                </div>
+            <div id="tratamientosViewContainer"></div>
 
-                <div class="campo">
-                    <label>Dosis mg/kg 1</label>
-                    <input id="dosisMgKg1" readonly>
-                </div>
-
-                <div class="campo">
-                    <label>Vía 1</label>
-                    <input id="via1" readonly>
-                </div>
-
-                <div class="campo">
-                    <label>Tiempo administración 1</label>
-                    <input id="tiempoAdministracion1" readonly>
-                </div>
-            </div>
-
-            <div class="fila">
-                <div class="campo">
-                    <label>Medicamento 2</label>
-                    <input id="medicamento2" readonly>
-                </div>
-
-                <div class="campo">
-                    <label>Dosis mg/kg 2</label>
-                    <input id="dosisMgKg2" readonly>
-                </div>
-
-                <div class="campo">
-                    <label>Vía 2</label>
-                    <input id="via2" readonly>
-                </div>
-
-                <div class="campo">
-                    <label>Tiempo administración 2</label>
-                    <input id="tiempoAdministracion2" readonly>
-                </div>
-            </div>
-
-            <div class="fila">
-                <div class="campo">
-                    <label>Medicamento 3</label>
-                    <input id="medicamento3" readonly>
-                </div>
-
-                <div class="campo">
-                    <label>Dosis mg/kg 3</label>
-                    <input id="dosisMgKg3" readonly>
-                </div>
-
-                <div class="campo">
-                    <label>Vía 3</label>
-                    <input id="via3" readonly>
-                </div>
-
-                <div class="campo">
-                    <label>Tiempo administración 3</label>
-                    <input id="tiempoAdministracion3" readonly>
-                </div>
-            </div>
         </div>
 
         <div class="seccion">
+
             <h3>Procedimientos terapéuticos</h3>
 
-            <div class="fila">
-                <div class="campo">
-                    <label>Procedimiento 1</label>
-                    <input id="procedimientoTerapeutico1" readonly>
-                </div>
+            <div id="procedimientosViewContainer"></div>
 
-                <div class="campo">
-                    <label>Código 1</label>
-                    <input id="codigoProcedimiento1" readonly>
-                </div>
-            </div>
-
-            <div class="fila">
-                <div class="campo">
-                    <label>Procedimiento 2</label>
-                    <input id="procedimientoTerapeutico2" readonly>
-                </div>
-
-                <div class="campo">
-                    <label>Código 2</label>
-                    <input id="codigoProcedimiento2" readonly>
-                </div>
-            </div>
-
-            <div class="fila">
-                <div class="campo">
-                    <label>Procedimiento 3</label>
-                    <input id="procedimientoTerapeutico3" readonly>
-                </div>
-
-                <div class="campo">
-                    <label>Código 3</label>
-                    <input id="codigoProcedimiento3" readonly>
-                </div>
-            </div>
         </div>
 
         <div class="seccion">
@@ -492,45 +445,48 @@
             </div>
         </div>
 
-        <div class="seccion">
-            <h3>Inmunización</h3>
+        <div class="grid-final">
+            <div class="seccion">
+                <h3>Inmunización</h3>
 
-            <div class="radio-group">
-                <label><input id="inmunizacionCompleta" type="radio" disabled> Completa</label>
-                <label><input id="inmunizacionIncompleta" type="radio" disabled> Incompleta</label>
+                <div class="radio-group">
+                    <label><input id="inmunizacionCompleta" type="radio" disabled> Completa</label>
+                    <label><input id="inmunizacionIncompleta" type="radio" disabled> Incompleta</label>
+                </div>
             </div>
-        </div>
 
-        <div class="seccion">
-            <h3>Condición al egreso</h3>
+            <div class="seccion">
+                <h3>Condición al egreso</h3>
 
-            <div class="radio-group">
-                <label><input id="condicionCurado" type="radio" disabled> Curado</label>
-                <label><input id="condicionMejorado" type="radio" disabled> Mejorado</label>
-                <label><input id="condicionEmpeorado" type="radio" disabled> Empeorado</label>
-                <label><input id="condicionEstacionario" type="radio" disabled> Estacionario</label>
-                <label><input id="condicionFallecido" type="radio" disabled> Fallecido</label>
+                <div class="radio-group">
+                    <label><input id="condicionCurado" type="radio" disabled> Curado</label>
+                    <label><input id="condicionMejorado" type="radio" disabled> Mejorado</label>
+                    <label><input id="condicionEmpeorado" type="radio" disabled> Empeorado</label>
+                    <label><input id="condicionEstacionario" type="radio" disabled> Estacionario</label>
+                    <label><input id="condicionFallecido" type="radio" disabled> Fallecido</label>
+                </div>
             </div>
-        </div>
 
-        <div class="seccion">
-            <h3>Tipo de alta</h3>
+            <div class="seccion">
+                <h3>Tipo de alta</h3>
 
-            <div class="radio-group">
-                <label><input id="tipoAltaMedica" type="radio" disabled> Médica</label>
-                <label><input id="tipoAltaVoluntaria" type="radio" disabled> Voluntaria</label>
-                <label><input id="tipoAltaTransferencia" type="radio" disabled> Transferencia</label>
-                <label><input id="tipoAltaFallecido" type="radio" disabled> Fallecido</label>
+                <div class="radio-group">
+                    <label><input id="tipoAltaMedica" type="radio" disabled> Médica</label>
+                    <label><input id="tipoAltaVoluntaria" type="radio" disabled> Voluntaria</label>
+                    <label><input id="tipoAltaTransferencia" type="radio" disabled> Transferencia</label>
+                    <label><input id="tipoAltaFallecido" type="radio" disabled> Fallecido</label>
+                </div>
             </div>
-        </div>
 
-        <div class="seccion">
-            <h3>Necropsia</h3>
+            <div class="seccion">
+                <h3>Necropsia</h3>
 
-            <div class="radio-group">
-                <label><input id="necropsiaSi" type="radio" disabled> Sí</label>
-                <label><input id="necropsiaNo" type="radio" disabled> No</label>
+                <div class="radio-group">
+                    <label><input id="necropsiaSi" type="radio" disabled> Sí</label>
+                    <label><input id="necropsiaNo" type="radio" disabled> No</label>
+                </div>
             </div>
+
         </div>
 
         <div class="seccion">
@@ -605,46 +561,113 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <script>
+        <div class="botones-acciones">
+            <button class="btn-imprimir" onclick="window.print()">
+                Imprimir
+            </button>
+
+            <button class="btn-pdf" onclick="descargarPDF()">
+                Descargar PDF
+            </button>
+
+            <button class="btn-firma" onclick="abrirFirmaDigital()">
+                Firma digital
+            </button>
+
+        </div>
+
+        <div id="modalFirma" class="modal-firma">
+
+            <div class="contenido-firma">
+
+                <h2>Firma digital</h2>
+
+                <canvas id="canvasFirma"
+                        width="500"
+                        height="200"></canvas>
+
+                <div class="botones-firma">
+
+                    <button onclick="limpiarFirma()"
+                            class="btn-secundario">
+                        Limpiar
+                    </button>
+
+                    <button onclick="guardarFirma()"
+                            class="btn-principal">
+                        Guardar firma
+                    </button>
+
+                    <button onclick="cerrarFirma()"
+                            class="btn-eliminar">
+                        Cerrar
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+     
+        <script>
+
         function setValor(id, valor) {
             const elemento = document.getElementById(id);
-            if (elemento) elemento.value = valor ?? "";
+
+            if (elemento) {
+                elemento.value = valor ?? "";
+            }
         }
 
         function setCheck(id, valor) {
             const elemento = document.getElementById(id);
-            if (elemento) elemento.checked = valor === true;
+
+            if (elemento) {
+                elemento.checked = valor === true;
+            }
         }
 
         function fechaCorta(fecha) {
+
             if (!fecha) return "";
+
             return fecha.split("T")[0];
         }
 
         function valorConTipoEdad(edad, tipoEdad) {
+
             if (edad == null || edad === "") return "";
+
             return `${edad} ${tipoEdad ?? ""}`.trim();
         }
 
         async function cargarEpicrisis() {
+
             const params = new URLSearchParams(window.location.search);
+
             const id = params.get("id");
 
             if (!id) {
+
                 alert("Debes enviar un ID. Ejemplo: ver-epicrisis.html?id=1");
+
                 return;
             }
 
             const response = await fetch(`/api/Epicrisis/${id}`);
 
             if (!response.ok) {
+
                 alert("No se encontró la epicrisis.");
+
                 return;
             }
 
             const e = await response.json();
+
+            // DATOS PACIENTE
 
             setValor("servicio", e.servicio);
             setValor("historiaClinicaNumero", e.historiaClinicaNumero);
@@ -652,11 +675,23 @@
 
             setValor("nombres", e.nombres);
             setValor("apellidos", e.apellidos);
-            setValor("edadCompleta", valorConTipoEdad(e.edad, e.tipoEdad));
+
+            setValor(
+                "edadCompleta",
+                valorConTipoEdad(e.edad, e.tipoEdad)
+            );
+
             setValor("sexo", e.sexo);
             setValor("numeroCama", e.numeroCama);
-            setValor("fechaNacimiento", fechaCorta(e.fechaNacimiento));
+
+            setValor(
+                "fechaNacimiento",
+                fechaCorta(e.fechaNacimiento)
+            );
+
             setValor("procedencia", e.procedencia);
+
+            // FECHAS
 
             setValor("fechaIngresoINSNTexto", e.fechaIngresoINSNTexto);
             setValor("fechaIngresoServicioTexto", e.fechaIngresoServicioTexto);
@@ -665,10 +700,14 @@
             setValor("fechaEgresoTexto", e.fechaEgresoTexto);
             setValor("estadiaTotalDias", e.estadiaTotalDias);
 
+            // HISTORIA CLÍNICA
+
             setValor("antecedentes", e.antecedentes);
             setValor("enfermedadActualResumen", e.enfermedadActualResumen);
             setValor("examenFisico", e.examenFisico);
             setValor("evolucionTratamiento", e.evolucionTratamiento);
+
+            // EXAMEN INGRESO
 
             setValor("temperaturaIngreso", e.temperaturaIngreso);
             setValor("presionArterial", e.presionArterial);
@@ -677,50 +716,18 @@
             setValor("frecuenciaCardiaca", e.frecuenciaCardiaca);
             setValor("frecuenciaRespiratoria", e.frecuenciaRespiratoria);
 
+            // DIAGNÓSTICOS
+
             setValor("diagnosticoIngreso", e.diagnosticoIngreso);
             setValor("cie10Ingreso", e.cie10Ingreso);
             setValor("diagnosticoNutricional", e.diagnosticoNutricional);
             setValor("evolucion", e.evolucion);
 
-            setValor("interconsultaFecha1", fechaCorta(e.interconsultaFecha1));
-            setValor("interconsultaEspecialidad1", e.interconsultaEspecialidad1);
-            setValor("interconsultaConclusion1", e.interconsultaConclusion1);
-
-            setValor("interconsultaFecha2", fechaCorta(e.interconsultaFecha2));
-            setValor("interconsultaEspecialidad2", e.interconsultaEspecialidad2);
-            setValor("interconsultaConclusion2", e.interconsultaConclusion2);
-
-            setValor("interconsultaFecha3", fechaCorta(e.interconsultaFecha3));
-            setValor("interconsultaEspecialidad3", e.interconsultaEspecialidad3);
-            setValor("interconsultaConclusion3", e.interconsultaConclusion3);
-
-            setValor("medicamento1", e.medicamento1);
-            setValor("dosisMgKg1", e.dosisMgKg1);
-            setValor("via1", e.via1);
-            setValor("tiempoAdministracion1", e.tiempoAdministracion1);
-
-            setValor("medicamento2", e.medicamento2);
-            setValor("dosisMgKg2", e.dosisMgKg2);
-            setValor("via2", e.via2);
-            setValor("tiempoAdministracion2", e.tiempoAdministracion2);
-
-            setValor("medicamento3", e.medicamento3);
-            setValor("dosisMgKg3", e.dosisMgKg3);
-            setValor("via3", e.via3);
-            setValor("tiempoAdministracion3", e.tiempoAdministracion3);
-
-            setValor("procedimientoTerapeutico1", e.procedimientoTerapeutico1);
-            setValor("codigoProcedimiento1", e.codigoProcedimiento1);
-
-            setValor("procedimientoTerapeutico2", e.procedimientoTerapeutico2);
-            setValor("codigoProcedimiento2", e.codigoProcedimiento2);
-
-            setValor("procedimientoTerapeutico3", e.procedimientoTerapeutico3);
-            setValor("codigoProcedimiento3", e.codigoProcedimiento3);
-
             setValor("diagnosticoAlta", e.diagnosticoAlta);
             setValor("cie10Alta", e.cie10Alta);
             setValor("nutricional", e.nutricional);
+
+            // RADIO BUTTONS
 
             setCheck("inmunizacionCompleta", e.inmunizacionCompleta);
             setCheck("inmunizacionIncompleta", e.inmunizacionIncompleta);
@@ -739,61 +746,291 @@
             setCheck("necropsiaSi", e.necropsiaSi);
             setCheck("necropsiaNo", e.necropsiaNo);
 
+            // INDICACIONES
+
             setValor("pronostico", e.pronostico);
             setValor("pendiente", e.pendiente);
             setValor("indicacionesAlta", e.indicacionesAlta);
+
+            // FIRMAS
 
             setValor("nombreFirmaInterno", e.nombreFirmaInterno);
             setValor("nombreFirmaMedicoResidente1", e.nombreFirmaMedicoResidente1);
             setValor("nombreFirmaMedicoTratante", e.nombreFirmaMedicoTratante);
             setValor("nombreFirmaMedicoResidente2", e.nombreFirmaMedicoResidente2);
 
+            // DATOS FINALES
+
             setValor("nombresFinales", e.nombresFinales);
             setValor("apellidosFinales", e.apellidosFinales);
             setValor("hcFinal", e.hcFinal);
             setValor("camaFinal", e.camaFinal);
 
-            const contenedor = document.getElementById("examenesAuxiliares");
-            contenedor.innerHTML = "";
+            // EXÁMENES AUXILIARES
 
-            if (e.examenesAuxiliares && e.examenesAuxiliares.length > 0) {
+            const contenedorExamenes =
+                document.getElementById("examenesAuxiliares");
+
+            contenedorExamenes.innerHTML = "";
+
+            if (e.examenesAuxiliares?.length > 0) {
+
                 e.examenesAuxiliares.forEach(examen => {
+
                     const div = document.createElement("div");
+
                     div.className = "examen-item";
 
                     div.innerHTML = `
+
                         <div class="fila">
+
                             <div class="campo">
                                 <label>Nombre del examen</label>
+
                                 <input value="${examen.nombreExamen ?? ""}" readonly>
                             </div>
 
                             <div class="campo">
                                 <label>Resultado</label>
+
                                 <input value="${examen.resultado ?? ""}" readonly>
                             </div>
 
                             <div class="campo">
                                 <label>Fecha</label>
+
                                 <input value="${fechaCorta(examen.fecha)}" readonly>
                             </div>
+
                         </div>
 
                         <div class="campo">
                             <label>Observaciones</label>
+
                             <textarea readonly>${examen.observaciones ?? ""}</textarea>
                         </div>
                     `;
 
-                    contenedor.appendChild(div);
+                    contenedorExamenes.appendChild(div);
                 });
+
             } else {
-                contenedor.innerHTML = "<p>No hay exámenes auxiliares registrados.</p>";
+
+                contenedorExamenes.innerHTML =
+                    "<p>No hay exámenes auxiliares registrados.</p>";
+            }
+
+            // INTERCONSULTAS DINÁMICAS
+
+            const interconsultasContainer =
+                document.getElementById("interconsultasViewContainer");
+
+            if (interconsultasContainer) {
+
+                interconsultasContainer.innerHTML = "";
+
+                const interconsultas =
+                    JSON.parse(e.interconsultasJson || "[]");
+
+                interconsultas.forEach((i, index) => {
+
+                    interconsultasContainer.innerHTML += `
+
+                        <div class="examen-item">
+
+                            <div class="fila">
+
+                                <div class="campo">
+                                    <label>Fecha ${index + 1}</label>
+
+                                    <input value="${i.fecha || ""}" readonly>
+                                </div>
+
+                                <div class="campo">
+                                    <label>Especialidad ${index + 1}</label>
+
+                                    <input value="${i.especialidad || ""}" readonly>
+                                </div>
+
+                                <div class="campo">
+                                    <label>Conclusión ${index + 1}</label>
+
+                                    <input value="${i.conclusion || ""}" readonly>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    `;
+                });
+            }
+
+            // TRATAMIENTOS DINÁMICOS
+
+            const tratamientosContainer =
+                document.getElementById("tratamientosViewContainer");
+
+            if (tratamientosContainer) {
+
+                tratamientosContainer.innerHTML = "";
+
+                const tratamientos =
+                    JSON.parse(e.tratamientosJson || "[]");
+
+                tratamientos.forEach((t, index) => {
+
+                    tratamientosContainer.innerHTML += `
+
+                        <div class="examen-item">
+
+                            <div class="fila">
+
+                                <div class="campo">
+                                    <label>Medicamento ${index + 1}</label>
+
+                                    <input value="${t.medicamento || ""}" readonly>
+                                </div>
+
+                                <div class="campo">
+                                    <label>Dosis ${index + 1}</label>
+
+                                    <input value="${t.dosis || ""}" readonly>
+                                </div>
+
+                                <div class="campo">
+                                    <label>Vía ${index + 1}</label>
+
+                                    <input value="${t.via || ""}" readonly>
+                                </div>
+
+                                <div class="campo">
+                                    <label>Tiempo ${index + 1}</label>
+
+                                    <input value="${t.tiempo || ""}" readonly>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    `;
+                });
+            }
+
+            // PROCEDIMIENTOS DINÁMICOS
+
+            const procedimientosContainer =
+                document.getElementById("procedimientosViewContainer");
+
+            if (procedimientosContainer) {
+
+                procedimientosContainer.innerHTML = "";
+
+                const procedimientos =
+                    JSON.parse(e.procedimientosTerapeuticosJson || "[]");
+
+                procedimientos.forEach((p, index) => {
+
+                    procedimientosContainer.innerHTML += `
+
+                        <div class="examen-item">
+
+                            <div class="fila">
+
+                                <div class="campo">
+                                    <label>Procedimiento ${index + 1}</label>
+
+                                    <input value="${p.procedimiento || ""}" readonly>
+                                </div>
+
+                                <div class="campo">
+                                    <label>Código ${index + 1}</label>
+
+                                    <input value="${p.codigo || ""}" readonly>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    `;
+                });
             }
         }
 
+        function descargarPDF() {
+            window.print();
+        }
+
+        const canvas = document.getElementById("canvasFirma");
+        const ctx = canvas.getContext("2d");
+
+        let dibujando = false;
+
+        canvas.addEventListener("mousedown", () => {
+            dibujando = true;
+        });
+
+        canvas.addEventListener("mouseup", () => {
+            dibujando = false;
+            ctx.beginPath();
+        });
+
+        canvas.addEventListener("mousemove", dibujar);
+
+        function dibujar(e) {
+
+            if (!dibujando) return;
+
+            const rect = canvas.getBoundingClientRect();
+
+            ctx.lineWidth = 2;
+            ctx.lineCap = "round";
+            ctx.strokeStyle = "black";
+
+            ctx.lineTo(
+                e.clientX - rect.left,
+                e.clientY - rect.top
+            );
+
+            ctx.stroke();
+            ctx.beginPath();
+
+            ctx.moveTo(
+                e.clientX - rect.left,
+                e.clientY - rect.top
+            );
+        }
+
+        function abrirFirmaDigital() {
+            document.getElementById("modalFirma").style.display = "flex";
+        }
+
+        function cerrarFirma() {
+            document.getElementById("modalFirma").style.display = "none";
+        }
+
+        function limpiarFirma() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function guardarFirma() {
+
+            const imagenFirma = canvas.toDataURL("image/png");
+
+            localStorage.setItem(
+                "firmaDigitalEpicrisis",
+                imagenFirma
+            );
+
+            alert("Firma guardada correctamente.");
+
+            cerrarFirma();
+        }
+
         cargarEpicrisis();
-    </script>
+
+        </script>
+
 
 </body>
 </html>

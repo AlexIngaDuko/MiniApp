@@ -185,11 +185,34 @@
             flex: 1;
         }
 
-            .campo-busqueda input,
-            .campo-dni-busqueda input {
-                width: 75%;
-                min-width: 220px;
+        .campo-busqueda input,
+        .campo-dni-busqueda input {
+            width: 75%;
+            min-width: 220px;
+        }
+
+        .interconsulta-item,
+        .tratamiento-item {
+            border: 1px dashed #666;
+            padding: 12px;
+            margin-top: 12px;
+            background: #fafafa;
+        }
+
+        .grid-final {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 768px) {
+
+            .grid-final {
+                grid-template-columns: 1fr;
             }
+        }
+
     </style>
 </head>
 
@@ -298,7 +321,7 @@
                         <div class="campo">
                             <label>Edad</label>
                             <div class="edad-grupo">
-                                <input id="edad" type="text" min="0" readonly>                          
+                                <input id="edad" type="text" min="0" readonly>
                             </div>
                         </div>
 
@@ -465,128 +488,35 @@
                 </div>
 
                 <div class="seccion">
+
                     <h3>Interconsultas</h3>
 
-                    <div class="fila">
-                        <div class="campo">
-                            <label>Fecha 1</label>
-                            <input id="interconsultaFecha1" type="date">
-                        </div>
+                    <div id="interconsultasContainer"></div>
 
-                        <div class="campo">
-                            <label>Especialidad 1</label>
-                            <input id="interconsultaEspecialidad1" type="text">
-                        </div>
+                    <button type="button"
+                            class="btn-secundario"
+                            onclick="agregarInterconsulta()">
 
-                        <div class="campo">
-                            <label>Conclusión 1</label>
-                            <input id="interconsultaConclusion1" type="text">
-                        </div>
-                    </div>
+                        + Agregar interconsulta
 
-                    <div class="fila">
-                        <div class="campo">
-                            <label>Fecha 2</label>
-                            <input id="interconsultaFecha2" type="date">
-                        </div>
+                    </button>
 
-                        <div class="campo">
-                            <label>Especialidad 2</label>
-                            <input id="interconsultaEspecialidad2" type="text">
-                        </div>
-
-                        <div class="campo">
-                            <label>Conclusión 2</label>
-                            <input id="interconsultaConclusion2" type="text">
-                        </div>
-                    </div>
-
-                    <div class="fila">
-                        <div class="campo">
-                            <label>Fecha 3</label>
-                            <input id="interconsultaFecha3" type="date">
-                        </div>
-
-                        <div class="campo">
-                            <label>Especialidad 3</label>
-                            <input id="interconsultaEspecialidad3" type="text">
-                        </div>
-
-                        <div class="campo">
-                            <label>Conclusión 3</label>
-                            <input id="interconsultaConclusion3" type="text">
-                        </div>
-                    </div>
                 </div>
 
                 <div class="seccion">
+
                     <h3>Tratamiento recibido</h3>
 
-                    <div class="fila">
-                        <div class="campo">
-                            <label>Medicamento 1</label>
-                            <input id="medicamento1" type="text">
-                        </div>
+                    <div id="tratamientosContainer"></div>
 
-                        <div class="campo">
-                            <label>Dosis mg/kg 1</label>
-                            <input id="dosisMgKg1" type="text">
-                        </div>
+                    <button type="button"
+                            class="btn-secundario"
+                            onclick="agregarTratamiento()">
 
-                        <div class="campo">
-                            <label>Vía 1</label>
-                            <input id="via1" type="text">
-                        </div>
+                        + Agregar tratamiento
 
-                        <div class="campo">
-                            <label>Tiempo administración 1</label>
-                            <input id="tiempoAdministracion1" type="text">
-                        </div>
-                    </div>
+                    </button>
 
-                    <div class="fila">
-                        <div class="campo">
-                            <label>Medicamento 2</label>
-                            <input id="medicamento2" type="text">
-                        </div>
-
-                        <div class="campo">
-                            <label>Dosis mg/kg 2</label>
-                            <input id="dosisMgKg2" type="text">
-                        </div>
-
-                        <div class="campo">
-                            <label>Vía 2</label>
-                            <input id="via2" type="text">
-                        </div>
-
-                        <div class="campo">
-                            <label>Tiempo administración 2</label>
-                            <input id="tiempoAdministracion2" type="text">
-                        </div>
-                    </div>
-
-                    <div class="fila">
-                        <div class="campo">
-                            <label>Medicamento 3</label>
-                            <input id="medicamento3" type="text">
-                        </div>
-
-                        <div class="campo">
-                            <label>Dosis mg/kg 3</label>
-                            <input id="dosisMgKg3" type="text">
-                        </div>
-
-                        <div class="campo">
-                            <label>Vía 3</label>
-                            <input id="via3" type="text">
-                        </div>
-
-                        <div class="campo">
-                            <label>Tiempo administración 3</label>
-                            <input id="tiempoAdministracion3" type="text">
-                        </div>
-                    </div>
                 </div>
 
                 <div class="seccion">
@@ -620,134 +550,291 @@
                     </div>
                 </div>
 
-                <div class="seccion">
-                    <h3>Inmunización</h3>
+                <div class="grid-final">
+                    <div class="seccion">
+                        <h3>Inmunización</h3>
 
-                    <div class="radio-group">
-                        <label><input name="inmunizacion" value="Completa" type="radio"> Completa</label>
-                        <label><input name="inmunizacion" value="Incompleta" type="radio"> Incompleta</label>
+                        <div class="radio-group">
+                            <label><input name="inmunizacion" value="Completa" type="radio"> Completa</label>
+                            <label><input name="inmunizacion" value="Incompleta" type="radio"> Incompleta</label>
+                        </div>
                     </div>
+
+                    <div class="seccion">
+                        <h3>Condición al egreso</h3>
+
+                        <div class="radio-group">
+                            <label><input name="condicionEgreso" value="Curado" type="radio"> Curado</label>
+                            <label><input name="condicionEgreso" value="Mejorado" type="radio"> Mejorado</label>
+                            <label><input name="condicionEgreso" value="Empeorado" type="radio"> Empeorado</label>
+                            <label><input name="condicionEgreso" value="Estacionario" type="radio"> Estacionario</label>
+                            <label><input name="condicionEgreso" value="Fallecido" type="radio"> Fallecido</label>
+                        </div>
+                    </div>
+
+                    <div class="seccion">
+                        <h3>Tipo de alta</h3>
+
+                        <div class="radio-group">
+                            <label><input name="tipoAlta" value="Medica" type="radio"> Médica</label>
+                            <label><input name="tipoAlta" value="Voluntaria" type="radio"> Voluntaria</label>
+                            <label><input name="tipoAlta" value="Transferencia" type="radio"> Transferencia</label>
+                            <label><input name="tipoAlta" value="Fallecido" type="radio"> Fallecido</label>
+                        </div>
+                    </div>
+
+                    <div class="seccion">
+                        <h3>Necropsia</h3>
+
+                        <div class="radio-group">
+                            <label><input name="necropsia" value="Si" type="radio"> Sí</label>
+                            <label><input name="necropsia" value="No" type="radio"> No</label>
+                        </div>
+                    </div>
+
                 </div>
 
-                <div class="seccion">
-                    <h3>Condición al egreso</h3>
+                    <div class="seccion">
+                        <h3>Indicaciones finales</h3>
 
-                    <div class="radio-group">
-                        <label><input name="condicionEgreso" value="Curado" type="radio"> Curado</label>
-                        <label><input name="condicionEgreso" value="Mejorado" type="radio"> Mejorado</label>
-                        <label><input name="condicionEgreso" value="Empeorado" type="radio"> Empeorado</label>
-                        <label><input name="condicionEgreso" value="Estacionario" type="radio"> Estacionario</label>
-                        <label><input name="condicionEgreso" value="Fallecido" type="radio"> Fallecido</label>
+                        <div class="campo">
+                            <label>Pronóstico</label>
+                            <textarea id="pronostico"></textarea>
+                        </div>
+
+                        <div class="campo">
+                            <label>Pendiente</label>
+                            <textarea id="pendiente"></textarea>
+                        </div>
+
+                        <div class="campo">
+                            <label>Indicaciones de alta</label>
+                            <textarea id="indicacionesAlta"></textarea>
+                        </div>
                     </div>
+
+                    <div class="seccion">
+                        <h3>Firmas</h3>
+
+                        <div class="fila">
+                            <div class="campo">
+                                <label>Nombre y firma del interno</label>
+                                <input id="nombreFirmaInterno" type="text">
+                            </div>
+
+                            <div class="campo">
+                                <label>Nombre y firma del médico residente</label>
+                                <input id="nombreFirmaMedicoResidente1" type="text">
+                            </div>
+                        </div>
+
+                        <div class="fila">
+                            <div class="campo">
+                                <label>Nombre y firma del médico tratante</label>
+                                <input id="nombreFirmaMedicoTratante" type="text">
+                            </div>
+
+                            <div class="campo">
+                                <label>Nombre y firma del médico residente 2</label>
+                                <input id="nombreFirmaMedicoResidente2" type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="seccion">
+                        <h3>Datos finales del paciente</h3>
+
+                        <div class="fila">
+                            <div class="campo">
+                                <label>Nombres</label>
+                                <input id="nombresFinales" type="text" oninput="soloLetras(this)">
+                            </div>
+
+                            <div class="campo">
+                                <label>Apellidos</label>
+                                <input id="apellidosFinales" type="text" oninput="soloLetras(this)">
+                            </div>
+
+                            <div class="campo">
+                                <label>N° HC</label>
+                                <input id="hcFinal" type="text" inputmode="numeric" onkeydown="bloquearNoNumerico(event)">
+                            </div>
+
+                            <div class="campo">
+                                <label>N° Cama</label>
+                                <input id="camaFinal" type="text" oninput="soloCama(this)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn-secundario" onclick="abrirModalReceta()">
+                        Enviar receta médica
+                    </button>
+
+                    <button type="submit" class="btn-principal">
+                        Guardar Epicrisis
+                    </button>
+
+                    <div id="mensaje" class="mensaje"></div>
                 </div>
-
-                <div class="seccion">
-                    <h3>Tipo de alta</h3>
-
-                    <div class="radio-group">
-                        <label><input name="tipoAlta" value="Medica" type="radio"> Médica</label>
-                        <label><input name="tipoAlta" value="Voluntaria" type="radio"> Voluntaria</label>
-                        <label><input name="tipoAlta" value="Transferencia" type="radio"> Transferencia</label>
-                        <label><input name="tipoAlta" value="Fallecido" type="radio"> Fallecido</label>
-                    </div>
-                </div>
-
-                <div class="seccion">
-                    <h3>Necropsia</h3>
-
-                    <div class="radio-group">
-                        <label><input name="necropsia" value="Si" type="radio"> Sí</label>
-                        <label><input name="necropsia" value="No" type="radio"> No</label>
-                    </div>
-                </div>
-
-                <div class="seccion">
-                    <h3>Indicaciones finales</h3>
-
-                    <div class="campo">
-                        <label>Pronóstico</label>
-                        <textarea id="pronostico"></textarea>
-                    </div>
-
-                    <div class="campo">
-                        <label>Pendiente</label>
-                        <textarea id="pendiente"></textarea>
-                    </div>
-
-                    <div class="campo">
-                        <label>Indicaciones de alta</label>
-                        <textarea id="indicacionesAlta"></textarea>
-                    </div>
-                </div>
-
-                <div class="seccion">
-                    <h3>Firmas</h3>
-
-                    <div class="fila">
-                        <div class="campo">
-                            <label>Nombre y firma del interno</label>
-                            <input id="nombreFirmaInterno" type="text">
-                        </div>
-
-                        <div class="campo">
-                            <label>Nombre y firma del médico residente</label>
-                            <input id="nombreFirmaMedicoResidente1" type="text">
-                        </div>
-                    </div>
-
-                    <div class="fila">
-                        <div class="campo">
-                            <label>Nombre y firma del médico tratante</label>
-                            <input id="nombreFirmaMedicoTratante" type="text">
-                        </div>
-
-                        <div class="campo">
-                            <label>Nombre y firma del médico residente 2</label>
-                            <input id="nombreFirmaMedicoResidente2" type="text">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="seccion">
-                    <h3>Datos finales del paciente</h3>
-
-                    <div class="fila">
-                        <div class="campo">
-                            <label>Nombres</label>
-                            <input id="nombresFinales" type="text" oninput="soloLetras(this)">
-                        </div>
-
-                        <div class="campo">
-                            <label>Apellidos</label>
-                            <input id="apellidosFinales" type="text" oninput="soloLetras(this)">
-                        </div>
-
-                        <div class="campo">
-                            <label>N° HC</label>
-                            <input id="hcFinal" type="text" inputmode="numeric" onkeydown="bloquearNoNumerico(event)">
-                        </div>
-
-                        <div class="campo">
-                            <label>N° Cama</label>
-                            <input id="camaFinal" type="text" oninput="soloCama(this)">
-                        </div>
-                    </div>
-                </div>
-
-                <button type="button" class="btn-secundario" onclick="abrirModalReceta()">
-                    Enviar receta médica
-                </button>
-
-                <button type="submit" class="btn-principal">
-                    Guardar Epicrisis
-                </button>
-
-                <div id="mensaje" class="mensaje"></div>
-            </div>
-        </form>
+</form>
     </div>
 
     <script>
+
+    function agregarTratamiento() {
+
+        const container = document.getElementById("tratamientosContainer");
+
+        const cantidad =
+            container.querySelectorAll(".tratamiento-item").length + 1;
+
+        const div = document.createElement("div");
+
+        div.className = "tratamiento-item";
+
+        div.innerHTML = `
+    
+            <div class="fila">
+
+                <div class="campo">
+                    <label>Medicamento ${cantidad}</label>
+
+                    <input type="text"
+                           class="medicamentoTratamiento">
+                </div>
+
+                <div class="campo">
+                    <label>Dosis mg/kg ${cantidad}</label>
+
+                    <input type="text"
+                           class="dosisTratamiento">
+                </div>
+
+                <div class="campo">
+                    <label>Vía ${cantidad}</label>
+
+                    <input type="text"
+                           class="viaTratamiento">
+                </div>
+
+                <div class="campo">
+                    <label>Tiempo administración ${cantidad}</label>
+
+                    <input type="text"
+                           class="tiempoTratamiento">
+                </div>
+
+            </div>
+
+            <button type="button"
+                    class="btn-eliminar"
+                    onclick="this.parentElement.remove()">
+
+                Eliminar tratamiento
+
+            </button>
+        `;
+
+        container.appendChild(div);
+}
+
+function obtenerInterconsultas() {
+
+    const interconsultas = [];
+
+    document.querySelectorAll(".interconsulta-item").forEach(item => {
+
+        interconsultas.push({
+
+            fecha:
+                item.querySelector(".fechaInterconsulta")?.value || "",
+
+            especialidad:
+                item.querySelector(".especialidadInterconsulta")?.value || "",
+
+            conclusion:
+                item.querySelector(".conclusionInterconsulta")?.value || ""
+        });
+    });
+
+    return JSON.stringify(interconsultas);
+}
+
+function obtenerTratamientos() {
+
+    const tratamientos = [];
+
+    document.querySelectorAll(".tratamiento-item").forEach(item => {
+
+        tratamientos.push({
+
+            medicamento:
+                item.querySelector(".medicamentoTratamiento")?.value || "",
+
+            dosis:
+                item.querySelector(".dosisTratamiento")?.value || "",
+
+            via:
+                item.querySelector(".viaTratamiento")?.value || "",
+
+            tiempo:
+                item.querySelector(".tiempoTratamiento")?.value || ""
+        });
+    });
+
+    return JSON.stringify(tratamientos);
+}
+
+    function agregarInterconsulta() {
+
+        const container = document.getElementById("interconsultasContainer");
+
+        const cantidad =
+            container.querySelectorAll(".interconsulta-item").length + 1;
+
+        const div = document.createElement("div");
+
+        div.className = "interconsulta-item";
+
+        div.innerHTML = `
+    
+            <div class="fila">
+
+                <div class="campo">
+                    <label>Fecha ${cantidad}</label>
+
+                    <input type="date"
+                           class="fechaInterconsulta">
+                </div>
+
+                <div class="campo">
+                    <label>Especialidad ${cantidad}</label>
+
+                    <input type="text"
+                           class="especialidadInterconsulta">
+                </div>
+
+                <div class="campo">
+                    <label>Conclusión ${cantidad}</label>
+
+                    <input type="text"
+                           class="conclusionInterconsulta">
+                </div>
+
+            </div>
+
+            <button type="button"
+                    class="btn-eliminar"
+                    onclick="this.parentElement.remove()">
+
+                Eliminar interconsulta
+
+            </button>
+        `;
+
+        container.appendChild(div);
+    }
 
     function calcularEdadCompleta(fechaNacimiento) {
         if (!fechaNacimiento) return "";
@@ -846,54 +933,67 @@ async function buscarPaciente() {
         return (dni || "").replace(/[^0-9]/g, "");
     }
 
+    function cargarYBloquear(id, valorCampo) {
+        const input = document.getElementById(id);
+        if (!input) return;
+
+        const valorFinal = valorCampo || "";
+        input.value = valorFinal;
+
+        if (valorFinal.trim() !== "") {
+            input.readOnly = true;
+            input.style.background = "#e9ecef";
+            input.style.cursor = "not-allowed";
+        } else {
+            input.readOnly = false;
+            input.style.background = "white";
+            input.style.cursor = "text";
+        }
+    }
+
     function cargarDatosPaciente(p) {
         document.getElementById("buscadorPaciente").style.display = "none";
         document.getElementById("contenidoFormulario").style.display = "block";
 
-        if (document.getElementById("historiaClinicaNumero"))
-            document.getElementById("historiaClinicaNumero").value = p.historiaClinica || "";
+        cargarYBloquear("historiaClinicaNumero", p.historiaClinica);
+        cargarYBloquear("numeroSIS", p.numeroSis);
 
-        if (document.getElementById("numeroHistoriaClinica"))
-            document.getElementById("numeroHistoriaClinica").value = p.historiaClinica || "";
+        cargarYBloquear("nombres", p.nombres);
+        cargarYBloquear("apellidos", `${p.apellidoPaterno || ""} ${p.apellidoMaterno || ""}`.trim());
 
-        if (document.getElementById("numeroSIS"))
-            document.getElementById("numeroSIS").value = p.numeroSis || "";
+        cargarYBloquear("procedencia", p.procedencia);
 
-        if (document.getElementById("nombres"))
-            document.getElementById("nombres").value = p.nombres || "";
-
-        if (document.getElementById("apellidos"))
-            document.getElementById("apellidos").value =
-                `${p.apellidoPaterno || ""} ${p.apellidoMaterno || ""}`.trim();
-
-        if (document.getElementById("nombresApellidos"))
-            document.getElementById("nombresApellidos").value =
-                `${p.apellidoPaterno || ""} ${p.apellidoMaterno || ""} ${p.nombres || ""}`.trim();
-
-        if (document.getElementById("sexo"))
-            document.getElementById("sexo").value = p.sexo || "";
-
-        if (document.getElementById("fechaNacimiento") && p.fechaNacimiento)
-            document.getElementById("fechaNacimiento").value = p.fechaNacimiento.split("T")[0];
-
-        if (document.getElementById("edad")) {
-            document.getElementById("edad").value = calcularEdadCompleta(p.fechaNacimiento);
+        if (p.fechaNacimiento) {
+            cargarYBloquear("fechaNacimiento", p.fechaNacimiento.split("T")[0]);
+            cargarYBloquear("edad", calcularEdadCompleta(p.fechaNacimiento));
+        } else {
+            cargarYBloquear("fechaNacimiento", "");
+            cargarYBloquear("edad", "");
         }
 
-        if (document.getElementById("procedencia"))
-            document.getElementById("procedencia").value = p.procedencia || "";
+        const sexo = document.getElementById("sexo");
 
-        if (document.getElementById("domicilio"))
-            document.getElementById("domicilio").value = p.procedencia || "";
+        if (sexo) {
+            sexo.value = p.sexo || "";
 
-        if (document.getElementById("dniPaciente"))
-            document.getElementById("dniPaciente").value = limpiarDni(p.dni);
+            if ((p.sexo || "").trim() !== "") {
+                sexo.disabled = true;
+                sexo.style.background = "#e9ecef";
+                sexo.style.cursor = "not-allowed";
+            } else {
+                sexo.disabled = false;
+                sexo.style.background = "white";
+                sexo.style.cursor = "pointer";
+            }
+        }
 
         if (document.getElementById("correoPaciente"))
             document.getElementById("correoPaciente").value = p.correo || "";
 
         if (document.getElementById("celularPaciente"))
             document.getElementById("celularPaciente").value = p.telefono || "";
+
+        document.getElementById("resultadosPacientes").innerHTML = "";
     }
 
         function extraerFecha(texto) {
@@ -1134,8 +1234,8 @@ Tiempo administración 3: ${valor("tiempoAdministracion3")}
 
                 nombres: valor("nombres"),
                 apellidos: valor("apellidos"),
-                edad: numero("edad"),
-                tipoEdad: valor("tipoEdad"),
+                edad: valor("edad"),
+                tipoEdad: "",
                 sexo: valor("sexo"),
                 numeroCama: valor("numeroCama"),
                 fechaNacimiento: fecha("fechaNacimiento"),
@@ -1173,34 +1273,14 @@ Tiempo administración 3: ${valor("tiempoAdministracion3")}
                 diagnosticoNutricional: valor("diagnosticoNutricional"),
                 evolucion: valor("evolucion"),
 
-                interconsultaFecha1: fecha("interconsultaFecha1"),
-                interconsultaEspecialidad1: valor("interconsultaEspecialidad1"),
-                interconsultaConclusion1: valor("interconsultaConclusion1"),
+                interconsultasJson: obtenerInterconsultas(),
 
-                interconsultaFecha2: fecha("interconsultaFecha2"),
-                interconsultaEspecialidad2: valor("interconsultaEspecialidad2"),
-                interconsultaConclusion2: valor("interconsultaConclusion2"),
-
-                interconsultaFecha3: fecha("interconsultaFecha3"),
-                interconsultaEspecialidad3: valor("interconsultaEspecialidad3"),
-                interconsultaConclusion3: valor("interconsultaConclusion3"),
-
-                medicamento1: valor("medicamento1"),
-                dosisMgKg1: valor("dosisMgKg1"),
-                via1: valor("via1"),
-                tiempoAdministracion1: valor("tiempoAdministracion1"),
-
-                medicamento2: valor("medicamento2"),
-                dosisMgKg2: valor("dosisMgKg2"),
-                via2: valor("via2"),
-                tiempoAdministracion2: valor("tiempoAdministracion2"),
-
-                medicamento3: valor("medicamento3"),
-                dosisMgKg3: valor("dosisMgKg3"),
-                via3: valor("via3"),
-                tiempoAdministracion3: valor("tiempoAdministracion3"),
+                tratamientosJson: obtenerTratamientos(),
 
                 procedimientosTerapeuticos: procedimientosTerapeuticos,
+
+                procedimientosTerapeuticosJson:
+                    JSON.stringify(procedimientosTerapeuticos),
 
                 diagnosticoAlta: valor("diagnosticoAlta"),
                 cie10Alta: valor("cie10Alta"),
@@ -1250,18 +1330,32 @@ Tiempo administración 3: ${valor("tiempoAdministracion3")}
 
             if (response.ok) {
 
+                const epicrisisGuardada = await response.json();
+
                 mensaje.style.color = "green";
-                mensaje.innerText = "Epicrisis guardada correctamente.";
+
+                mensaje.innerHTML = `
+        Epicrisis guardada correctamente.
+        <br><br>
+
+        <button type="button"
+                class="btn-secundario"
+                onclick="window.open('/ver-epicrisis.html?id=${epicrisisGuardada.id}', '_blank')">
+
+            Ver epicrisis guardada
+        </button>
+    `;
 
                 document.getElementById("epicrisisForm").reset();
 
                 document.getElementById("examenesContainer").innerHTML = "";
                 document.getElementById("procedimientosTerapeuticosContainer").innerHTML = "";
-   
+
                 agregarExamen();
                 agregarProcedimientoTerapeutico();
+            }
 
-            } else {
+            else {
 
                 const errorTexto = await response.text();
                 
@@ -1285,6 +1379,8 @@ Tiempo administración 3: ${valor("tiempoAdministracion3")}
             }
         });
 
+        agregarInterconsulta();
+        agregarTratamiento();
         agregarExamen();
         agregarProcedimientoTerapeutico();
     </script>
