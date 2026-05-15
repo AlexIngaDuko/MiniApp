@@ -164,10 +164,70 @@
             font-weight: normal;
         }
 
-            .opcion-mini input {
+        .opcion-mini input {
                 width: auto;
-            }
+        }
+        .seccion-radio {
+            margin-top: 25px;
+        }
 
+        .seccion-radio label.titulo-radio {
+                display: block;
+                text-align: center;
+                font-weight: bold;
+                margin-bottom: 18px;
+                font-size: 17px;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 45px;
+            margin-bottom: 28px;
+        }
+
+        .radio-group label {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 8px;
+                font-weight: normal;
+        }
+
+        .espacio-responsable {
+            margin-top: 35px;
+        }
+
+        .titulo-radio {
+            display: block;
+            text-align: center;
+            font-weight: bold;
+            font-size: 17px;
+            margin-bottom: 18px;
+            background: #e8e8e8;
+            border: 1px solid #bdbdbd;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .condicion-usuario {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 55px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+            margin-bottom: 35px;
+        }
+
+            .condicion-usuario label {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 8px;
+                font-weight: normal;
+            }
     </style>
 </head>
 
@@ -403,6 +463,16 @@
                         <label>Diagnóstico de egreso</label>
                         <textarea id="diagnosticoEgreso"></textarea>
                     </div>
+                    <div class="fila">
+                        <div class="campo">
+                            <div id="cie10EgresoContainer"></div>
+
+                            <button type="button" class="btn-secundario" onclick="agregarCie10Egreso()">
+                                + Agregar CIE-10
+                            </button>
+                        </div>
+
+                    </div>
 
                     <div class="campo">
                         <label>Tratamiento y/o procedimientos realizados</label>
@@ -418,36 +488,88 @@
                 <div class="seccion">
                     <h3>4. Datos de la referencia</h3>
 
-                    <label>Origen de la referencia</label>
-                    <div class="radio-group">
-                        <label><input type="radio" name="origenReferencia" value="Comunidad"> De la comunidad</label>
-                        <label><input type="radio" name="origenReferencia" value="Establecimiento"> De un establecimiento de salud</label>
-                        <label><input type="radio" name="origenReferencia" value="Autorreferencia"> Autorreferencia</label>
-                    </div>
+                    <div class="seccion-radio">
 
-                    <label>Calificación preliminar de la referencia</label>
-                    <div class="radio-group">
-                        <label><input type="radio" name="calificacionReferencia" value="Justificada"> Justificada</label>
-                        <label><input type="radio" name="calificacionReferencia" value="No Justificada"> No justificada</label>
-                    </div>
+                        <label class="titulo-radio">
+                            Origen de la referencia
+                        </label>
 
-                    <label>UPS que ordena la contrarreferencia</label>
-                    <div class="radio-group">
-                        <label><input type="radio" name="upsContrarreferencia" value="Consulta Externa"> Consulta Externa</label>
-                        <label><input type="radio" name="upsContrarreferencia" value="Emergencia"> Emergencia</label>
-                        <label><input type="radio" name="upsContrarreferencia" value="Apoyo al DX"> Apoyo al DX</label>
-                        <label><input type="radio" name="upsContrarreferencia" value="Hospitalizacion"> Hospitalización</label>
-                    </div>
+                        <div class="radio-group">
+                            <label><input type="radio" name="origenReferencia" value="Comunidad"> De la comunidad</label>
 
-                    <label>Especialidad que ordena la contrarreferencia</label>
-                    <div class="radio-group">
-                        <label><input type="radio" name="especialidad" value="Pediatria"> Pediatría</label>
-                        <label><input type="radio" name="especialidad" value="Medicina"> Medicina</label>
-                        <label><input type="radio" name="especialidad" value="Cirugia"> Cirugía</label>
-                        <label><input type="radio" name="especialidad" value="Gineco-Obs"> Gineco-Obs</label>
-                        <label><input type="radio" name="especialidad" value="Lab"> Lab</label>
-                        <label><input type="radio" name="especialidad" value="DxImagen"> Dx Imagen</label>
-                        <label><input type="radio" name="especialidad" value="Otro"> Otro</label>
+                            <label>
+                                <input type="radio" name="origenReferencia" value="Establecimiento">
+                                De un establecimiento de salud
+                            </label>
+
+                            <label>
+                                <input type="radio" name="origenReferencia" value="Autorreferencia">
+                                Autorreferencia
+                            </label>
+                        </div>
+
+                        <label class="titulo-radio">
+                            Calificación preliminar de la referencia
+                        </label>
+
+                        <div class="radio-group">
+                            <label>
+                                <input type="radio" name="calificacionReferencia" value="Justificada">
+                                Justificada
+                            </label>
+
+                            <label>
+                                <input type="radio" name="calificacionReferencia" value="No Justificada">
+                                No justificada
+                            </label>
+                        </div>
+
+                        <label class="titulo-radio">
+                            UPS que ordena la contrarreferencia
+                        </label>
+
+                        <div class="radio-group">
+                            <label>
+                                <input type="radio" name="upsContrarreferencia" value="Consulta Externa">
+                                Consulta Externa
+                            </label>
+
+                            <label>
+                                <input type="radio" name="upsContrarreferencia" value="Emergencia">
+                                Emergencia
+                            </label>
+
+                            <label>
+                                <input type="radio" name="upsContrarreferencia" value="Apoyo al DX">
+                                Apoyo al DX
+                            </label>
+
+                            <label>
+                                <input type="radio" name="upsContrarreferencia" value="Hospitalizacion">
+                                Hospitalización
+                            </label>
+                        </div>
+
+                        <label class="titulo-radio">
+                            Especialidad que ordena la contrarreferencia
+                        </label>
+
+                        <div class="radio-group">
+                            <label><input type="radio" name="especialidad" value="Pediatria"> Pediatría</label>
+
+                            <label><input type="radio" name="especialidad" value="Medicina"> Medicina</label>
+
+                            <label><input type="radio" name="especialidad" value="Cirugia"> Cirugía</label>
+
+                            <label><input type="radio" name="especialidad" value="Gineco-Obs"> Gineco-Obs</label>
+
+                            <label><input type="radio" name="especialidad" value="Lab"> Lab</label>
+
+                            <label><input type="radio" name="especialidad" value="DxImagen"> Dx Imagen</label>
+
+                            <label><input type="radio" name="especialidad" value="Otro"> Otro</label>
+                        </div>
+
                     </div>
                 </div>
 
@@ -459,17 +581,45 @@
                 <div class="seccion">
                     <h3>Responsable de la contrarreferencia</h3>
 
-                    <label>Condición del usuario para la contrarreferencia</label>
-                    <div class="radio-group">
-                        <label><input type="radio" name="condicionUsuario" value="Curado"> Curado</label>
-                        <label><input type="radio" name="condicionUsuario" value="Mejorado"> Mejorado</label>
-                        <label><input type="radio" name="condicionUsuario" value="Atencion Apoyo DX"> Atención x Apoyo al DX</label>
-                        <label><input type="radio" name="condicionUsuario" value="Desercion"> Deserción</label>
-                        <label><input type="radio" name="condicionUsuario" value="Retiro Voluntario"> Retiro voluntario</label>
-                        <label><input type="radio" name="condicionUsuario" value="Fallecido"> Fallecido</label>
+                    <label class="titulo-radio">
+                        Condición del usuario para la contrarreferencia
+                    </label>
+
+                    <div class="condicion-usuario">
+
+                        <label>
+                            <input type="radio" name="condicionUsuario" value="Curado">
+                            Curado
+                        </label>
+
+                        <label>
+                            <input type="radio" name="condicionUsuario" value="Mejorado">
+                            Mejorado
+                        </label>
+
+                        <label>
+                            <input type="radio" name="condicionUsuario" value="Atencion Apoyo DX">
+                            Atención x Apoyo al DX
+                        </label>
+
+                        <label>
+                            <input type="radio" name="condicionUsuario" value="Desercion">
+                            Deserción
+                        </label>
+
+                        <label>
+                            <input type="radio" name="condicionUsuario" value="Retiro Voluntario">
+                            Retiro voluntario
+                        </label>
+
+                        <label>
+                            <input type="radio" name="condicionUsuario" value="Fallecido">
+                            Fallecido
+                        </label>
+
                     </div>
 
-                    <div class="fila">
+                    <div class="fila espacio-responsable">
                         <div class="campo">
                             <label>Nombre del responsable</label>
                             <input id="nombreResponsable" type="text">
@@ -493,6 +643,85 @@
     </div>
 
     <script>
+    function cargarYBloquear(id, valorCampo) {
+        const input = document.getElementById(id);
+
+        if (!input) return;
+
+        const valorFinal = valorCampo || "";
+
+        input.value = valorFinal;
+
+        if (valorFinal.trim() !== "") {
+            input.readOnly = true;
+            input.style.background = "#e9ecef";
+            input.style.cursor = "not-allowed";
+        } else {
+            input.readOnly = false;
+            input.style.background = "white";
+            input.style.cursor = "text";
+        }
+    }
+
+    function obtenerCie10Egreso() {
+        const filas = [];
+
+        document.querySelectorAll(".cie10-egreso-item").forEach((fila, index) => {
+            const cie = fila.querySelector(".cie10Egreso").value;
+
+            if (cie.trim() !== "") {
+                filas.push(`${index + 1}.- ${cie}`);
+            }
+        });
+
+        return filas.join("\n");
+    }
+
+    function obtenerDprEgreso() {
+        const filas = [];
+
+        document.querySelectorAll(".cie10-egreso-item").forEach((fila, index) => {
+            const dpr = fila.querySelector(".dprEgreso").value;
+
+            if (dpr.trim() !== "") {
+                filas.push(`${index + 1}.- ${dpr}`);
+            }
+        });
+
+        return filas.join("\n");
+    }
+
+    function agregarCie10Egreso() {
+        const container = document.getElementById("cie10EgresoContainer");
+
+        const div = document.createElement("div");
+        div.className = "fila cie10-egreso-item";
+        div.style.alignItems = "center";
+        div.style.marginBottom = "10px";
+
+        div.innerHTML = `
+            <div class="campo">
+                <label>CIE-10</label>
+                <input class="cie10Egreso" type="text">
+            </div>
+
+            <div class="campo">
+                <label>D / P / R</label>
+                <select class="dprEgreso">
+                    <option value="">Seleccione</option>
+                    <option value="D">D</option>
+                    <option value="P">P</option>
+                    <option value="R">R</option>
+                </select>
+            </div>
+
+            <button type="button" class="btn-eliminar" onclick="this.parentElement.remove()">
+                Eliminar
+            </button>
+        `;
+
+        container.appendChild(div);
+    }
 
     function soloNumeros(input) {
         input.value = input.value.replace(/[^0-9]/g, "");
@@ -596,26 +825,96 @@
         });
     }
 
+function cargarYBloquear(id, valorCampo) {
+
+    const input = document.getElementById(id);
+
+    if (!input) return;
+
+    const valorFinal = valorCampo || "";
+
+    input.value = valorFinal;
+
+    if (valorFinal.trim() !== "") {
+
+        input.readOnly = true;
+
+        input.style.background = "#e9ecef";
+        input.style.cursor = "not-allowed";
+
+    } else {
+
+        input.readOnly = false;
+
+        input.style.background = "white";
+        input.style.cursor = "text";
+    }
+}
+
     function cargarPaciente(p) {
+
         document.getElementById("buscadorPaciente").style.display = "none";
         document.getElementById("contenidoFormulario").style.display = "block";
 
-        document.getElementById("historiaClinica").value = p.historiaClinica || "";
-        document.getElementById("dniPaciente").value = limpiarDni(p.dni);
-        document.getElementById("codigoSis").value = p.numeroSis || "";
+        cargarYBloquear("historiaClinica", p.historiaClinica);
 
-        document.getElementById("apellidoPaterno").value = p.apellidoPaterno || "";
-        document.getElementById("apellidoMaterno").value = p.apellidoMaterno || "";
-        document.getElementById("nombres").value = p.nombres || "";
+        cargarYBloquear("dniPaciente", limpiarDni(p.dni));
 
-        document.getElementById("sexo").value = p.sexo || "";
+        cargarYBloquear("codigoSis", p.numeroSis);
 
-        if (p.fechaNacimiento) {
-            document.getElementById("fechaNacimiento").value = p.fechaNacimiento.split("T")[0];
-            document.getElementById("edad").value = calcularEdadCompleta(p.fechaNacimiento);
+        cargarYBloquear("apellidoPaterno", p.apellidoPaterno);
+
+        cargarYBloquear("apellidoMaterno", p.apellidoMaterno);
+
+        cargarYBloquear("nombres", p.nombres);
+
+        cargarYBloquear("direccion", p.procedencia);
+
+        cargarYBloquear("distrito", p.distrito);
+
+        cargarYBloquear("departamento", p.departamento);
+
+        const sexo = document.getElementById("sexo");
+
+        if (sexo) {
+
+            sexo.value = p.sexo || "";
+
+            if ((p.sexo || "").trim() !== "") {
+
+                sexo.disabled = true;
+
+                sexo.style.background = "#e9ecef";
+                sexo.style.cursor = "not-allowed";
+
+            } else {
+
+                sexo.disabled = false;
+
+                sexo.style.background = "white";
+                sexo.style.cursor = "pointer";
+            }
         }
 
-        document.getElementById("direccion").value = p.procedencia || "";
+        if (p.fechaNacimiento) {
+
+            const fecha = p.fechaNacimiento.split("T")[0];
+
+            cargarYBloquear("fechaNacimiento", fecha);
+
+            cargarYBloquear(
+                "edad",
+                calcularEdadCompleta(p.fechaNacimiento)
+            );
+
+        } else {
+
+            cargarYBloquear("fechaNacimiento", "");
+
+            cargarYBloquear("edad", "");
+        }
+
+        document.getElementById("resultadosPacientes").innerHTML = "";
     }
 
     ["buscarDNI", "buscarHC", "buscarNombres", "buscarApellidos"].forEach(id => {
@@ -675,6 +974,8 @@
 
             diagnosticoIngreso: valor("diagnosticoIngreso"),
             diagnosticoEgreso: valor("diagnosticoEgreso"),
+            cie10DiagnosticoEgreso: obtenerCie10Egreso(),
+            dprDiagnosticoEgreso: obtenerDprEgreso(),
             tratamientoProcedimientos: valor("tratamientoProcedimientos"),
             reportesProcedimientos: valor("reportesProcedimientos"),
 
@@ -701,15 +1002,27 @@
         const mensaje = document.getElementById("mensaje");
 
         if (response.ok) {
+
+            const contrarreferenciaGuardada = await response.json();
+
             mensaje.style.color = "green";
-            mensaje.innerText = "Contrarreferencia guardada correctamente.";
+
+            mensaje.innerHTML = `
+        Contrarreferencia guardada correctamente.
+        <br><br>
+
+        <button type="button"
+                class="btn-secundario"
+                onclick="window.open('/ver-contrarreferencia.html?id=${contrarreferenciaGuardada.id}', '_blank')">
+
+            Ver contrarreferencia guardada
+        </button>
+    `;
+
             document.getElementById("contrarreferenciaForm").reset();
-        } else {
-            const error = await response.text();
-            mensaje.style.color = "red";
-            mensaje.innerText = "Error al guardar: " + error;
         }
     });
+    agregarCie10Egreso();
     </script>
 
 </body>
